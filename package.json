@@ -4,15 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "lint": "eslint .",
+    "test": "mocha --exit"
   },
   "author": "thephez",
   "license": "MIT",
   "dependencies": {
-    "dash": "^3.17.0",
-    "mocha": "^8.2.1"
+    "dash": "^3.17.0"
   },
   "devDependencies": {
-    "eslint": "^7.18.0"
+    "chai": "^4.2.0",
+    "eslint": "^7.18.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "mocha": "^8.2.1"
   }
 }
