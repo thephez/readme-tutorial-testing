@@ -38,7 +38,7 @@ describe('Tutorial Code Tests', function suite() {
 
     it('Should create a wallet and get an unused address without error', async function () {
       const result = await tutorials.getNewWalletInfo(sdkClient);
-      console.log(result);
+      // console.log(result);
       assert.hasAllKeys(result, ['mnemonic', 'address']);
       expect(result.mnemonic.split(' ')).to.have.lengthOf(12);
     }).timeout(300000);
@@ -76,6 +76,14 @@ describe('Tutorial Code Tests', function suite() {
       expect(identityToppedUp.toJSON()).to.include.all.keys('id', 'publicKeys', 'balance', 'revision');
       expect(identityToppedUp.balance).to.not.equal(startBalance);
     }).timeout(20000);
+
+    it('Should retrieve all account identity IDs', async function () {
+      const identityIds = await tutorials.retrieveIdentityIds(sdkClient);
+      console.log(identityIds);
+      console.log(identity.toJSON());
+      expect(identityIds).to.be.an('array').that.has.lengthOf.at.least(1);
+      expect(identityIds).to.include.members(identity.toJSON().id);
+    });
 
     after(function () {
       sdkClient.disconnect();
