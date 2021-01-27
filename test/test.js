@@ -82,7 +82,7 @@ describe('Tutorial Code Tests', function suite() {
       console.log(identityIds);
       console.log(identity.toJSON());
       expect(identityIds).to.be.an('array').that.has.lengthOf.at.least(1);
-      expect(identityIds).to.include.members(identity.toJSON().id);
+      expect(identityIds).to.include(identity.toJSON().id);
     });
 
     after(function () {
