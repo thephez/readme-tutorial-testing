@@ -79,8 +79,8 @@ describe('Tutorial Code Tests', function suite() {
 
     it('Should retrieve all account identity IDs', async function () {
       const identityIds = await tutorials.retrieveIdentityIds(sdkClient);
-      console.log(identityIds);
-      console.log(identity.toJSON());
+      // console.log(identityIds);
+      // console.log(identity.toJSON());
       expect(identityIds).to.be.an('array').that.has.lengthOf.at.least(1);
       expect(identityIds).to.include(identity.toJSON().id);
     });
