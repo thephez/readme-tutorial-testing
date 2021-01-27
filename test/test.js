@@ -19,7 +19,7 @@ describe('Tutorial Code Tests', function suite() {
         wallet: {
           mnemonic: null,
         },
-        dapiAddresses: ['127.0.0.1:3000'],
+        // dapiAddresses: ['127.0.0.1:3000'],
       });
     });
 
@@ -48,7 +48,7 @@ describe('Tutorial Code Tests', function suite() {
         wallet: {
           mnemonic,
         },
-        dapiAddresses: ['127.0.0.1:3000'],
+        // dapiAddresses: ['127.0.0.1:3000'],
       });
     });
 
