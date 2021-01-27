@@ -1,50 +1,77 @@
+/* eslint-disable no-console */
+/* eslint-disable func-names */
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable no-undef */
 const Dash = require('dash');
-// const assert = require('assert');
 const { assert, expect } = require('chai');
 const { checkNetworkConnection } = require('../tutorials/checkNetworkConnection');
 const { getNewWalletInfo } = require('../tutorials/getNewWalletInfo');
-const { createIdentity } = require('../tutorials/registerAnIdentity')
-/* const CreateAndFundWallet = require('../1-create-and-fund-wallet');
-let mnemonic = 'can remember inner harsh fringe student excite alone sense neutral people inflict';
-let clientOptions = {
-  wallet: {
-    mnemonic: null,
-  },
-};
-let sdkClient = new Dash.Client(clientOptions);
+const { createIdentity } = require('../tutorials/registerAnIdentity');
+const { topupIdentity } = require('../tutorials/topupIdentity');
 
-describe('Tutorial Code Test', function suite() {
+const mnemonic = 'can remember inner harsh fringe student excite alone sense neutral people inflict';
+let sdkClient;
+
+describe('Tutorial Code Tests', function suite() {
   describe('Initial preparation', () => {
-    it('should connect to Evonet without error', async function () {
+    before(function () {
+      sdkClient = new Dash.Client({
+        wallet: {
+          mnemonic: null,
+        },
+        dapiAddresses: ['127.0.0.1:3000'],
+      });
+    });
+
+    it('Should connect without error', async function () {
       const result = await checkNetworkConnection(sdkClient);
-      assert.ok(result);
+      // assert.ok(result);
+      expect(result).to.have.lengthOf(64);
     }).timeout(5000);
 
-    it('should create a wallet and get an unused address without error', async function () {
+    it('Should create a wallet and get an unused address without error', async function () {
       const result = await getNewWalletInfo(sdkClient);
-      console.log(result);
-      sdkClient.disconnect();
+      // console.log(result);
       assert.hasAllKeys(result, ['mnemonic', 'address']);
-      // assert.ifError(result);
+      expect(result.mnemonic.split(' ')).to.have.lengthOf(12);
     }).timeout(300000);
-  });
 
-  // Switch to using received mnemonic for client
-  clientOptions = {
-    wallet: {
-      mnemonic,
-    },
-  };
-  sdkClient = new Dash.Client(clientOptions);
+    after(function () {
+      sdkClient.disconnect();
+    });
+  });
 
   describe('Identities and Names', () => {
+    before(function () {
+      // Switch to using received mnemonic for client
+      sdkClient = new Dash.Client({
+        wallet: {
+          mnemonic,
+        },
+        dapiAddresses: ['127.0.0.1:3000'],
+      });
+    });
+
+    let identity;
+
     it('Should create an identity', async function () {
-      const result = await createIdentity(sdkClient);
-      console.log(result);
-      assert.ok(result);
+      identity = await createIdentity(sdkClient);
+      // console.log(identity.toJSON());
+      assert.containsAllKeys(identity.toJSON(), ['id', 'publicKeys', 'balance', 'revision']);
     }).timeout(300000);
+
+    it('Should topup the identity', async function () {
+      assert.isDefined(identity);
+
+      const startBalance = identity.balance;
+      const identityToppedUp = await topupIdentity(sdkClient, identity.id);
+
+      expect(identityToppedUp.toJSON()).to.include.all.keys('id', 'publicKeys', 'balance', 'revision');
+      expect(identityToppedUp.balance).to.not.equal(startBalance);
+    }).timeout(20000);
+
+    after(function () {
+      sdkClient.disconnect();
+    });
   });
-
-  sdkClient.disconnect();
-
 });
