@@ -27,7 +27,7 @@ describe('Tutorial Code Tests', function suite() {
       const result = await checkNetworkConnection(sdkClient);
       // assert.ok(result);
       expect(result).to.have.lengthOf(64);
-    }).timeout(5000);
+    }).timeout(10000);
 
     it('Should create a wallet and get an unused address without error', async function () {
       const result = await getNewWalletInfo(sdkClient);
