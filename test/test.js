@@ -4,10 +4,18 @@
 /* eslint-disable no-undef */
 const Dash = require('dash');
 const { assert, expect } = require('chai');
-const { checkNetworkConnection } = require('../tutorials/checkNetworkConnection');
+/* const { checkNetworkConnection } = require('../tutorials/checkNetworkConnection');
 const { getNewWalletInfo } = require('../tutorials/getNewWalletInfo');
-const { createIdentity } = require('../tutorials/registerAnIdentity');
-const { topupIdentity } = require('../tutorials/topupIdentity');
+const { createIdentity } = require('../tutorials/identity/registerIdentity');
+const { topupIdentity } = require('../tutorials/identity/topupIdentity'); */
+// const Tutorial = require('../cTutorials');
+/* const {
+  checkNetworkConnection,
+  getNewWalletInfo,
+  createIdentity,
+  topupIdentity
+} = require('../Tutorials'); */
+const tutorials = require('../tutorials');
 
 const mnemonic = 'can remember inner harsh fringe student excite alone sense neutral people inflict';
 let sdkClient;
@@ -24,14 +32,13 @@ describe('Tutorial Code Tests', function suite() {
     });
 
     it('Should connect without error', async function () {
-      const result = await checkNetworkConnection(sdkClient);
-      // assert.ok(result);
+      const result = await tutorials.checkNetworkConnection(sdkClient);
       expect(result).to.have.lengthOf(64);
     }).timeout(10000);
 
     it('Should create a wallet and get an unused address without error', async function () {
-      const result = await getNewWalletInfo(sdkClient);
-      // console.log(result);
+      const result = await tutorials.getNewWalletInfo(sdkClient);
+      console.log(result);
       assert.hasAllKeys(result, ['mnemonic', 'address']);
       expect(result.mnemonic.split(' ')).to.have.lengthOf(12);
     }).timeout(300000);
@@ -55,7 +62,7 @@ describe('Tutorial Code Tests', function suite() {
     let identity;
 
     it('Should create an identity', async function () {
-      identity = await createIdentity(sdkClient);
+      identity = await tutorials.createIdentity(sdkClient);
       // console.log(identity.toJSON());
       assert.containsAllKeys(identity.toJSON(), ['id', 'publicKeys', 'balance', 'revision']);
     }).timeout(300000);
@@ -64,7 +71,7 @@ describe('Tutorial Code Tests', function suite() {
       assert.isDefined(identity);
 
       const startBalance = identity.balance;
-      const identityToppedUp = await topupIdentity(sdkClient, identity.id);
+      const identityToppedUp = await tutorials.topupIdentity(sdkClient, identity.id);
 
       expect(identityToppedUp.toJSON()).to.include.all.keys('id', 'publicKeys', 'balance', 'revision');
       expect(identityToppedUp.balance).to.not.equal(startBalance);
