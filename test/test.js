@@ -8,8 +8,11 @@ const faker = require('faker');
 const dotenv = require('dotenv');
 const tutorials = require('../tutorials');
 
-const mnemonic = 'can remember inner harsh fringe student excite alone sense neutral people inflict';
+dotenv.config();
 
+// const mnemonic = 'can remember inner harsh fringe student excite alone sense neutral people inflict';
+const mnemonic = process.env.WALLET_MNEMONIC;
+console.log(mnemonic);
 let emptyWalletClient;
 let sdkClient;
 
