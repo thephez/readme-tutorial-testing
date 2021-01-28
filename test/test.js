@@ -28,7 +28,7 @@ describe('Tutorial Code Tests', function suite() {
       });
     });
 
-    it('Should connect without error', async function () {
+    it('Client should connect without error', async function () {
       const result = await tutorials.checkNetworkConnection(emptyWalletClient);
       expect(result).to.have.lengthOf(64);
     });
@@ -140,17 +140,20 @@ describe('Tutorial Code Tests', function suite() {
     let contractId;
 
     it('Should create a contract', async function () {
+      assert.isDefined(identity);
       const contractTransition = await tutorials.registerContract(sdkClient, identity.id);
       contract = contractTransition.toJSON().dataContract;
-      console.log(contract);
+
       assert.containsAllKeys(contract.documents, ['note']);
     });
 
     it('Should retrieve the contract', async function () {
+      assert.isDefined(contract);
       contractId = contract.$id;
       console.log(contractId);
       const retrievedContract = await tutorials.retrieveContract(sdkClient, contractId);
-      expect(retrievedContract.toJSON()).to.equal(contract);
+
+      expect(retrievedContract.toJSON()).to.deep.equal(contract);
     });
 
     after(function () {
