@@ -76,6 +76,7 @@ describe('Tutorial Code Tests', function suite() {
 
     it('Should retrieve all account identity IDs', async function () {
       assert.isDefined(identity);
+
       const identityIds = await tutorials.retrieveIdentityIds(sdkClient);
       // console.log(identityIds);
       expect(identityIds).to.be.an('array').that.has.lengthOf.at.least(1);
@@ -84,12 +85,53 @@ describe('Tutorial Code Tests', function suite() {
 
     it('Should register a name', async function () {
       assert.isDefined(identity);
+
       name = `rt-${faker.name.firstName()}-${faker.random.number()}`;
       const registeredName = await tutorials.registerName(sdkClient, identity.id, name);
       // console.log(registeredName.toJSON());
       console.log(`\tRegistered ${name}`);
       expect(registeredName.toJSON().label).to.equal(name);
     }).timeout(30000);
+
+    xit('Should register an alias', async function () {
+      assert.isDefined(identity);
+      const alias = `${name}-alias`;
+      console.log(alias);
+      const registeredAlias = await tutorials.registerName(sdkClient, identity.id, alias);
+      expect(registeredAlias.toJSON().label).to.equal(alias);
+    }).timeout(30000);
+
+    it('Should retrieve a name by name', async function () {
+      assert.isDefined(identity);
+      const retrievedName = await tutorials.retrieveNameByName(sdkClient, name);
+
+      expect(retrievedName.toJSON().label).to.equal(name);
+    });
+
+    it('Should retrieve a name by record', async function () {
+      assert.isDefined(identity);
+      const retrievedName = await tutorials.retrieveNameByRecord(sdkClient, identity.id);
+
+      expect(retrievedName).to.be.an('array').that.has.lengthOf.at.least(1);
+      expect(retrievedName[0]).to.be.an('object');
+      expect(retrievedName[0].toJSON().label).to.equal(name);
+    });
+
+    it('Should retrieve a name by search', async function () {
+      assert.isDefined(identity);
+      const retrievedName = await tutorials.retrieveNameBySearch(sdkClient, name.toLowerCase());
+
+      expect(retrievedName).to.be.an('array').that.has.lengthOf.at.least(1);
+      expect(retrievedName[0]).to.be.an('object');
+      expect(retrievedName[0].toJSON().label).to.equal(name);
+    });
+
+    afterEach(function () {
+      assert.isDefined(identity);
+      if (identity === 'undefined') {
+        this.skip();
+      }
+    });
 
     after(function () {
       sdkClient.disconnect();
