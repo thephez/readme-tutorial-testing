@@ -129,6 +129,7 @@ describe('Tutorial Code Tests', function suite() {
     afterEach(function () {
       assert.isDefined(identity);
       if (identity === 'undefined') {
+        console.error('No identity. Skip remaining tests.');
         this.skip();
       }
     });
