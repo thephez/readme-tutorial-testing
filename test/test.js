@@ -18,12 +18,16 @@ const { topupIdentity } = require('../tutorials/identity/topupIdentity'); */
 const tutorials = require('../tutorials');
 
 const mnemonic = 'can remember inner harsh fringe student excite alone sense neutral people inflict';
+
+let emptyWalletClient;
 let sdkClient;
 
 describe('Tutorial Code Tests', function suite() {
-  describe('Initial preparation', () => {
+  this.timeout(10000);
+
+  describe('Initial preparation', function () {
     before(function () {
-      sdkClient = new Dash.Client({
+      emptyWalletClient = new Dash.Client({
         wallet: {
           mnemonic: null,
         },
@@ -32,23 +36,26 @@ describe('Tutorial Code Tests', function suite() {
     });
 
     it('Should connect without error', async function () {
-      const result = await tutorials.checkNetworkConnection(sdkClient);
+      const result = await tutorials.checkNetworkConnection(emptyWalletClient);
       expect(result).to.have.lengthOf(64);
-    }).timeout(10000);
+    });
 
     it('Should create a wallet and get an unused address without error', async function () {
-      const result = await tutorials.getNewWalletInfo(sdkClient);
+      const result = await tutorials.getNewWalletInfo(emptyWalletClient);
       // console.log(result);
       assert.hasAllKeys(result, ['mnemonic', 'address']);
       expect(result.mnemonic.split(' ')).to.have.lengthOf(12);
     }).timeout(300000);
 
     after(function () {
-      sdkClient.disconnect();
+      emptyWalletClient.disconnect();
     });
   });
 
-  describe('Identities and Names', () => {
+  describe('Identities and Names', function () {
+    let identity;
+    let name;
+
     before(function () {
       // Switch to using received mnemonic for client
       sdkClient = new Dash.Client({
@@ -59,8 +66,6 @@ describe('Tutorial Code Tests', function suite() {
       });
     });
 
-    let identity;
-
     it('Should create an identity', async function () {
       identity = await tutorials.createIdentity(sdkClient);
       // console.log(identity.toJSON());
@@ -68,6 +73,9 @@ describe('Tutorial Code Tests', function suite() {
     }).timeout(300000);
 
     it('Should topup the identity', async function () {
+      if (typeof identity === 'undefined') {
+        this.skip();
+      }
       assert.isDefined(identity);
 
       const startBalance = identity.balance;
