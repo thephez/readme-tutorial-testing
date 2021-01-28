@@ -88,7 +88,6 @@ describe('Tutorial Code Tests', function suite() {
 
       name = `rt-${faker.name.firstName()}-${faker.random.number()}`;
       const registeredName = await tutorials.registerName(sdkClient, identity.id, name);
-      // console.log(registeredName.toJSON());
       console.log(`\tRegistered ${name}`);
       expect(registeredName.toJSON().label).to.equal(name);
     }).timeout(30000);
@@ -143,6 +142,7 @@ describe('Tutorial Code Tests', function suite() {
       assert.isDefined(identity);
       const contractTransition = await tutorials.registerContract(sdkClient, identity.id);
       contract = contractTransition.toJSON().dataContract;
+      console.log(`\tRegistered contract ${contract.$id}`);
 
       assert.containsAllKeys(contract.documents, ['note']);
     });
@@ -150,7 +150,6 @@ describe('Tutorial Code Tests', function suite() {
     it('Should retrieve the contract', async function () {
       assert.isDefined(contract);
       contractId = contract.$id;
-      console.log(contractId);
       const retrievedContract = await tutorials.retrieveContract(sdkClient, contractId);
 
       expect(retrievedContract.toJSON()).to.deep.equal(contract);
