@@ -34,3 +34,4 @@ jobs:
     - run: npm test
       env:
         CI: true
+        WALLET_MNEMONIC: ${{ secrets.WALLET_MNEMONIC }}
