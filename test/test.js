@@ -13,9 +13,10 @@ const mnemonic = process.env.WALLET_MNEMONIC;
 
 let emptyWalletClient;
 let sdkClient;
+let identity;
 
 describe('Tutorial Code Tests', function suite() {
-  this.timeout(10000);
+  this.timeout(15000);
 
   describe('Initial preparation', function () {
     before(function () {
@@ -45,7 +46,6 @@ describe('Tutorial Code Tests', function suite() {
   });
 
   describe('Identities and Names', function () {
-    let identity;
     let name;
 
     before(function () {
@@ -132,6 +132,25 @@ describe('Tutorial Code Tests', function suite() {
         console.error('No identity. Skip remaining tests.');
         this.skip();
       }
+    });
+  });
+
+  describe('Contracts and Documents', function () {
+    let contract;
+    let contractId;
+
+    it('Should create a contract', async function () {
+      const contractTransition = await tutorials.registerContract(sdkClient, identity.id);
+      contract = contractTransition.toJSON().dataContract;
+      console.log(contract);
+      assert.containsAllKeys(contract.documents, ['note']);
+    });
+
+    it('Should retrieve the contract', async function () {
+      contractId = contract.$id;
+      console.log(contractId);
+      const retrievedContract = await tutorials.retrieveContract(sdkClient, contractId);
+      expect(retrievedContract.toJSON()).to.equal(contract);
     });
 
     after(function () {
