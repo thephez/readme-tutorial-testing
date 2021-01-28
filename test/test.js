@@ -31,7 +31,7 @@ describe('Tutorial Code Tests', function suite() {
       expect(result).to.have.lengthOf(64);
     });
 
-    it('Should create a wallet and get an unused address without error', async function () {
+    xit('Should create a wallet and get an unused address without error', async function () {
       const result = await tutorials.getNewWalletInfo(emptyWalletClient);
       // console.log(result);
       assert.hasAllKeys(result, ['mnemonic', 'address']);
@@ -79,10 +79,17 @@ describe('Tutorial Code Tests', function suite() {
     it('Should retrieve all account identity IDs', async function () {
       const identityIds = await tutorials.retrieveIdentityIds(sdkClient);
       // console.log(identityIds);
-      // console.log(identity.toJSON());
       expect(identityIds).to.be.an('array').that.has.lengthOf.at.least(1);
       expect(identityIds).to.include(identity.toJSON().id);
     });
+
+    it('Should register a name', async function () {
+      name = `rt-${faker.name.firstName()}-${faker.random.number()}`;
+      const registeredName = await tutorials.registerName(sdkClient, identity.id, name);
+      // console.log(registeredName.toJSON());
+      console.log(`\tRegistered ${name}`);
+      expect(registeredName.toJSON().label).to.equal(name);
+    }).timeout(30000);
 
     after(function () {
       sdkClient.disconnect();
