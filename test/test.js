@@ -9,10 +9,8 @@ const dotenv = require('dotenv');
 const tutorials = require('../tutorials');
 
 dotenv.config();
-
-// const mnemonic = 'can remember inner harsh fringe student excite alone sense neutral people inflict';
 const mnemonic = process.env.WALLET_MNEMONIC;
-console.log(mnemonic);
+
 let emptyWalletClient;
 let sdkClient;
 
@@ -67,9 +65,6 @@ describe('Tutorial Code Tests', function suite() {
     }).timeout(300000);
 
     it('Should topup the identity', async function () {
-      if (typeof identity === 'undefined') {
-        this.skip();
-      }
       assert.isDefined(identity);
 
       const startBalance = identity.balance;
@@ -80,6 +75,7 @@ describe('Tutorial Code Tests', function suite() {
     }).timeout(20000);
 
     it('Should retrieve all account identity IDs', async function () {
+      assert.isDefined(identity);
       const identityIds = await tutorials.retrieveIdentityIds(sdkClient);
       // console.log(identityIds);
       expect(identityIds).to.be.an('array').that.has.lengthOf.at.least(1);
@@ -87,6 +83,7 @@ describe('Tutorial Code Tests', function suite() {
     });
 
     it('Should register a name', async function () {
+      assert.isDefined(identity);
       name = `rt-${faker.name.firstName()}-${faker.random.number()}`;
       const registeredName = await tutorials.registerName(sdkClient, identity.id, name);
       // console.log(registeredName.toJSON());
