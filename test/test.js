@@ -4,17 +4,8 @@
 /* eslint-disable no-undef */
 const Dash = require('dash');
 const { assert, expect } = require('chai');
-/* const { checkNetworkConnection } = require('../tutorials/checkNetworkConnection');
-const { getNewWalletInfo } = require('../tutorials/getNewWalletInfo');
-const { createIdentity } = require('../tutorials/identity/registerIdentity');
-const { topupIdentity } = require('../tutorials/identity/topupIdentity'); */
-// const Tutorial = require('../cTutorials');
-/* const {
-  checkNetworkConnection,
-  getNewWalletInfo,
-  createIdentity,
-  topupIdentity
-} = require('../Tutorials'); */
+const faker = require('faker');
+const dotenv = require('dotenv');
 const tutorials = require('../tutorials');
 
 const mnemonic = 'can remember inner harsh fringe student excite alone sense neutral people inflict';
