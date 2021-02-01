@@ -144,7 +144,7 @@ describe('Tutorial Code Tests', function suite() {
       if (checkForIdentity === true) {
         assert.isDefined(identity);
         if (identity === 'undefined') {
-          console.error('No identity. Skip remaining tests.');
+          expect.fail('Identity undefined. Test cannot run.');
           this.skip();
         }
       }
