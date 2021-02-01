@@ -14,4 +14,5 @@ module.exports = {
   ...require('./contract/retrieveContract'),
   ...require('./document/submitDocument'),
   ...require('./document/getDocument'),
+  ...require('./document/updateDocument'),
 };

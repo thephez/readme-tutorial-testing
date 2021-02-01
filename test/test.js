@@ -157,6 +157,7 @@ describe('Tutorial Code Tests', function suite() {
     let retrievedContract;
     let documentId;
     const noteMessage = `Tutorial CI Test @ ${new Date().toUTCString()}`;
+    const updatedNoteMessage = `${noteMessage} (updated)`;
 
     it('Should create a contract', async function () {
       assert.isDefined(identity);
@@ -198,12 +199,33 @@ describe('Tutorial Code Tests', function suite() {
     it('Should get the document', async function () {
       assert.isDefined(contract);
       const documents = await tutorials.getDocuments(sdkClient);
-      console.log(documents);
+      // console.log(documents);
 
       expect(documents).to.have.lengthOf(1);
       expect(documents[0].getData().message).to.deep.equal(noteMessage);
     });
 
+    it('Should update the document', async function () {
+      assert.isDefined(contract);
+      console.log(documentId);
+      const documentBatchTransition = await tutorials.updateNoteDocument(
+        sdkClient,
+        identity.id,
+        documentId,
+        updatedNoteMessage,
+      );
+
+      // console.log(documentBatchTransition);
+      expect(documentBatchTransition).to.be.an('object');
+    });
+
+    it('Should get the updated document', async function () {
+      assert.isDefined(contract);
+      const documents = await tutorials.getDocuments(sdkClient);
+      // console.log(documents);
+
+      expect(documents).to.have.lengthOf(1);
+      expect(documents[0].getData().message).to.deep.equal(updatedNoteMessage);
     });
 
     after(function () {
