@@ -39,7 +39,7 @@ describe('Tutorial Code Tests', function suite() {
       const result = await tutorials.getNewWalletInfo(emptyWalletClient);
       // console.log(result);
       assert.hasAllKeys(result, ['mnemonic', 'address']);
-      expect(result.mnemonic.split(' ')).to.have.lengthOf(12);
+      expect(result.mnemonic.split(' '), 'mnemonic words').to.have.lengthOf(12);
     }).timeout(300000);
 
     after(function () {
@@ -69,8 +69,8 @@ describe('Tutorial Code Tests', function suite() {
       const account = await sdkClient.getWalletAccount();
       const balance = await account.getTotalBalance();
       console.log(`\tCurrent balance: ${balance}`);
-      expect(balance).to.be.greaterThan(0);
-    }).timeout(300000);
+      expect(balance, 'account balance').to.be.greaterThan(0);
+    }).timeout(360000);
 
     it('Should create an identity', async function () {
       checkForIdentity = true;
@@ -201,13 +201,12 @@ describe('Tutorial Code Tests', function suite() {
       const documents = await tutorials.getDocuments(sdkClient);
       // console.log(documents);
 
-      expect(documents).to.have.lengthOf(1);
+      expect(documents, 'number of documents').to.have.lengthOf(1);
       expect(documents[0].getData().message).to.deep.equal(noteMessage);
     });
 
     it('Should update the document', async function () {
       assert.isDefined(contract);
-      console.log(documentId);
       const documentBatchTransition = await tutorials.updateNoteDocument(
         sdkClient,
         identity.id,
@@ -224,7 +223,7 @@ describe('Tutorial Code Tests', function suite() {
       const documents = await tutorials.getDocuments(sdkClient);
       // console.log(documents);
 
-      expect(documents).to.have.lengthOf(1);
+      expect(documents, 'number of documents').to.have.lengthOf(1);
       expect(documents[0].getData().message).to.deep.equal(updatedNoteMessage);
     });
 
