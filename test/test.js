@@ -3,6 +3,8 @@
 /* eslint-disable prefer-arrow-callback */
 /* eslint-disable no-undef */
 const Dash = require('dash');
+const DataContract = require('@dashevo/dpp/lib/dataContract/DataContract');
+const Document = require('@dashevo/dpp/lib/document/Document');
 const Identifier = require('@dashevo/dpp/lib/Identifier');
 const Identity = require('@dashevo/dpp/lib/identity/Identity');
 const { assert, expect } = require('chai');
@@ -98,7 +100,7 @@ describe('Tutorial Code Tests', function suite() {
       const startBalance = identity.balance;
       const identityToppedUp = await tutorials.topupIdentity(sdkClient, identity.id);
 
-      expect(identityToppedUp.toJSON()).to.include.all.keys('id', 'publicKeys', 'balance', 'revision');
+      expect(identityToppedUp).to.be.instanceOf(Identity);
       expect(identityToppedUp.balance).to.not.equal(startBalance);
     });
 
@@ -176,6 +178,7 @@ describe('Tutorial Code Tests', function suite() {
       contractId = contract.$id;
       retrievedContract = await tutorials.retrieveContract(sdkClient, contractId);
 
+      expect(retrievedContract).to.be.instanceOf(DataContract);
       expect(retrievedContract.toJSON()).to.deep.equal(contract);
 
       // Manually add contract with name "tutorialContract"
@@ -205,6 +208,7 @@ describe('Tutorial Code Tests', function suite() {
       // console.log(documents);
 
       expect(documents, 'number of documents').to.have.lengthOf(1);
+      expect(documents[0]).to.be.instanceOf(Document);
       expect(documents[0].getData().message).to.deep.equal(noteMessage);
     });
 
@@ -227,6 +231,7 @@ describe('Tutorial Code Tests', function suite() {
       // console.log(documents);
 
       expect(documents, 'number of documents').to.have.lengthOf(1);
+      expect(documents[0]).to.be.instanceOf(Document);
       expect(documents[0].getData().message).to.deep.equal(updatedNoteMessage);
     });
 
