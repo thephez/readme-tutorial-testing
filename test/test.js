@@ -14,6 +14,7 @@ const mnemonic = process.env.WALLET_MNEMONIC;
 let emptyWalletClient;
 let sdkClient;
 let identity;
+let checkForIdentity = false;
 
 describe('Tutorial Code Tests', function suite() {
   this.timeout(15000);
@@ -58,11 +59,19 @@ describe('Tutorial Code Tests', function suite() {
       });
     });
 
+    it('Client wallet should have a balance > 0', async function () {
+      const account = await sdkClient.getWalletAccount();
+      const balance = await account.getTotalBalance();
+      console.log('Current balance', balance);
+      expect(balance).to.be.greaterThan(0);
+    }).timeout(300000);
+
     it('Should create an identity', async function () {
+      checkForIdentity = true;
       identity = await tutorials.createIdentity(sdkClient);
       // console.log(identity.toJSON());
       assert.containsAllKeys(identity.toJSON(), ['id', 'publicKeys', 'balance', 'revision']);
-    }).timeout(300000);
+    }).timeout(20000);
 
     it('Should topup the identity', async function () {
       assert.isDefined(identity);
@@ -126,10 +135,12 @@ describe('Tutorial Code Tests', function suite() {
     });
 
     afterEach(function () {
-      assert.isDefined(identity);
-      if (identity === 'undefined') {
-        console.error('No identity. Skip remaining tests.');
-        this.skip();
+      if (checkForIdentity === true) {
+        assert.isDefined(identity);
+        if (identity === 'undefined') {
+          console.error('No identity. Skip remaining tests.');
+          this.skip();
+        }
       }
     });
   });
