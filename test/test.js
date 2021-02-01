@@ -2,6 +2,7 @@
 /* eslint-disable func-names */
 /* eslint-disable prefer-arrow-callback */
 /* eslint-disable no-undef */
+const Identifier = require('@dashevo/dpp/lib/Identifier');
 const Dash = require('dash');
 const { assert, expect } = require('chai');
 const faker = require('faker');
@@ -148,6 +149,9 @@ describe('Tutorial Code Tests', function suite() {
   describe('Contracts and Documents', function () {
     let contract;
     let contractId;
+    let retrievedContract;
+    let documentId;
+    const noteMessage = `Tutorial CI Test @ ${new Date().toUTCString()}`;
 
     it('Should create a contract', async function () {
       assert.isDefined(identity);
@@ -161,9 +165,40 @@ describe('Tutorial Code Tests', function suite() {
     it('Should retrieve the contract', async function () {
       assert.isDefined(contract);
       contractId = contract.$id;
-      const retrievedContract = await tutorials.retrieveContract(sdkClient, contractId);
+      retrievedContract = await tutorials.retrieveContract(sdkClient, contractId);
 
       expect(retrievedContract.toJSON()).to.deep.equal(contract);
+
+      // Manually add contract with name "tutorialContract"
+      sdkClient.apps.apps.tutorialContract = {
+        contractId: Identifier.from(contractId),
+        retrievedContract,
+      };
+    });
+
+    it('Should submit a new document', async function () {
+      assert.isDefined(contract);
+      // console.log(sdkClient.getApps());
+      const documentBatchTransition = await tutorials.submitNoteDocument(
+        sdkClient,
+        identity.id,
+        noteMessage,
+      );
+      // console.log(documentBatchTransition);
+
+      documentId = documentBatchTransition.transitions[0].id;
+      expect(documentBatchTransition).to.be.an('object');
+    }).timeout();
+
+    it('Should get the document', async function () {
+      assert.isDefined(contract);
+      const documents = await tutorials.getDocuments(sdkClient);
+      console.log(documents);
+
+      expect(documents).to.have.lengthOf(1);
+      expect(documents[0].getData().message).to.deep.equal(noteMessage);
+    });
+
     });
 
     after(function () {
