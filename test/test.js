@@ -86,7 +86,7 @@ describe('Tutorial Code Tests', function suite() {
       identity = await tutorials.createIdentity(sdkClient);
       // console.log(identity.toJSON());
       assert.containsAllKeys(identity.toJSON(), ['id', 'publicKeys', 'balance', 'revision']);
-    }).timeout(45000);
+    }).timeout(60000);
 
     it('Should topup the identity', async function () {
       // assert.isDefined(identity);
