@@ -2,8 +2,9 @@
 /* eslint-disable func-names */
 /* eslint-disable prefer-arrow-callback */
 /* eslint-disable no-undef */
-const Identifier = require('@dashevo/dpp/lib/Identifier');
 const Dash = require('dash');
+const Identifier = require('@dashevo/dpp/lib/Identifier');
+const Identity = require('@dashevo/dpp/lib/identity/Identity');
 const { assert, expect } = require('chai');
 const faker = require('faker');
 const dotenv = require('dotenv');
@@ -14,6 +15,7 @@ const mnemonic = process.env.WALLET_MNEMONIC;
 
 let emptyWalletClient;
 let sdkClient;
+let account;
 let identity;
 let checkForIdentity = false;
 
@@ -75,18 +77,20 @@ describe('Tutorial Code Tests', function suite() {
     });
 
     it('Client wallet should have a balance > 0', async function () {
-      const account = await sdkClient.getWalletAccount();
+      account = await sdkClient.getWalletAccount();
       const balance = await account.getTotalBalance();
       console.log(`\tCurrent balance: ${balance}`);
       expect(balance, 'account balance').to.be.greaterThan(0);
-    }).timeout(360000);
+    }).timeout(600000);
 
     it('Should create an identity', async function () {
       checkForIdentity = true;
+      assert.isDefined(account);
       identity = await tutorials.createIdentity(sdkClient);
-      // console.log(identity.toJSON());
-      assert.containsAllKeys(identity.toJSON(), ['id', 'publicKeys', 'balance', 'revision']);
-    }).timeout(60000);
+
+      expect(identity).to.be.instanceOf(Identity);
+      // assert.containsAllKeys(identity.toJSON(), ['id', 'publicKeys', 'balance', 'revision']);
+    }).timeout(120000);
 
     it('Should topup the identity', async function () {
       // assert.isDefined(identity);
