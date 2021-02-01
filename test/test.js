@@ -18,7 +18,7 @@ let identity;
 let checkForIdentity = false;
 
 describe('Tutorial Code Tests', function suite() {
-  this.timeout(15000);
+  this.timeout(30000);
 
   describe('Initial preparation', function () {
     before(function () {
@@ -60,10 +60,15 @@ describe('Tutorial Code Tests', function suite() {
       });
     });
 
+    it('Client should connect without error', async function () {
+      const result = await tutorials.checkNetworkConnection(sdkClient);
+      expect(result).to.have.lengthOf(64);
+    });
+
     it('Client wallet should have a balance > 0', async function () {
       const account = await sdkClient.getWalletAccount();
       const balance = await account.getTotalBalance();
-      console.log('Current balance', balance);
+      console.log(`\tCurrent balance: ${balance}`);
       expect(balance).to.be.greaterThan(0);
     }).timeout(300000);
 
@@ -82,7 +87,7 @@ describe('Tutorial Code Tests', function suite() {
 
       expect(identityToppedUp.toJSON()).to.include.all.keys('id', 'publicKeys', 'balance', 'revision');
       expect(identityToppedUp.balance).to.not.equal(startBalance);
-    }).timeout(30000);
+    });
 
     it('Should retrieve all account identity IDs', async function () {
       assert.isDefined(identity);
@@ -100,7 +105,7 @@ describe('Tutorial Code Tests', function suite() {
       const registeredName = await tutorials.registerName(sdkClient, identity.id, name);
       console.log(`\tRegistered ${name}`);
       expect(registeredName.toJSON().label).to.equal(name);
-    }).timeout(30000);
+    });
 
     xit('Should register an alias', async function () {
       assert.isDefined(identity);
@@ -108,7 +113,7 @@ describe('Tutorial Code Tests', function suite() {
       console.log(alias);
       const registeredAlias = await tutorials.registerName(sdkClient, identity.id, alias);
       expect(registeredAlias.toJSON().label).to.equal(alias);
-    }).timeout(30000);
+    }).timeout(45000);
 
     it('Should retrieve a name by name', async function () {
       assert.isDefined(identity);
