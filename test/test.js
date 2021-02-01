@@ -60,6 +60,15 @@ describe('Tutorial Code Tests', function suite() {
       });
     });
 
+    beforeEach(function () {
+      if (checkForIdentity === true) {
+        if (identity === 'undefined') {
+          console.log('\tIdentity undefined. Skipping test');
+          this.skip();
+        }
+      }
+    });
+
     it('Client should connect without error', async function () {
       const result = await tutorials.checkNetworkConnection(sdkClient);
       expect(result).to.have.lengthOf(64);
@@ -80,7 +89,7 @@ describe('Tutorial Code Tests', function suite() {
     }).timeout(45000);
 
     it('Should topup the identity', async function () {
-      assert.isDefined(identity);
+      // assert.isDefined(identity);
 
       const startBalance = identity.balance;
       const identityToppedUp = await tutorials.topupIdentity(sdkClient, identity.id);
@@ -90,7 +99,7 @@ describe('Tutorial Code Tests', function suite() {
     });
 
     it('Should retrieve all account identity IDs', async function () {
-      assert.isDefined(identity);
+      // assert.isDefined(identity);
 
       const identityIds = await tutorials.retrieveIdentityIds(sdkClient);
       // console.log(identityIds);
@@ -99,7 +108,7 @@ describe('Tutorial Code Tests', function suite() {
     });
 
     it('Should register a name', async function () {
-      assert.isDefined(identity);
+      // assert.isDefined(identity);
 
       name = `rt-${faker.name.firstName()}-${faker.random.number()}`;
       const registeredName = await tutorials.registerName(sdkClient, identity.id, name);
@@ -108,7 +117,7 @@ describe('Tutorial Code Tests', function suite() {
     });
 
     xit('Should register an alias', async function () {
-      assert.isDefined(identity);
+      // assert.isDefined(identity);
       const alias = `${name}-alias`;
       console.log(alias);
       const registeredAlias = await tutorials.registerName(sdkClient, identity.id, alias);
@@ -116,14 +125,14 @@ describe('Tutorial Code Tests', function suite() {
     }).timeout(45000);
 
     it('Should retrieve a name by name', async function () {
-      assert.isDefined(identity);
+      // assert.isDefined(identity);
       const retrievedName = await tutorials.retrieveNameByName(sdkClient, name);
 
       expect(retrievedName.toJSON().label).to.equal(name);
     });
 
     it('Should retrieve a name by record', async function () {
-      assert.isDefined(identity);
+      // assert.isDefined(identity);
       const retrievedName = await tutorials.retrieveNameByRecord(sdkClient, identity.id);
 
       expect(retrievedName).to.be.an('array').that.has.lengthOf.at.least(1);
@@ -132,22 +141,12 @@ describe('Tutorial Code Tests', function suite() {
     });
 
     it('Should retrieve a name by search', async function () {
-      assert.isDefined(identity);
+      // assert.isDefined(identity);
       const retrievedName = await tutorials.retrieveNameBySearch(sdkClient, name.toLowerCase());
 
       expect(retrievedName).to.be.an('array').that.has.lengthOf.at.least(1);
       expect(retrievedName[0]).to.be.an('object');
       expect(retrievedName[0].toJSON().label).to.equal(name);
-    });
-
-    afterEach(function () {
-      if (checkForIdentity === true) {
-        assert.isDefined(identity);
-        if (identity === 'undefined') {
-          expect.fail('Identity undefined. Test cannot run.');
-          this.skip();
-        }
-      }
     });
   });
 
