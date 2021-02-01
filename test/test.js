@@ -71,7 +71,7 @@ describe('Tutorial Code Tests', function suite() {
       identity = await tutorials.createIdentity(sdkClient);
       // console.log(identity.toJSON());
       assert.containsAllKeys(identity.toJSON(), ['id', 'publicKeys', 'balance', 'revision']);
-    }).timeout(20000);
+    }).timeout(45000);
 
     it('Should topup the identity', async function () {
       assert.isDefined(identity);
@@ -81,7 +81,7 @@ describe('Tutorial Code Tests', function suite() {
 
       expect(identityToppedUp.toJSON()).to.include.all.keys('id', 'publicKeys', 'balance', 'revision');
       expect(identityToppedUp.balance).to.not.equal(startBalance);
-    }).timeout(20000);
+    }).timeout(30000);
 
     it('Should retrieve all account identity IDs', async function () {
       assert.isDefined(identity);
