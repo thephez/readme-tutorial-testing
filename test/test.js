@@ -228,6 +228,26 @@ describe('Tutorial Code Tests', function suite() {
       expect(documents[0].getData().message).to.deep.equal(updatedNoteMessage);
     });
 
+    it('Should delete the document', async function () {
+      assert.isDefined(contract);
+      const documentBatchTransition = await tutorials.deleteNoteDocument(
+        sdkClient,
+        identity.id,
+        documentId,
+      );
+
+      // console.log(documentBatchTransition);
+      expect(documentBatchTransition).to.be.an('object');
+    });
+
+    it('Should retrieve no documents', async function () {
+      assert.isDefined(contract);
+      const documents = await tutorials.getDocuments(sdkClient);
+      // console.log(documents);
+
+      expect(documents, 'number of documents').to.have.lengthOf(0);
+    });
+
     after(function () {
       sdkClient.disconnect();
     });

@@ -15,4 +15,5 @@ module.exports = {
   ...require('./document/submitDocument'),
   ...require('./document/getDocument'),
   ...require('./document/updateDocument'),
+  ...require('./document/deleteDocument'),
 };
