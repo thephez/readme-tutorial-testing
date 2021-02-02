@@ -21,8 +21,8 @@ let account;
 let identity;
 let checkForIdentity = false;
 
-describe('Tutorial Code Tests', function suite() {
-  this.timeout(30000);
+describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function suite() {
+  this.timeout(35000);
 
   describe('Initial preparation', function () {
     before(function () {
@@ -89,7 +89,7 @@ describe('Tutorial Code Tests', function suite() {
       checkForIdentity = true;
       assert.isDefined(account);
       identity = await tutorials.createIdentity(sdkClient);
-
+      console.log(`\tRegistered identity: ${identity.id}`);
       expect(identity).to.be.instanceOf(Identity);
       // assert.containsAllKeys(identity.toJSON(), ['id', 'publicKeys', 'balance', 'revision']);
     }).timeout(120000);
@@ -122,13 +122,13 @@ describe('Tutorial Code Tests', function suite() {
       expect(registeredName.toJSON().label).to.equal(name);
     });
 
-    xit('Should register an alias', async function () {
+    it('Should register an alias', async function () {
       // assert.isDefined(identity);
       const alias = `${name}-alias`;
-      console.log(alias);
-      const registeredAlias = await tutorials.registerName(sdkClient, identity.id, alias);
+
+      const registeredAlias = await tutorials.registerAlias(sdkClient, identity.id, alias);
       expect(registeredAlias.toJSON().label).to.equal(alias);
-    }).timeout(45000);
+    });
 
     it('Should retrieve a name by name', async function () {
       // assert.isDefined(identity);

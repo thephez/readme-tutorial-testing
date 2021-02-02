@@ -9,8 +9,8 @@ const client = new Dash.Client(clientOpts); */
 
 async function registerAlias(client, identityId, alias) {
   const platform = client.platform;
+
   const identity = await platform.identities.get(identityId);
-  console.log(`Register alias for ${identityId}\n${identity}`);
   const aliasRegistration = await platform.names.register(
     `${alias}.dash`,
     { dashAliasIdentityId: identity.getId() },
