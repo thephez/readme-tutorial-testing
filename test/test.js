@@ -61,6 +61,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
           mnemonic,
         },
         // dapiAddresses: ['127.0.0.1:3000'],
+        dapiAddresses: ['54.185.249.226:3000'],
       });
     });
 
