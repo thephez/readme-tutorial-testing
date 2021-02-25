@@ -9,7 +9,7 @@ const client = new Dash.Client({
 
 async function retrieveAccountIdentityIds(client) {
   const account = await client.getWalletAccount();
-  return account.getIdentityIds();
+  return account.identities.getIdentityIds();
 }
 
 /* retrieveIdentityIds()
