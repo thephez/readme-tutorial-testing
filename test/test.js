@@ -37,6 +37,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         network,
         wallet: {
           mnemonic: null,
+          offlineMode: true,
         },
         dapiAddresses: [selectedNode],
       });
@@ -47,7 +48,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(result).to.have.lengthOf(64);
     });
 
-    xit('Should create a wallet and get an unused address without error', async function () {
+    it('Should create a wallet and get an unused address without error', async function () {
       const result = await tutorials.getNewWalletInfo(emptyWalletClient);
       // console.log(result);
       assert.hasAllKeys(result, ['mnemonic', 'address']);
