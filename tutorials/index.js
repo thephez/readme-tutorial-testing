@@ -16,4 +16,6 @@ module.exports = {
   ...require('./document/getDocument'),
   ...require('./document/updateDocument'),
   ...require('./document/deleteDocument'),
+  ...require('./sendFunds'),
+  ...require('./dapiClientMethods'),
 };

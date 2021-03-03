@@ -275,6 +275,24 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
       expect(documents, 'number of documents').to.have.lengthOf(0);
     });
+  });
+
+  describe('Misc', function () {
+    it('Should send a transaction', async function () {
+      const txid = await tutorials.sendFunds(sdkClient);
+      console.log(`\tTransaction broadcast: ${txid}`);
+      expect(txid).to.have.a.lengthOf(64);
+    });
+
+    it('Should execute DAPI client methods and return Dash Core status', async function () {
+      const status = await tutorials.dapiClientMethods(sdkClient);
+      // console.dir(status);
+      expect(status).to.include.all.keys(
+        'coreVersion',
+        'protocolVersion',
+        'blocks',
+      );
+    });
 
     after(function () {
       sdkClient.disconnect();
