@@ -137,7 +137,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     it('Should register a name', async function () {
       // assert.isDefined(identity);
 
-      name = `rt-${faker.name.firstName()}-${faker.random.number()}`;
+      name = `RT-${faker.name.firstName()}-${faker.random.number()}`;
       const registeredName = await tutorials.registerName(sdkClient, identity.id, name);
       console.log(`\tRegistered ${name}`);
       expect(registeredName.toJSON().label).to.equal(name);
@@ -169,7 +169,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
     it('Should retrieve a name by search', async function () {
       // assert.isDefined(identity);
-      const retrievedName = await tutorials.retrieveNameBySearch(sdkClient, name.toLowerCase());
+      const retrievedName = await tutorials.retrieveNameBySearch(sdkClient, name);
 
       expect(retrievedName).to.be.an('array').that.has.lengthOf.at.least(1);
       expect(retrievedName[0]).to.be.an('object');
