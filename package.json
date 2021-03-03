@@ -11,7 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "@dashevo/dpp": "^0.18.0",
-    "dash": "^3.18.0"
+    "dash": "^3.18.1"
   },
   "devDependencies": {
     "chai": "^4.3.1",
