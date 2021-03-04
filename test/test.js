@@ -209,7 +209,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       };
     });
 
-    it('Should submit a new document', async function () {
+    it('Should submit a new document to be updated then deleted', async function () {
       assert.isDefined(contract);
       // console.log(sdkClient.getApps());
       const documentBatchTransition = await tutorials.submitNoteDocument(
@@ -275,6 +275,18 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
       expect(documents, 'number of documents').to.have.lengthOf(0);
     });
+
+    it('Should submit a new document', async function () {
+      assert.isDefined(contract);
+      const documentBatchTransition = await tutorials.submitNoteDocument(
+        sdkClient,
+        identity.id,
+        noteMessage,
+      );
+
+      documentId = documentBatchTransition.transitions[0].id;
+      expect(documentBatchTransition).to.be.an('object');
+    }).timeout();
   });
 
   describe('Misc', function () {
