@@ -10,13 +10,13 @@
   "author": "thephez",
   "license": "MIT",
   "dependencies": {
-    "@dashevo/dpp": "^0.17.0",
-    "dash": "^3.17.0"
+    "@dashevo/dpp": "^0.18.0",
+    "dash": "^3.18.1"
   },
   "devDependencies": {
-    "chai": "^4.3.0",
+    "chai": "^4.3.1",
     "dotenv": "^8.2.0",
-    "eslint": "^7.20.0",
+    "eslint": "^7.21.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "faker": "^5.4.0",
