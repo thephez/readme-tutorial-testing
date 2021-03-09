@@ -12,7 +12,12 @@ npm install
 
 ## Usage
 
-```
+Create an `.env` file that sets `WALLET_MNEMONIC` to a valid wallet mnemonic that you will fund.
+See [.env.example](./.env.example) for an example `.env` file.
+
+Once the wallet has been funded, run the following command:
+
+``` shell
 npm run test
 ```
 
