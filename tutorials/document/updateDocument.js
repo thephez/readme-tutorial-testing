@@ -13,7 +13,7 @@ const clientOpts = {
 const client = new Dash.Client(clientOpts); */
 
 async function updateNoteDocument(client, identityId, documentId, message) {
-  const platform = client.platform;
+  const { platform } = client;
   const identity = await platform.identities.get(identityId);
   // const documentId = 'an existing document ID goes here';
 
