@@ -8,7 +8,7 @@ const clientOpts = {
 const client = new Dash.Client(clientOpts); */
 
 async function registerContract(client, identityId) {
-  const platform = client.platform;
+  const { platform } = client;
   const identity = await platform.identities.get(identityId);
 
   const contractDocuments = {
