@@ -116,6 +116,11 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       // assert.containsAllKeys(identity.toJSON(), ['id', 'publicKeys', 'balance', 'revision']);
     }).timeout(120000);
 
+    it('Should retrieve the identity', async function () {
+      const retrievedIdentity = await tutorials.retrieveIdentity(sdkClient, identity.id);
+      expect(retrievedIdentity).to.be.instanceOf(Identity);
+    });
+
     it('Should topup the identity', async function () {
       // assert.isDefined(identity);
 
