@@ -8,7 +8,7 @@ const clientOpts = {
 const client = new Dash.Client(clientOpts); */
 
 async function registerName(client, identityId, name) {
-  const platform = client.platform;
+  const { platform } = client;
 
   const identity = await platform.identities.get(identityId);
   const nameRegistration = await platform.names.register(
