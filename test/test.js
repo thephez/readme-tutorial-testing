@@ -144,7 +144,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     it('Should register a name', async function () {
       // assert.isDefined(identity);
 
-      name = `RT-${faker.name.firstName()}-${faker.random.number()}`;
+      name = `RT-${faker.name.firstName()}-${faker.datatype.number()}`;
       const registeredName = await tutorials.registerName(sdkClient, identity.id, name);
       console.log(`\tRegistered ${name}`);
       expect(registeredName.toJSON().label).to.equal(name);
