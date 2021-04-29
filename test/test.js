@@ -306,10 +306,13 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     it('Should execute DAPI client methods and return Dash Core status', async function () {
       const status = await tutorials.dapiClientMethods(sdkClient);
       // console.dir(status);
-      expect(status).to.include.all.keys(
-        'coreVersion',
-        'protocolVersion',
-        'blocks',
+      expect(status.version).to.include.all.keys(
+        'software',
+        'protocol',
+      );
+      expect(status.chain).to.include.all.keys(
+        'name',
+        'blocksCount',
       );
     });
 
