@@ -80,7 +80,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         // Override DPNS contract ID (for testing against devnets)
         apps: {
           dpns: {
-            contractId: 'F1erbGMTrcLjvPhY6QoNe81Nz5r4YTaEkEHTpGmffRnj',
+            contractId: 'CgLcubqzRCvYkHyWKK2bQjqA3P1P8AHVPyJf61G9MRgK',
           },
         },
         dapiAddresses: [selectedNode],
