@@ -78,11 +78,11 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
           },
         },
         // Override DPNS contract ID (for testing against devnets)
-        apps: {
-          dpns: {
-            contractId: '76wgB8KBxLGhtEzn4Hp5zgheyzzpHYvfcWGLs69B2ahq',
-          },
-        },
+        // apps: {
+        //   dpns: {
+        //     contractId: '76wgB8KBxLGhtEzn4Hp5zgheyzzpHYvfcWGLs69B2ahq',
+        //   },
+        // },
         dapiAddresses: [selectedNode],
       });
     });
