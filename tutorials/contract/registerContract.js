@@ -13,6 +13,7 @@ async function registerContract(client, identityId) {
 
   const contractDocuments = {
     note: {
+      type: 'object',
       properties: {
         message: {
           type: 'string',
