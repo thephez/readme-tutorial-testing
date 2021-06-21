@@ -10,8 +10,8 @@
   "author": "thephez",
   "license": "MIT",
   "dependencies": {
-    "@dashevo/dpp": "~0.19.1",
-    "dash": "^3.19.1"
+    "@dashevo/dpp": "^0.20.0-dev.2",
+    "dash": "^3.20.0-dev.2"
   },
   "devDependencies": {
     "chai": "^4.3.4",
