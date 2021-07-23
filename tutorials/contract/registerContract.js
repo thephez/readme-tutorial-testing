@@ -27,6 +27,7 @@ async function registerContract(client, identityId) {
   /* console.dir({ contract }); */
 
   // Make sure contract passes validation checks
+  await platform.dpp.initialize();
   const validationResult = await platform.dpp.dataContract.validate(contract);
 
   if (validationResult.isValid()) {
