@@ -6,22 +6,24 @@ const clientOpts = {
   },
 };
 const client = new Dash.Client(clientOpts); */
+const minimalContractDocumentSchema = require('./contracts/contractMinimal.json');
 
 async function registerContract(client, identityId) {
   const { platform } = client;
   const identity = await platform.identities.get(identityId);
 
-  const contractDocuments = {
-    note: {
-      type: 'object',
-      properties: {
-        message: {
-          type: 'string',
-        },
-      },
-      additionalProperties: false,
-    },
-  };
+  // const contractDocuments = {
+  //   note: {
+  //     type: 'object',
+  //     properties: {
+  //       message: {
+  //         type: 'string',
+  //       },
+  //     },
+  //     additionalProperties: false,
+  //   },
+  // };
+  const contractDocuments = minimalContractDocumentSchema;
 
   const contract = await platform.contracts.create(contractDocuments, identity);
   /* console.dir({ contract }); */
