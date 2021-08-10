@@ -1,0 +1,14 @@
+{
+  "block": {
+    "type": "object",
+     "properties": {
+       "hash": {
+         "type": "array",
+         "byteArray": true,
+         "maxItems": 64,
+         "description": "Store block hashes"
+       }
+     },
+     "additionalProperties": false
+   }
+ }

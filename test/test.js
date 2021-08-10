@@ -16,6 +16,7 @@ const indexedContractDocumentSchema = require('../tutorials/contract/contracts/c
 const timestampContractDocumentSchema = require('../tutorials/contract/contracts/contractWithTimestamps.json');
 const refContractDocumentSchema = require('../tutorials/contract/contracts/contractWithRef.json');
 const refContractDefinitions = require('../tutorials/contract/contracts/contractWithRefDefinitions.json');
+const binaryContractDocumentSchema = require('../tutorials/contract/contracts/contractWithBinaryData.json');
 
 dotenv.config();
 const mnemonic = process.env.WALLET_MNEMONIC;
@@ -331,6 +332,16 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
         expect(refContract.$defs).to.be.an('object');
         expect(refContract.$defs).to.have.property('address');
+      });
+
+      it('Should create a contract with binary data', async function () {
+        assert.isDefined(identity);
+        // eslint-disable-next-line max-len
+        const contractTransition = await tutorials.registerContractProvided(sdkClient, identity.id, binaryContractDocumentSchema);
+        const binaryContract = contractTransition.toJSON().dataContract;
+        console.log(`\tRegistered contract with binary data: ${binaryContract.$id}`);
+
+        expect(binaryContract.documents.block.properties.hash).to.have.property('byteArray');
       });
     });
   });
