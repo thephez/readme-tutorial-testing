@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* const Dash = require('dash');
 
 const clientOpts = {
