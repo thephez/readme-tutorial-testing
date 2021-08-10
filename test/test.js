@@ -197,7 +197,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     it('Should create a minimal contract', async function () {
       assert.isDefined(identity);
       // eslint-disable-next-line max-len
-      const contractTransition = await tutorials.registerContractProvided(sdkClient, minimalContractDocumentSchema, identity.id);
+      const contractTransition = await tutorials.registerContractProvided(sdkClient, identity.id, minimalContractDocumentSchema);
       contract = contractTransition.toJSON().dataContract;
       console.log(`\tRegistered minimal contract ${contract.$id}`);
 
@@ -298,14 +298,16 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(documentBatchTransition).to.be.an('object');
     }).timeout();
 
-    it('Should create a contract with indices', async function () {
-      assert.isDefined(identity);
-      // eslint-disable-next-line max-len
-      const contractTransition = await tutorials.registerContractProvided(sdkClient, indexedContractDocumentSchema, identity.id);
-      const indexedContract = contractTransition.toJSON().dataContract;
-      console.log(`\tRegistered contract with indices ${indexedContract.$id}`);
+    describe('Additional Contracts', function () {
+      it('Should create a contract with indices', async function () {
+        assert.isDefined(identity);
+        // eslint-disable-next-line max-len
+        const contractTransition = await tutorials.registerContractProvided(sdkClient, identity.id, indexedContractDocumentSchema);
+        const indexedContract = contractTransition.toJSON().dataContract;
+        console.log(`\tRegistered contract with indices ${indexedContract.$id}`);
 
-      assert.containsAllKeys(indexedContract.documents.note, ['indices']);
+        assert.containsAllKeys(indexedContract.documents.note, ['indices']);
+      });
     });
   });
 
