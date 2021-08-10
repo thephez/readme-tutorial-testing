@@ -11,6 +11,7 @@ const { assert, expect } = require('chai');
 const faker = require('faker');
 const dotenv = require('dotenv');
 const tutorials = require('../tutorials');
+const minimalContractDocumentSchema = require('../tutorials/contract/contracts/contractMinimal.json');
 
 dotenv.config();
 const mnemonic = process.env.WALLET_MNEMONIC;
@@ -192,11 +193,12 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     const noteMessage = `Tutorial CI Test @ ${new Date().toUTCString()}`;
     const updatedNoteMessage = `${noteMessage} (updated)`;
 
-    it('Should create a contract', async function () {
+    it('Should create a minimal contract', async function () {
       assert.isDefined(identity);
-      const contractTransition = await tutorials.registerContract(sdkClient, identity.id);
+      // eslint-disable-next-line max-len
+      const contractTransition = await tutorials.registerContractProvided(sdkClient, minimalContractDocumentSchema, identity.id);
       contract = contractTransition.toJSON().dataContract;
-      console.log(`\tRegistered contract ${contract.$id}`);
+      console.log(`\tRegistered minimal contract ${contract.$id}`);
 
       assert.containsAllKeys(contract.documents, ['note']);
     });
