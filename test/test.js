@@ -203,7 +203,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       // eslint-disable-next-line max-len
       const contractTransition = await tutorials.registerContractProvided(sdkClient, identity.id, minimalContractDocumentSchema);
       contract = contractTransition.toJSON().dataContract;
-      console.log(`\tRegistered minimal contract ${contract.$id}`);
+      console.log(`\tRegistered minimal contract: ${contract.$id}`);
 
       assert.containsAllKeys(contract.documents, ['note']);
     });
@@ -308,7 +308,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         // eslint-disable-next-line max-len
         const contractTransition = await tutorials.registerContractProvided(sdkClient, identity.id, indexedContractDocumentSchema);
         const indexedContract = contractTransition.toJSON().dataContract;
-        console.log(`\tRegistered contract with indices ${indexedContract.$id}`);
+        console.log(`\tRegistered contract with indices: ${indexedContract.$id}`);
 
         assert.containsAllKeys(indexedContract.documents.note, ['indices']);
       });
@@ -318,7 +318,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         // eslint-disable-next-line max-len
         const contractTransition = await tutorials.registerContractProvided(sdkClient, identity.id, timestampContractDocumentSchema);
         const timestampContract = contractTransition.toJSON().dataContract;
-        console.log(`\tRegistered contract with timestamps required ${timestampContract.$id}`);
+        console.log(`\tRegistered contract with timestamps required: ${timestampContract.$id}`);
 
         expect(timestampContract.documents.note.required).to.include('$createdAt', '$updatedAt');
       });
@@ -328,7 +328,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         // eslint-disable-next-line max-len
         const contractTransition = await tutorials.registerContractProvided(sdkClient, identity.id, refContractDocumentSchema, refContractDefinitions);
         const refContract = contractTransition.toJSON().dataContract;
-        console.log(`\tRegistered contract with $ref ${refContract.$id}`);
+        console.log(`\tRegistered contract with $ref: ${refContract.$id}`);
 
         expect(refContract.$defs).to.be.an('object');
         expect(refContract.$defs).to.have.property('address');
