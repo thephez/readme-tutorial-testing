@@ -1,0 +1,12 @@
+{
+  "note": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string"
+      }
+    },
+    "required": ["$createdAt", "$updatedAt"],
+    "additionalProperties": false
+  }
+}

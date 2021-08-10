@@ -13,6 +13,9 @@ const dotenv = require('dotenv');
 const tutorials = require('../tutorials');
 const minimalContractDocumentSchema = require('../tutorials/contract/contracts/contractMinimal.json');
 const indexedContractDocumentSchema = require('../tutorials/contract/contracts/contractWithIndex.json');
+const timestampContractDocumentSchema = require('../tutorials/contract/contracts/contractWithTimestamps.json');
+const refContractDocumentSchema = require('../tutorials/contract/contracts/contractWithRef.json');
+const refContractDefinitions = require('../tutorials/contract/contracts/contractWithRefDefinitions.json');
 
 dotenv.config();
 const mnemonic = process.env.WALLET_MNEMONIC;
@@ -307,6 +310,27 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         console.log(`\tRegistered contract with indices ${indexedContract.$id}`);
 
         assert.containsAllKeys(indexedContract.documents.note, ['indices']);
+      });
+
+      it('Should create a contract with timestamps required', async function () {
+        assert.isDefined(identity);
+        // eslint-disable-next-line max-len
+        const contractTransition = await tutorials.registerContractProvided(sdkClient, identity.id, timestampContractDocumentSchema);
+        const timestampContract = contractTransition.toJSON().dataContract;
+        console.log(`\tRegistered contract with timestamps required ${timestampContract.$id}`);
+
+        expect(timestampContract.documents.note.required).to.include('$createdAt', '$updatedAt');
+      });
+
+      it('Should create a contract with $ref', async function () {
+        assert.isDefined(identity);
+        // eslint-disable-next-line max-len
+        const contractTransition = await tutorials.registerContractProvided(sdkClient, identity.id, refContractDocumentSchema, refContractDefinitions);
+        const refContract = contractTransition.toJSON().dataContract;
+        console.log(`\tRegistered contract with $ref ${refContract.$id}`);
+
+        expect(refContract.$defs).to.be.an('object');
+        expect(refContract.$defs).to.have.property('address');
       });
     });
   });
