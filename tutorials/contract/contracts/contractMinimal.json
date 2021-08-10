@@ -1,0 +1,11 @@
+{
+  "note": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": false
+  }
+}

@@ -11,6 +11,12 @@ const { assert, expect } = require('chai');
 const faker = require('faker');
 const dotenv = require('dotenv');
 const tutorials = require('../tutorials');
+const minimalContractDocumentSchema = require('../tutorials/contract/contracts/contractMinimal.json');
+const indexedContractDocumentSchema = require('../tutorials/contract/contracts/contractWithIndex.json');
+const timestampContractDocumentSchema = require('../tutorials/contract/contracts/contractWithTimestamps.json');
+const refContractDocumentSchema = require('../tutorials/contract/contracts/contractWithRef.json');
+const refContractDefinitions = require('../tutorials/contract/contracts/contractWithRefDefinitions.json');
+const binaryContractDocumentSchema = require('../tutorials/contract/contracts/contractWithBinaryData.json');
 
 dotenv.config();
 const mnemonic = process.env.WALLET_MNEMONIC;
@@ -192,11 +198,12 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     const noteMessage = `Tutorial CI Test @ ${new Date().toUTCString()}`;
     const updatedNoteMessage = `${noteMessage} (updated)`;
 
-    it('Should create a contract', async function () {
+    it('Should create a minimal contract', async function () {
       assert.isDefined(identity);
-      const contractTransition = await tutorials.registerContract(sdkClient, identity.id);
+      // eslint-disable-next-line max-len
+      const contractTransition = await tutorials.registerContractProvided(sdkClient, identity.id, minimalContractDocumentSchema);
       contract = contractTransition.toJSON().dataContract;
-      console.log(`\tRegistered contract ${contract.$id}`);
+      console.log(`\tRegistered minimal contract: ${contract.$id}`);
 
       assert.containsAllKeys(contract.documents, ['note']);
     });
@@ -294,6 +301,49 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       documentId = documentBatchTransition.transitions[0].id;
       expect(documentBatchTransition).to.be.an('object');
     }).timeout();
+
+    describe('Additional Contracts', function () {
+      it('Should create a contract with indices', async function () {
+        assert.isDefined(identity);
+        // eslint-disable-next-line max-len
+        const contractTransition = await tutorials.registerContractProvided(sdkClient, identity.id, indexedContractDocumentSchema);
+        const indexedContract = contractTransition.toJSON().dataContract;
+        console.log(`\tRegistered contract with indices: ${indexedContract.$id}`);
+
+        assert.containsAllKeys(indexedContract.documents.note, ['indices']);
+      });
+
+      it('Should create a contract with timestamps required', async function () {
+        assert.isDefined(identity);
+        // eslint-disable-next-line max-len
+        const contractTransition = await tutorials.registerContractProvided(sdkClient, identity.id, timestampContractDocumentSchema);
+        const timestampContract = contractTransition.toJSON().dataContract;
+        console.log(`\tRegistered contract with timestamps required: ${timestampContract.$id}`);
+
+        expect(timestampContract.documents.note.required).to.include('$createdAt', '$updatedAt');
+      });
+
+      it('Should create a contract with $ref', async function () {
+        assert.isDefined(identity);
+        // eslint-disable-next-line max-len
+        const contractTransition = await tutorials.registerContractProvided(sdkClient, identity.id, refContractDocumentSchema, refContractDefinitions);
+        const refContract = contractTransition.toJSON().dataContract;
+        console.log(`\tRegistered contract with $ref: ${refContract.$id}`);
+
+        expect(refContract.$defs).to.be.an('object');
+        expect(refContract.$defs).to.have.property('address');
+      });
+
+      it('Should create a contract with binary data', async function () {
+        assert.isDefined(identity);
+        // eslint-disable-next-line max-len
+        const contractTransition = await tutorials.registerContractProvided(sdkClient, identity.id, binaryContractDocumentSchema);
+        const binaryContract = contractTransition.toJSON().dataContract;
+        console.log(`\tRegistered contract with binary data: ${binaryContract.$id}`);
+
+        expect(binaryContract.documents.block.properties.hash).to.have.property('byteArray');
+      });
+    });
   });
 
   describe('Misc', function () {

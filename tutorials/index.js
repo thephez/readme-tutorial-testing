@@ -12,6 +12,7 @@ module.exports = {
   ...require('./name/retrieveNameByRecord'),
   ...require('./name/retrieveNameBySearch'),
   ...require('./contract/registerContract'),
+  ...require('./contract/registerContractProvided'),
   ...require('./contract/retrieveContract'),
   ...require('./document/submitDocument'),
   ...require('./document/getDocument'),

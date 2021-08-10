@@ -1,0 +1,15 @@
+{
+  "note": {
+    "type": "object",
+    "indices": [
+      {
+        "properties": [{ "$ownerId": "asc" }], "unique": false }
+    ],
+    "properties": {
+      "message": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": false
+  }
+}

@@ -8,24 +8,18 @@ const clientOpts = {
 };
 const client = new Dash.Client(clientOpts); */
 
-async function registerContract(client, identityId) {
+async function registerContract(client, identityId, contractDocumentSchema, contractDefinitions) {
   const { platform } = client;
   const identity = await platform.identities.get(identityId);
 
-  const contractDocuments = {
-    note: {
-      type: 'object',
-      properties: {
-        message: {
-          type: 'string',
-        },
-      },
-      additionalProperties: false,
-    },
-  };
+  // console.dir(contractDocumentSchema, { depth: null });
+  const contract = await platform.contracts.create(contractDocumentSchema, identity);
 
-  const contract = await platform.contracts.create(contractDocuments, identity);
-  /* console.dir({ contract }); */
+  // Add reusable definitions referred to by "$ref" to contract
+  if (contractDefinitions) {
+    contract.setDefinitions(contractDefinitions);
+  }
+  // console.dir({ contract }, { depth: null });
 
   // Make sure contract passes validation checks
   await platform.dpp.initialize();
@@ -45,4 +39,4 @@ async function registerContract(client, identityId) {
   .catch((e) => console.error('Something went wrong:\n', e))
   .finally(() => client.disconnect()); */
 
-module.exports.registerContract = registerContract;
+module.exports.registerContractProvided = registerContract;
