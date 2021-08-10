@@ -12,6 +12,7 @@ const faker = require('faker');
 const dotenv = require('dotenv');
 const tutorials = require('../tutorials');
 const minimalContractDocumentSchema = require('../tutorials/contract/contracts/contractMinimal.json');
+const indexedContractDocumentSchema = require('../tutorials/contract/contracts/contractWithIndex.json');
 
 dotenv.config();
 const mnemonic = process.env.WALLET_MNEMONIC;
@@ -296,6 +297,16 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       documentId = documentBatchTransition.transitions[0].id;
       expect(documentBatchTransition).to.be.an('object');
     }).timeout();
+
+    it('Should create a contract with indices', async function () {
+      assert.isDefined(identity);
+      // eslint-disable-next-line max-len
+      const contractTransition = await tutorials.registerContractProvided(sdkClient, indexedContractDocumentSchema, identity.id);
+      const indexedContract = contractTransition.toJSON().dataContract;
+      console.log(`\tRegistered contract with indices ${indexedContract.$id}`);
+
+      assert.containsAllKeys(indexedContract.documents.note, ['indices']);
+    });
   });
 
   describe('Misc', function () {
