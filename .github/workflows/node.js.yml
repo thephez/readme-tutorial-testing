@@ -24,6 +24,9 @@ jobs:
     timeout-minutes: 15
 
     steps:
+    - name: Use https instead of ssh for git
+      run: git config --global url."https://github.com/".insteadOf ssh://git@github.com/
+
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -35,3 +38,4 @@ jobs:
       env:
         CI: true
         WALLET_MNEMONIC: ${{ secrets.WALLET_MNEMONIC }}
+        DPNS_CONTRACT_ID: ${{ 'EBnvxB5RSW8NbBbXdRS3zPqFEaZnjCZ8WeurjvLTaru7' }}
