@@ -1,6 +1,6 @@
 {
   "name": "readme-tutorial-testing",
-  "version": "0.21.0",
+  "version": "0.21.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,8 +10,8 @@
   "author": "thephez",
   "license": "MIT",
   "dependencies": {
-    "@dashevo/dpp": "^0.21.0",
-    "dash": "^3.21.2"
+    "@dashevo/dpp": "^0.21.5",
+    "dash": "^3.21.5"
   },
   "devDependencies": {
     "chai": "^4.3.4",
