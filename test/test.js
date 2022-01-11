@@ -29,6 +29,7 @@ let selectedNode = goodNodes[Math.floor(Math.random() * goodNodes.length)];
 selectedNode = '35.87.212.139:3000'; // devnet
 // selectedNode = '127.0.0.1:3000';
 
+let noWalletClient;
 let emptyWalletClient;
 let sdkClient;
 let account;
@@ -74,6 +75,22 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     before(function () {
       // selectedNode = '127.0.0.1:3000';
       console.log(`\tUsing node ${selectedNode} for tests`);
+
+      // Override DPNS contract ID (for testing against devnets)
+      // eslint-disable-next-line prefer-const
+      let apps = {
+        dpns: {
+          contractId: process.env.DPNS_CONTRACT_ID,
+        },
+      };
+
+      // Client with no wallet for read-only operations
+      noWalletClient = new Dash.Client({
+        network,
+        apps, // Override DPNS contract ID (for testing against devnets)
+        dapiAddresses: [selectedNode],
+      });
+
       // Switch to using received mnemonic for client
       sdkClient = new Dash.Client({
         network,
@@ -84,11 +101,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
           },
         },
         // Override DPNS contract ID (for testing against devnets)
-        apps: {
-          dpns: {
-            contractId: process.env.DPNS_CONTRACT_ID,
-          },
-        },
+        apps,
         dapiAddresses: [selectedNode],
       });
     });
@@ -166,14 +179,14 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
     it('Should retrieve a name by name', async function () {
       // assert.isDefined(identity);
-      const retrievedName = await tutorials.retrieveNameByName(sdkClient, name);
+      const retrievedName = await tutorials.retrieveNameByName(noWalletClient, name);
 
       expect(retrievedName.toJSON().label).to.equal(name);
     });
 
     it('Should retrieve a name by record', async function () {
       // assert.isDefined(identity);
-      const retrievedName = await tutorials.retrieveNameByRecord(sdkClient, identity.id);
+      const retrievedName = await tutorials.retrieveNameByRecord(noWalletClient, identity.id);
 
       expect(retrievedName).to.be.an('array').that.has.lengthOf.at.least(1);
       expect(retrievedName[0]).to.be.an('object');
@@ -182,7 +195,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
     it('Should retrieve a name by search', async function () {
       // assert.isDefined(identity);
-      const retrievedName = await tutorials.retrieveNameBySearch(sdkClient, name);
+      const retrievedName = await tutorials.retrieveNameBySearch(noWalletClient, name);
 
       expect(retrievedName).to.be.an('array').that.has.lengthOf.at.least(1);
       expect(retrievedName[0]).to.be.an('object');
@@ -211,13 +224,17 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     it('Should retrieve the contract', async function () {
       assert.isDefined(contract);
       contractId = contract.$id;
-      retrievedContract = await tutorials.retrieveContract(sdkClient, contractId);
+      retrievedContract = await tutorials.retrieveContract(noWalletClient, contractId);
 
       expect(retrievedContract).to.be.instanceOf(DataContract);
       expect(retrievedContract.toJSON()).to.deep.equal(contract);
 
       // Manually add contract with name "tutorialContract"
       sdkClient.apps.apps.tutorialContract = {
+        contractId: Identifier.from(contractId),
+        retrievedContract,
+      };
+      noWalletClient.apps.apps.tutorialContract = {
         contractId: Identifier.from(contractId),
         retrievedContract,
       };
@@ -239,7 +256,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
     it('Should get the document', async function () {
       assert.isDefined(contract);
-      const documents = await tutorials.getDocuments(sdkClient);
+      const documents = await tutorials.getDocuments(noWalletClient);
       // console.log(documents);
 
       expect(documents, 'number of documents').to.have.lengthOf(1);
@@ -262,7 +279,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
     it('Should get the updated document', async function () {
       assert.isDefined(contract);
-      const documents = await tutorials.getDocuments(sdkClient);
+      const documents = await tutorials.getDocuments(noWalletClient);
       // console.log(documents);
 
       expect(documents, 'number of documents').to.have.lengthOf(1);
@@ -284,7 +301,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
     it('Should retrieve no documents', async function () {
       assert.isDefined(contract);
-      const documents = await tutorials.getDocuments(sdkClient);
+      const documents = await tutorials.getDocuments(noWalletClient);
       // console.log(documents);
 
       expect(documents, 'number of documents').to.have.lengthOf(0);
@@ -354,7 +371,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     });
 
     it('Should execute DAPI client methods and return Dash Core status', async function () {
-      const status = await tutorials.dapiClientMethods(sdkClient);
+      const status = await tutorials.dapiClientMethods(noWalletClient);
       // console.dir(status);
       expect(status.version).to.include.all.keys(
         'software',
@@ -368,6 +385,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
     after(function () {
       sdkClient.disconnect();
+      noWalletClient.disconnect();
     });
   });
 });
