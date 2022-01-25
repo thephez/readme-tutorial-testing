@@ -320,7 +320,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(documentBatchTransition).to.be.an('object');
     }).timeout();
 
-    xit('Should update the contract', async function () {
+    it('Should update the contract', async function () {
       assert.isDefined(contract);
       // eslint-disable-next-line max-len
       const contractTransition = await tutorials.updateContractProvided(sdkClient, identity.id, contractId);
