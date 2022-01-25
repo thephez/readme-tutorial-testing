@@ -217,7 +217,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       // eslint-disable-next-line max-len
       const contractTransition = await tutorials.registerContractProvided(sdkClient, identity.id, minimalContractDocumentSchema);
       contract = contractTransition.toJSON().dataContract;
-      console.log(`\tRegistered minimal contract: ${contract.$id}`);
+      console.log(`\tRegistered minimal contract: ${contract.$id} ${contract.version}`);
 
       assert.containsAllKeys(contract.documents, ['note']);
     });
@@ -318,6 +318,17 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
       documentId = documentBatchTransition.transitions[0].id;
       expect(documentBatchTransition).to.be.an('object');
+    }).timeout();
+
+    xit('Should update the contract', async function () {
+      assert.isDefined(contract);
+      // eslint-disable-next-line max-len
+      const contractTransition = await tutorials.updateContractProvided(sdkClient, identity.id, contractId);
+      contract = contractTransition.toJSON().dataContract;
+      console.log(`Updated minimal contract: ${contract.$id}`);
+
+      assert.containsAllKeys(contract.documents, ['note']);
+      assert.containsAllKeys(contract.documents.note, ['message', 'author']);
     }).timeout();
 
     describe('Additional Contracts', function () {
