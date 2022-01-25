@@ -77,17 +77,18 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       console.log(`\tUsing node ${selectedNode} for tests`);
 
       // Override DPNS contract ID (for testing against devnets)
+      // Not necessary for version 0.22+
       // eslint-disable-next-line prefer-const
-      let apps = {
-        dpns: {
-          contractId: process.env.DPNS_CONTRACT_ID,
-        },
-      };
+      // let apps = {
+      //   dpns: {
+      //     contractId: process.env.DPNS_CONTRACT_ID,
+      //   },
+      // };
 
       // Client with no wallet for read-only operations
       noWalletClient = new Dash.Client({
         network,
-        apps, // Override DPNS contract ID (for testing against devnets)
+        // apps, // Override DPNS contract ID (for testing against devnets)
         dapiAddresses: [selectedNode],
       });
 
@@ -101,7 +102,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
           },
         },
         // Override DPNS contract ID (for testing against devnets)
-        apps,
+        // apps,
         dapiAddresses: [selectedNode],
       });
     });
