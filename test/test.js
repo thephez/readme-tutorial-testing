@@ -206,6 +206,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
   describe('Contracts and Documents', function () {
     let contract;
+    let updatedContract;
     let contractId;
     let retrievedContract;
     let documentId;
@@ -327,11 +328,11 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       assert.isDefined(contract);
       // eslint-disable-next-line max-len
       const contractTransition = await tutorials.updateContractProvided(sdkClient, identity.id, contractId);
-      contract = contractTransition.toJSON().dataContract;
-      console.log(`Updated minimal contract: ${contract.$id}`);
+      updatedContract = contractTransition.toJSON().dataContract;
+      console.log(`\tUpdated minimal contract: ${updatedContract.$id}`);
 
-      assert.containsAllKeys(contract.documents, ['note']);
-      assert.containsAllKeys(contract.documents.note, ['message', 'author']);
+      assert.containsAllKeys(updatedContract.documents, ['note']);
+      assert.containsAllKeys(updatedContract.documents.note.properties, ['message', 'author']);
     }).timeout();
 
     describe('Additional Contracts', function () {
