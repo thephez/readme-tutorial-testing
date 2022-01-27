@@ -321,6 +321,9 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     }).timeout();
 
     it('Should update the contract', async function () {
+      // Remove cached contract (temporary fix)
+      delete sdkClient.apps.apps.tutorialContract;
+
       assert.isDefined(contract);
       // eslint-disable-next-line max-len
       const contractTransition = await tutorials.updateContractProvided(sdkClient, identity.id, contractId);
