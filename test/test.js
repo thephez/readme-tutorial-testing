@@ -63,7 +63,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       // console.log(result);
       assert.hasAllKeys(result, ['mnemonic', 'address']);
       expect(result.mnemonic.split(' '), 'mnemonic words').to.have.lengthOf(12);
-    }).timeout(300000);
+    }).timeout(30000);
 
     after(function () {
       emptyWalletClient.disconnect();
@@ -123,7 +123,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       console.log(`\tRegistered identity: ${identity.id}`);
       expect(identity).to.be.instanceOf(Identity);
       // assert.containsAllKeys(identity.toJSON(), ['id', 'publicKeys', 'balance', 'revision']);
-    }).timeout(120000);
+    }).timeout(30000);
 
     it('Should retrieve the identity', async function () {
       const retrievedIdentity = await tutorials.retrieveIdentity(sdkClient, identity.id);
