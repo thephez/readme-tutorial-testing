@@ -16,7 +16,7 @@ async function sendFunds(client) {
 
   const transaction = account.createTransaction({
     recipient: 'yP8A3cbdxRtLRduy5mXDsBnJtMzHWs6ZXr', // Testnet2 faucet
-    satoshis: 100, // 0.000001 Dash
+    satoshis: 1000, // 0.00001 Dash
   });
   return account.broadcastTransaction(transaction);
 }
