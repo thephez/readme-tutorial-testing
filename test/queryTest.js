@@ -137,7 +137,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
   });
 
   it(`whereIn (asc) - should return all names from list where they all exist - (${identityName})`, async function () {
-    const result = await testQueries.whereIn(sdkClient, identityName, 'asc');
+    const result = await testQueries.whereIn(sdkClient, identityName, 'asc', 5);
 
     const names = [];
     // eslint-disable-next-line no-restricted-syntax
@@ -152,7 +152,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
   });
 
   it(`whereIn (desc) - should return all names from list where they all exist - (${identityName})`, async function () {
-    const result = await testQueries.whereIn(sdkClient, identityName, 'desc');
+    const result = await testQueries.whereIn(sdkClient, identityName, 'desc', 5);
 
     const names = [];
     // eslint-disable-next-line no-restricted-syntax
@@ -170,7 +170,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
   xit('whereIn (asc)- should return all names that exist where some do not exist', async function () {
     const someBadNames = [...identityName];
     someBadNames.push('somerandom_name');
-    const result = await testQueries.whereIn(sdkClient, someBadNames, 'asc');
+    const result = await testQueries.whereIn(sdkClient, someBadNames, 'asc', 5);
 
     const names = [];
     // eslint-disable-next-line no-restricted-syntax
@@ -188,7 +188,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
   xit('whereIn (desc)- should return all names that exist where some do not exist', async function () {
     const someBadNames = [...identityName];
     someBadNames.push('somerandom_name');
-    const result = await testQueries.whereIn(sdkClient, someBadNames, 'desc');
+    const result = await testQueries.whereIn(sdkClient, someBadNames, 'desc', 5);
 
     const names = [];
     // eslint-disable-next-line no-restricted-syntax

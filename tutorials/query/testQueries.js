@@ -18,11 +18,11 @@ async function startAt(sdkClient, startAtId) {
   );
 }
 
-async function startAfter(sdkClient, startAfterId) {
+async function startAfter(sdkClient, startAfterId, limit = 1) {
   return sdkClient.platform.documents.get(
     'dpns.domain',
     {
-      limit: 1,
+      limit,
       startAfter: Buffer.from(Identifier.from(startAfterId)),
     },
   );
@@ -40,11 +40,11 @@ async function whereSimple(sdkClient, dpnsName) {
   );
 }
 
-async function whereLessThanId(sdkClient, id, orderByDirection) {
+async function whereLessThanId(sdkClient, id, orderByDirection = 'asc', limit = 1) {
   return sdkClient.platform.documents.get(
     'dpns.domain',
     {
-      limit: 1,
+      limit,
       where: [
         ['records.dashUniqueIdentityId', '<', id],
       ],
@@ -55,11 +55,11 @@ async function whereLessThanId(sdkClient, id, orderByDirection) {
   );
 }
 
-async function whereLessThanEqualToId(sdkClient, id, orderByDirection) {
+async function whereLessThanEqualToId(sdkClient, id, orderByDirection = 'asc', limit = 1) {
   return sdkClient.platform.documents.get(
     'dpns.domain',
     {
-      limit: 1,
+      limit,
       where: [
         ['records.dashUniqueIdentityId', '<=', id],
       ],
@@ -70,11 +70,11 @@ async function whereLessThanEqualToId(sdkClient, id, orderByDirection) {
   );
 }
 
-async function whereGreaterThanId(sdkClient, id, orderByDirection) {
+async function whereGreaterThanId(sdkClient, id, orderByDirection = 'asc', limit = 1) {
   return sdkClient.platform.documents.get(
     'dpns.domain',
     {
-      limit: 1,
+      limit,
       where: [
         ['records.dashUniqueIdentityId', '>', id],
       ],
@@ -85,11 +85,11 @@ async function whereGreaterThanId(sdkClient, id, orderByDirection) {
   );
 }
 
-async function whereGreaterThanEqualToId(sdkClient, id, orderByDirection) {
+async function whereGreaterThanEqualToId(sdkClient, id, orderByDirection = 'asc', limit = 1) {
   return sdkClient.platform.documents.get(
     'dpns.domain',
     {
-      limit: 1,
+      limit,
       where: [
         ['records.dashUniqueIdentityId', '>=', id],
       ],
@@ -100,12 +100,12 @@ async function whereGreaterThanEqualToId(sdkClient, id, orderByDirection) {
   );
 }
 
-async function whereIn(sdkClient, dpnsNames, orderByDirection) {
+async function whereIn(sdkClient, dpnsNames, orderByDirection = 'asc', limit = 1) {
   // console.log(dpnsNames.map(name => name.toLowerCase()))
   return sdkClient.platform.documents.get(
     'dpns.domain',
     {
-      limit: 5,
+      limit,
       where: [
         ['normalizedParentDomainName', '==', 'dash'],
         ['normalizedLabel', 'in', dpnsNames.map((name) => name.toLowerCase())],
@@ -117,11 +117,11 @@ async function whereIn(sdkClient, dpnsNames, orderByDirection) {
   );
 }
 
-async function whereStartsWith(sdkClient, startsWithName, orderByDirection) {
+async function whereStartsWith(sdkClient, startsWithName, orderByDirection = 'asc', limit = 1) {
   return sdkClient.platform.documents.get(
     'dpns.domain',
     {
-      limit: 1,
+      limit,
       where: [
         ['normalizedParentDomainName', '==', 'dash'],
         ['normalizedLabel', 'startsWith', startsWithName.toLowerCase()],
