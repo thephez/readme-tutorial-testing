@@ -40,17 +40,61 @@ async function whereSimple(sdkClient, dpnsName) {
   );
 }
 
-async function whereLessThan(sdkClient, lessThanName) {
+async function whereLessThanId(sdkClient, id, orderByDirection) {
   return sdkClient.platform.documents.get(
     'dpns.domain',
     {
       limit: 1,
       where: [
-        ['normalizedParentDomainName', '==', 'dash'],
-        ['normalizedLabel', '<', lessThanName.toLowerCase()],
+        ['records.dashUniqueIdentityId', '<', id],
       ],
       orderBy: [
-        ['normalizedLabel', 'desc'],
+        ['records.dashUniqueIdentityId', orderByDirection],
+      ],
+    },
+  );
+}
+
+async function whereLessThanEqualToId(sdkClient, id, orderByDirection) {
+  return sdkClient.platform.documents.get(
+    'dpns.domain',
+    {
+      limit: 1,
+      where: [
+        ['records.dashUniqueIdentityId', '<=', id],
+      ],
+      orderBy: [
+        ['records.dashUniqueIdentityId', orderByDirection],
+      ],
+    },
+  );
+}
+
+async function whereGreaterThanId(sdkClient, id, orderByDirection) {
+  return sdkClient.platform.documents.get(
+    'dpns.domain',
+    {
+      limit: 1,
+      where: [
+        ['records.dashUniqueIdentityId', '>', id],
+      ],
+      orderBy: [
+        ['records.dashUniqueIdentityId', orderByDirection],
+      ],
+    },
+  );
+}
+
+async function whereGreaterThanEqualToId(sdkClient, id, orderByDirection) {
+  return sdkClient.platform.documents.get(
+    'dpns.domain',
+    {
+      limit: 1,
+      where: [
+        ['records.dashUniqueIdentityId', '>=', id],
+      ],
+      orderBy: [
+        ['records.dashUniqueIdentityId', orderByDirection],
       ],
     },
   );
@@ -93,7 +137,10 @@ module.exports = {
   startAt,
   startAfter,
   whereSimple,
-  whereLessThan,
+  whereLessThanId,
+  whereLessThanEqualToId,
+  whereGreaterThanId,
+  whereGreaterThanEqualToId,
   whereIn,
   whereStartsWith,
 };

@@ -13,6 +13,7 @@ dotenv.config();
 const network = 'devnet';
 const seedHost = 'seed-1.krupnik.networks.dash.org';
 const documentId = '4Qp3menV9QjE92hc3BzkUCusAmHLxh1AU6gsVsPF4L2q';
+const identityId = 'FETe2GxdRsAUj8Qoy3tsr6J822aupG5VYtetoYBgXt5P';
 const identityName = ['RT-Jarret-33563', 'hashengineering'];
 const startsWithString = 'RT-';
 
@@ -59,16 +60,81 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
     expect(result[0].getData().label).to.be.equal(identityName[0]);
   });
 
-  xit(`whereLessThan - should return name starting before name - (${identityName[0]})`, async function () {
-    const result = await testQueries.whereLessThan(sdkClient, identityName[0]);
+  it(`whereLessThanId (desc) - should return name starting before id - (${identityId})`, async function () {
+    const result = await testQueries.whereLessThanId(sdkClient, identityId, 'desc');
 
-    console.log(`\tReceived document with name: ${result[0].toJSON().label}`);
+    console.log(`\tReceived document with name/id: ${result[0].toJSON().label} ${result[0].toJSON().$ownerId}`);
     expect(result).to.have.lengthOf(1);
     expect(result[0]).to.be.instanceOf(Document);
     expect(result[0].id.toJSON()).to.not.be.equal(documentId);
   });
 
-  // Also check <=, ==, >=, >
+  // This test currently fails due to a bug? in Platform (https://github.com/dashevo/rs-drive/issues/83)
+  xit(`whereLessThanId (asc) - should return name starting before id - (${identityId})`, async function () {
+    const result = await testQueries.whereLessThanId(sdkClient, identityId, 'asc');
+
+    console.log(`\tReceived document with name/id: ${result[0].toJSON().label} ${result[0].toJSON().$ownerId}`);
+    expect(result).to.have.lengthOf(1);
+    expect(result[0]).to.be.instanceOf(Document);
+    expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+  });
+
+  it(`whereLessThanEqualToId (desc) - should return previous names starting with id - (${identityId})`, async function () {
+    const result = await testQueries.whereLessThanEqualToId(sdkClient, identityId, 'desc');
+
+    console.log(`\tReceived document with name/id: ${result[0].toJSON().label} ${result[0].toJSON().$ownerId}`);
+    expect(result).to.have.lengthOf(1);
+    expect(result[0]).to.be.instanceOf(Document);
+    expect(result[0].id.toJSON()).to.be.equal(documentId);
+  });
+
+  // This test currently fails due to a bug? in Platform (https://github.com/dashevo/rs-drive/issues/83)
+  xit(`whereLessThanEqualToId (asc) - should return previous names starting with id - (${identityId})`, async function () {
+    const result = await testQueries.whereLessThanEqualToId(sdkClient, identityId, 'asc');
+
+    console.log(`\tReceived document with name/id: ${result[0].toJSON().label} ${result[0].toJSON().$ownerId}`);
+    expect(result).to.have.lengthOf(1);
+    expect(result[0]).to.be.instanceOf(Document);
+    expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+  });
+
+  it(`whereGreaterThanId (desc) - should return name starting after id - (${identityId})`, async function () {
+    const result = await testQueries.whereGreaterThanId(sdkClient, identityId, 'desc');
+
+    console.log(`\tReceived document with name/id: ${result[0].toJSON().label} ${result[0].toJSON().$ownerId}`);
+    expect(result).to.have.lengthOf(1);
+    expect(result[0]).to.be.instanceOf(Document);
+    expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+  });
+
+  // This test currently fails due to a bug? in Platform (https://github.com/dashevo/rs-drive/issues/83)
+  it(`whereGreaterThanId (asc) - should return name starting after id - (${identityId})`, async function () {
+    const result = await testQueries.whereGreaterThanId(sdkClient, identityId, 'asc');
+
+    console.log(`\tReceived document with name/id: ${result[0].toJSON().label} ${result[0].toJSON().$ownerId}`);
+    expect(result).to.have.lengthOf(1);
+    expect(result[0]).to.be.instanceOf(Document);
+    expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+  });
+
+  it(`whereGreaterThanEqualToId (desc) - should return names starting with id - (${identityId})`, async function () {
+    const result = await testQueries.whereGreaterThanEqualToId(sdkClient, identityId, 'desc');
+
+    console.log(`\tReceived document with name/id: ${result[0].toJSON().label} ${result[0].toJSON().$ownerId}`);
+    expect(result).to.have.lengthOf(1);
+    expect(result[0]).to.be.instanceOf(Document);
+    expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+  });
+
+  // This test currently fails due to a bug? in Platform (https://github.com/dashevo/rs-drive/issues/83)
+  it(`whereGreaterThanEqualToId (asc) - should return names starting with id - (${identityId})`, async function () {
+    const result = await testQueries.whereGreaterThanEqualToId(sdkClient, identityId, 'asc');
+
+    console.log(`\tReceived document with name/id: ${result[0].toJSON().label} ${result[0].toJSON().$ownerId}`);
+    expect(result).to.have.lengthOf(1);
+    expect(result[0]).to.be.instanceOf(Document);
+    expect(result[0].id.toJSON()).to.be.equal(documentId);
+  });
 
   it(`whereIn - should return all names from list where they all exist - (${identityName})`, async function () {
     const result = await testQueries.whereIn(sdkClient, identityName);
