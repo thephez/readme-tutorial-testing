@@ -136,8 +136,8 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
     expect(result[0].id.toJSON()).to.be.equal(documentId);
   });
 
-  it(`whereIn - should return all names from list where they all exist - (${identityName})`, async function () {
-    const result = await testQueries.whereIn(sdkClient, identityName);
+  it(`whereIn (asc) - should return all names from list where they all exist - (${identityName})`, async function () {
+    const result = await testQueries.whereIn(sdkClient, identityName, 'asc');
 
     const names = [];
     // eslint-disable-next-line no-restricted-syntax
@@ -151,11 +151,26 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
     expect(result[0].id.toJSON()).to.not.be.equal(documentId);
   });
 
-  // This test currently fails due to bug in Platform
-  xit('whereIn - should return all names that exist where some do not exist', async function () {
+  it(`whereIn (desc) - should return all names from list where they all exist - (${identityName})`, async function () {
+    const result = await testQueries.whereIn(sdkClient, identityName, 'desc');
+
+    const names = [];
+    // eslint-disable-next-line no-restricted-syntax
+    for (const r of result) {
+      names.push(r.getData().label);
+    }
+
+    // console.log(`\tReceived document with name(s): ${names}`);
+    expect(result).to.have.lengthOf(identityName.length);
+    expect(result[0]).to.be.instanceOf(Document);
+    expect(result[0].id.toJSON()).to.be.equal(documentId);
+  });
+
+  // This test currently fails due to a bug in Platform (https://github.com/dashevo/grovedb/pull/80/)
+  xit('whereIn (asc)- should return all names that exist where some do not exist', async function () {
     const someBadNames = [...identityName];
     someBadNames.push('somerandom_name');
-    const result = await testQueries.whereIn(sdkClient, someBadNames);
+    const result = await testQueries.whereIn(sdkClient, someBadNames, 'asc');
 
     const names = [];
     // eslint-disable-next-line no-restricted-syntax
@@ -169,8 +184,35 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
     expect(result[0].id.toJSON()).to.not.be.equal(documentId);
   });
 
-  it(`whereStartsWith - should return name starting with provide string - (${startsWithString})`, async function () {
-    const result = await testQueries.whereStartsWith(sdkClient, startsWithString);
+  // This test currently fails due to a bug in Platform (https://github.com/dashevo/grovedb/pull/80/)
+  xit('whereIn (desc)- should return all names that exist where some do not exist', async function () {
+    const someBadNames = [...identityName];
+    someBadNames.push('somerandom_name');
+    const result = await testQueries.whereIn(sdkClient, someBadNames, 'desc');
+
+    const names = [];
+    // eslint-disable-next-line no-restricted-syntax
+    for (const r of result) {
+      names.push(r.getData().label);
+    }
+
+    console.log(`\tReceived document with name: ${names}`);
+    expect(result).to.have.lengthOf(identityName.length);
+    expect(result[0]).to.be.instanceOf(Document);
+    expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+  });
+
+  it(`whereStartsWith (asc) - should return name starting with provide string - (${startsWithString})`, async function () {
+    const result = await testQueries.whereStartsWith(sdkClient, startsWithString, 'asc');
+
+    console.log(`\tReceived document with name: ${result[0].toJSON().label}`);
+    expect(result).to.have.lengthOf(1);
+    expect(result[0]).to.be.instanceOf(Document);
+    expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+  });
+
+  it(`whereStartsWith (desc) - should return name starting with provide string - (${startsWithString})`, async function () {
+    const result = await testQueries.whereStartsWith(sdkClient, startsWithString, 'desc');
 
     console.log(`\tReceived document with name: ${result[0].toJSON().label}`);
     expect(result).to.have.lengthOf(1);

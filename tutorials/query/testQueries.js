@@ -100,7 +100,7 @@ async function whereGreaterThanEqualToId(sdkClient, id, orderByDirection) {
   );
 }
 
-async function whereIn(sdkClient, dpnsNames) {
+async function whereIn(sdkClient, dpnsNames, orderByDirection) {
   // console.log(dpnsNames.map(name => name.toLowerCase()))
   return sdkClient.platform.documents.get(
     'dpns.domain',
@@ -111,13 +111,13 @@ async function whereIn(sdkClient, dpnsNames) {
         ['normalizedLabel', 'in', dpnsNames.map((name) => name.toLowerCase())],
       ],
       orderBy: [
-        ['normalizedLabel', 'asc'],
+        ['normalizedLabel', orderByDirection],
       ],
     },
   );
 }
 
-async function whereStartsWith(sdkClient, startsWithName) {
+async function whereStartsWith(sdkClient, startsWithName, orderByDirection) {
   return sdkClient.platform.documents.get(
     'dpns.domain',
     {
@@ -127,7 +127,7 @@ async function whereStartsWith(sdkClient, startsWithName) {
         ['normalizedLabel', 'startsWith', startsWithName.toLowerCase()],
       ],
       orderBy: [
-        ['normalizedLabel', 'asc'],
+        ['normalizedLabel', orderByDirection],
       ],
     },
   );
