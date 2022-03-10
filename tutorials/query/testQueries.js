@@ -28,7 +28,7 @@ async function startAfter(sdkClient, startAfterId, limit = 1) {
   );
 }
 
-async function whereSimple(sdkClient, dpnsName) {
+async function whereEqual(sdkClient, dpnsName) {
   return sdkClient.platform.documents.get(
     'dpns.domain',
     {
@@ -136,7 +136,7 @@ async function whereStartsWith(sdkClient, startsWithName, orderByDirection = 'as
 module.exports = {
   startAt,
   startAfter,
-  whereSimple,
+  whereEqual,
   whereLessThanId,
   whereLessThanEqualToId,
   whereGreaterThanId,
