@@ -9,24 +9,26 @@ const dotenv = require('dotenv');
 const testQueries = require('../tutorials/query/testQueries');
 
 dotenv.config();
-const network = 'testnet';
+// const network = 'testnet';
+const network = 'devnet';
+const seedHost = 'seed-1.krupnik.networks.dash.org';
 const documentId = '4Qp3menV9QjE92hc3BzkUCusAmHLxh1AU6gsVsPF4L2q';
 const identityName = ['RT-Jarret-33563', 'hashengineering'];
 const startsWithString = 'RT-';
 
 let sdkClient;
 
-selectedNode = '35.87.212.139:3000'; // devnet
+// selectedNode = '35.87.212.139:3000'; // devnet
 
 describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
   this.timeout(40000);
 
   before(function () {
-    console.log(`    Using node ${selectedNode} for tests`);
+    // console.log(`    Using node ${selectedNode} for tests`);
     sdkClient = new Dash.Client({
       network,
-      // seeds: [{ host: process.env.SEED }],
-      dapiAddresses: [selectedNode],
+      seeds: [{ host: seedHost }],
+      // dapiAddresses: [selectedNode],
     });
   });
 
