@@ -244,28 +244,28 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       expect(result[0].id.toJSON()).to.not.be.equal(documentId);
     });
   });
-});
 
-describe('Where - evaluation operators', function () {
-  it(`startsWith (asc) - should return name starting with provide string - (${startsWithString})`, async function () {
-    const result = await testQueries.whereStartsWith(sdkClient, startsWithString, 'asc');
+  describe('Where - evaluation operators', function () {
+    it(`startsWith (asc) - should return name starting with provide string - (${startsWithString})`, async function () {
+      const result = await testQueries.whereStartsWith(sdkClient, startsWithString, 'asc');
 
-    console.log(`\tReceived document with name: ${result[0].toJSON().label}`);
-    expect(result).to.have.lengthOf(1);
-    expect(result[0]).to.be.instanceOf(Document);
-    expect(result[0].id.toJSON()).to.not.be.equal(documentId);
-  });
+      console.log(`\tReceived document with name: ${result[0].toJSON().label}`);
+      expect(result).to.have.lengthOf(1);
+      expect(result[0]).to.be.instanceOf(Document);
+      expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+    });
 
-  it(`startsWith (desc) - should return name starting with provide string - (${startsWithString})`, async function () {
-    const result = await testQueries.whereStartsWith(sdkClient, startsWithString, 'desc');
+    it(`startsWith (desc) - should return name starting with provide string - (${startsWithString})`, async function () {
+      const result = await testQueries.whereStartsWith(sdkClient, startsWithString, 'desc');
 
-    console.log(`\tReceived document with name: ${result[0].toJSON().label}`);
-    expect(result).to.have.lengthOf(1);
-    expect(result[0]).to.be.instanceOf(Document);
-    expect(result[0].id.toJSON()).to.not.be.equal(documentId);
-  });
+      console.log(`\tReceived document with name: ${result[0].toJSON().label}`);
+      expect(result).to.have.lengthOf(1);
+      expect(result[0]).to.be.instanceOf(Document);
+      expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+    });
 
-  after(function () {
-    sdkClient.disconnect();
+    after(function () {
+      sdkClient.disconnect();
+    });
   });
 });
