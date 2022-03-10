@@ -1,19 +1,29 @@
 /* eslint-disable no-console */
 const Identifier = require('@dashevo/dpp/lib/Identifier');
 
-async function startAt(sdkClient, startAtId) {
+async function startAt(sdkClient, startAtId, limit = 1) {
   return sdkClient.platform.documents.get(
     'dpns.domain',
     {
-      limit: 1,
+      limit,
       startAt: Buffer.from(Identifier.from(startAtId)),
-    // where: [
-    //   ['normalizedParentDomainName', '==', 'dash'],
-    //   ['normalizedLabel', 'startsWith', 'RT-'.toLowerCase()],
-    // ],
-    // orderBy: [
-    //   ['normalizedLabel', 'asc'],
-    // ],
+    },
+  );
+}
+
+async function startAtComplex(sdkClient, startAtId, startsWithString, orderByDirection = 'asc', limit = 1) {
+  return sdkClient.platform.documents.get(
+    'dpns.domain',
+    {
+      limit,
+      startAt: Buffer.from(Identifier.from(startAtId)),
+      where: [
+        ['normalizedParentDomainName', '==', 'dash'],
+        ['normalizedLabel', 'startsWith', startsWithString.toLowerCase()],
+      ],
+      orderBy: [
+        ['normalizedLabel', orderByDirection],
+      ],
     },
   );
 }
@@ -135,6 +145,7 @@ async function whereStartsWith(sdkClient, startsWithName, orderByDirection = 'as
 
 module.exports = {
   startAt,
+  startAtComplex,
   startAfter,
   whereEqual,
   whereLessThanId,

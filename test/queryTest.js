@@ -18,6 +18,7 @@ const identityName = ['RT-Jarret-33563', 'hashengineering'];
 const startsWithString = 'RT-';
 
 let sdkClient;
+let limit = 1;
 
 // selectedNode = '35.87.212.139:3000'; // devnet
 
@@ -46,11 +47,47 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
 
   describe('Query modifiers', function () {
     it(`startAt - should return names starting at document id - (${documentId})`, async function () {
-      const result = await testQueries.startAt(sdkClient, documentId);
+      const result = await testQueries.startAt(sdkClient, documentId, limit);
 
-      expect(result).to.have.lengthOf(1);
+      expect(result).to.have.lengthOf(limit);
       expect(result[0]).to.be.instanceOf(Document);
-      // console.log(result[0].toJSON())
+      // console.log(result)[0].toJSON())
+      expect(result[0].id.toJSON()).to.be.equal(documentId);
+    });
+
+    it(`startAtComplex (asc)- should return name(s) starting at document id - (${documentId})`, async function () {
+      const result = await testQueries.startAtComplex(sdkClient, documentId, startsWithString, 'asc', 1);
+
+      expect(result).to.have.lengthOf.at.most(1);
+      expect(result[0]).to.be.instanceOf(Document);
+      expect(result[0].id.toJSON()).to.be.equal(documentId);
+    });
+
+    // This test currently fails (returns all results, not just the limit requested)
+    xit(`startAtComplex (desc)- should return name(s) starting at document id - (${documentId})`, async function () {
+      const result = await testQueries.startAtComplex(sdkClient, documentId, startsWithString, 'desc', 1);
+
+      expect(result).to.have.lengthOf.at.most(1);
+      expect(result[0]).to.be.instanceOf(Document);
+      expect(result[0].id.toJSON()).to.be.equal(documentId);
+    });
+
+    it(`startAtComplex (asc)- should return name(s) starting at document id - (${documentId})`, async function () {
+      limit = 2;
+      const result = await testQueries.startAtComplex(sdkClient, documentId, startsWithString, 'asc', limit);
+
+      expect(result).to.have.lengthOf.at.most(limit);
+      expect(result[0]).to.be.instanceOf(Document);
+      expect(result[0].id.toJSON()).to.be.equal(documentId);
+    });
+
+    // This test currently fails (returns all results, not just the limit requested)
+    xit(`startAtComplex (desc)- should return name(s) starting at document id - (${documentId})`, async function () {
+      limit = 2;
+      const result = await testQueries.startAtComplex(sdkClient, documentId, startsWithString, 'desc', limit);
+
+      expect(result).to.have.lengthOf.at.most(limit);
+      expect(result[0]).to.be.instanceOf(Document);
       expect(result[0].id.toJSON()).to.be.equal(documentId);
     });
 
