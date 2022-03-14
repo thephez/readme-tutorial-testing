@@ -12,15 +12,15 @@ dotenv.config();
 // const network = 'testnet';
 const network = 'devnet';
 const seedHost = 'seed-1.krupnik.networks.dash.org';
-const documentId = '4Qp3menV9QjE92hc3BzkUCusAmHLxh1AU6gsVsPF4L2q';
-const identityId = 'FETe2GxdRsAUj8Qoy3tsr6J822aupG5VYtetoYBgXt5P';
-const identityName = ['RT-Jarret-33563', 'hashengineering'];
+const documentId = '5xu7tGM4phqbo2gsqLhPqQcE6rMQwX7DgpHdebYsWY7o';
+const identityId = '8H8MsSTjYCk16aoEbkHbRnUbLQBeH8h8bhuCm4SoAPC3';
+const identityName = ['RT-Jaylin-1631', 'hashengineering'];
 const startsWithString = 'RT-';
 
 let sdkClient;
 let limit = 1;
 
-// selectedNode = '35.87.212.139:3000'; // devnet
+// selectedNode = '34.217.47.197:3000'; // devnet
 
 describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
   this.timeout(40000);
