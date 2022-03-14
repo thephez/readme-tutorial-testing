@@ -252,7 +252,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       console.log(`\tReceived document with name: ${result[0].toJSON().label}`);
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+      expect(result[0].getData().label.slice(0, startsWithString.length)).to.be.equal(startsWithString);
     });
 
     it(`startsWith (desc) - should return name starting with provide string - (${startsWithString})`, async function () {
@@ -261,7 +261,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       console.log(`\tReceived document with name: ${result[0].toJSON().label}`);
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+      expect(result[0].getData().label.slice(0, startsWithString.length)).to.be.equal(startsWithString);
     });
 
     after(function () {
