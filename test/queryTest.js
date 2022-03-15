@@ -208,11 +208,10 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       expect(result[0].id.toJSON()).to.be.equal(documentId);
     });
 
-    // This test currently fails due to a bug in Platform (https://github.com/dashevo/grovedb/pull/80/)
-    xit('in (asc)- should return all existing names from list (some do not)', async function () {
-      const someBadNames = [...identityName];
-      someBadNames.push('somerandom_name');
-      const result = await testQueries.whereIn(sdkClient, someBadNames, 'asc', 5);
+    it('in (asc)- should return all existing names from list (some do not)', async function () {
+      const someUnknownNames = [...identityName];
+      someUnknownNames.push('somerandom_name');
+      const result = await testQueries.whereIn(sdkClient, someUnknownNames, 'asc', 5);
 
       const names = [];
       // eslint-disable-next-line no-restricted-syntax
@@ -226,11 +225,10 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       expect(result[0].id.toJSON()).to.not.be.equal(documentId);
     });
 
-    // This test currently fails due to a bug in Platform (https://github.com/dashevo/grovedb/pull/80/)
-    xit('in (desc)- should return all existing names from list (some do not)', async function () {
-      const someBadNames = [...identityName];
-      someBadNames.push('somerandom_name');
-      const result = await testQueries.whereIn(sdkClient, someBadNames, 'desc', 5);
+    it('in (desc)- should return all existing names from list (some do not)', async function () {
+      const someUnknownNames = [...identityName];
+      someUnknownNames.push('somerandom_name');
+      const result = await testQueries.whereIn(sdkClient, someUnknownNames, 'desc', 5);
 
       const names = [];
       // eslint-disable-next-line no-restricted-syntax
@@ -241,7 +239,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       console.log(`\tReceived document with name: ${names}`);
       expect(result).to.have.lengthOf(identityName.length);
       expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+      expect(result[0].id.toJSON()).to.be.equal(documentId);
     });
   });
 
