@@ -6,7 +6,7 @@ const Dash = require('dash');
 const Document = require('@dashevo/dpp/lib/document/Document');
 const { expect } = require('chai');
 const dotenv = require('dotenv');
-const testQueries = require('../tutorials/query/testQueries');
+const testQueries = require('../queries/testQueries');
 
 dotenv.config();
 // const network = 'testnet';
