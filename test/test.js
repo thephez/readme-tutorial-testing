@@ -123,7 +123,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       console.log(`\tRegistered identity: ${identity.id}`);
       expect(identity).to.be.instanceOf(Identity);
       // assert.containsAllKeys(identity.toJSON(), ['id', 'publicKeys', 'balance', 'revision']);
-    }).timeout(30000);
+    }).timeout(45000);
 
     it('Should retrieve the identity', async function () {
       const retrievedIdentity = await tutorials.retrieveIdentity(sdkClient, identity.id);
@@ -154,7 +154,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
       name = `RT-${faker.name.firstName()}-${faker.datatype.number()}`;
       const registeredName = await tutorials.registerName(sdkClient, identity.id, name);
-      console.log(`\tRegistered ${name}`);
+      console.log(`\tRegistered ${name} (${registeredName.toJSON().$id})`);
       expect(registeredName.toJSON().label).to.equal(name);
     });
 
@@ -163,8 +163,9 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       const alias = `${name}-alias`;
 
       const registeredAlias = await tutorials.registerAlias(sdkClient, identity.id, alias);
+      console.log(`\tRegistered ${alias} (${registeredAlias.toJSON().$id})`);
       expect(registeredAlias.toJSON().label).to.equal(alias);
-    });
+    }).timeout(60000);;
 
     it('Should retrieve a name by name', async function () {
       // assert.isDefined(identity);
@@ -306,6 +307,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       );
 
       documentId = documentBatchTransition.transitions[0].id;
+      console.log(`\tSubmitted document: ${documentId}`);
       expect(documentBatchTransition).to.be.an('object');
     }).timeout();
 
