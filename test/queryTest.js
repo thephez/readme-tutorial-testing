@@ -12,9 +12,9 @@ dotenv.config();
 // const network = 'testnet';
 const network = 'devnet';
 const seedHost = 'seed-1.krupnik.networks.dash.org';
-const documentId = '5xu7tGM4phqbo2gsqLhPqQcE6rMQwX7DgpHdebYsWY7o';
-const identityId = '8H8MsSTjYCk16aoEbkHbRnUbLQBeH8h8bhuCm4SoAPC3';
-const identityName = ['RT-Jaylin-1631', 'hashengineering'];
+const documentId = 'FJuBp3NtpkbEujjg6Boj91PJNK5oUBn1a8XzyZ8U1iT7';
+const identityId = '2tHkEUr7dLu9tV9upvTJWnHeRUtK6xmtojhciqWiPfxp';
+const identityName = ['RT-Lenora-19470', 'RT-Hadley-13326'];
 const startsWithString = 'RT-';
 
 let sdkClient;
@@ -64,7 +64,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
     });
 
     // This test currently fails (returns all results, not just the limit requested)
-    xit(`startAtComplex (desc)- should return name(s) starting at document id - (${documentId})`, async function () {
+    it(`startAtComplex (desc)- should return name(s) starting at document id - (${documentId})`, async function () {
       const result = await testQueries.startAtComplex(sdkClient, documentId, startsWithString, 'desc', 1);
 
       expect(result).to.have.lengthOf.at.most(1);
@@ -82,7 +82,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
     });
 
     // This test currently fails (returns all results, not just the limit requested)
-    xit(`startAtComplex (desc)- should return name(s) starting at document id - (${documentId})`, async function () {
+    it(`startAtComplex (desc)- should return name(s) starting at document id - (${documentId})`, async function () {
       limit = 2;
       const result = await testQueries.startAtComplex(sdkClient, documentId, startsWithString, 'desc', limit);
 
@@ -112,7 +112,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
     });
 
     // This test currently fails due to a bug? in Platform (https://github.com/dashevo/rs-drive/issues/83)
-    xit(`< id (asc) - should return name starting before id - (${identityId})`, async function () {
+    it(`< id (asc) - should return name starting before id - (${identityId})`, async function () {
       const result = await testQueries.whereLessThanId(sdkClient, identityId, 'asc');
 
       console.log(`\tReceived document with name/id: ${result[0].toJSON().label} ${result[0].toJSON().$ownerId}`);
@@ -131,7 +131,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
     });
 
     // This test currently fails due to a bug? in Platform (https://github.com/dashevo/rs-drive/issues/83)
-    xit(`<= id (asc) - should return previous names starting with id - (${identityId})`, async function () {
+    it(`<= id (asc) - should return previous names starting with id - (${identityId})`, async function () {
       const result = await testQueries.whereLessThanEqualToId(sdkClient, identityId, 'asc');
 
       console.log(`\tReceived document with name/id: ${result[0].toJSON().label} ${result[0].toJSON().$ownerId}`);
