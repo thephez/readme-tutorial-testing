@@ -9,12 +9,10 @@ const dotenv = require('dotenv');
 const testQueries = require('../queries/testQueries');
 
 dotenv.config();
-// const network = 'testnet';
-const network = 'devnet';
-const seedHost = 'seed-1.krupnik.networks.dash.org';
-const documentId = 'FJuBp3NtpkbEujjg6Boj91PJNK5oUBn1a8XzyZ8U1iT7';
-const identityId = '2tHkEUr7dLu9tV9upvTJWnHeRUtK6xmtojhciqWiPfxp';
-const identityName = ['RT-Lenora-19470', 'RT-Hadley-13326'];
+const network = 'testnet';
+const documentId = 'HasA9uTupgxTMeYRVEAPZvJCiiLitrbL76KKExMmZLbr';
+const identityId = 'BThomA9JDLRFLNjqFWPL2uSTgEsLija2dUWq9QicwA7R';
+const identityName = ['RT-Camren-69924', 'RT-Verda-75110'];
 const startsWithString = 'RT-';
 
 let sdkClient;
@@ -29,7 +27,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
     // console.log(`    Using node ${selectedNode} for tests`);
     sdkClient = new Dash.Client({
       network,
-      seeds: [{ host: seedHost }],
+      // seeds: [{ host: seedHost }],
       // dapiAddresses: [selectedNode],
     });
   });
@@ -63,7 +61,6 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       expect(result[0].id.toJSON()).to.be.equal(documentId);
     });
 
-    // This test currently fails (returns all results, not just the limit requested)
     it(`startAtComplex (desc)- should return name(s) starting at document id - (${documentId})`, async function () {
       const result = await testQueries.startAtComplex(sdkClient, documentId, startsWithString, 'desc', 1);
 
@@ -81,7 +78,6 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       expect(result[0].id.toJSON()).to.be.equal(documentId);
     });
 
-    // This test currently fails (returns all results, not just the limit requested)
     it(`startAtComplex (desc)- should return name(s) starting at document id - (${documentId})`, async function () {
       limit = 2;
       const result = await testQueries.startAtComplex(sdkClient, documentId, startsWithString, 'desc', limit);
@@ -111,7 +107,6 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       expect(result[0].id.toJSON()).to.not.be.equal(documentId);
     });
 
-    // This test currently fails due to a bug? in Platform (https://github.com/dashevo/rs-drive/issues/83)
     it(`< id (asc) - should return name starting before id - (${identityId})`, async function () {
       const result = await testQueries.whereLessThanId(sdkClient, identityId, 'asc');
 
@@ -130,7 +125,6 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       expect(result[0].id.toJSON()).to.be.equal(documentId);
     });
 
-    // This test currently fails due to a bug? in Platform (https://github.com/dashevo/rs-drive/issues/83)
     it(`<= id (asc) - should return previous names starting with id - (${identityId})`, async function () {
       const result = await testQueries.whereLessThanEqualToId(sdkClient, identityId, 'asc');
 
@@ -149,7 +143,6 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       expect(result[0].id.toJSON()).to.not.be.equal(documentId);
     });
 
-    // This test currently fails due to a bug? in Platform (https://github.com/dashevo/rs-drive/issues/83)
     it(`> id (asc) - should return name starting after id - (${identityId})`, async function () {
       const result = await testQueries.whereGreaterThanId(sdkClient, identityId, 'asc');
 
@@ -168,7 +161,6 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       expect(result[0].id.toJSON()).to.not.be.equal(documentId);
     });
 
-    // This test currently fails due to a bug? in Platform (https://github.com/dashevo/rs-drive/issues/83)
     it(`>= (asc) - should return names starting with id - (${identityId})`, async function () {
       const result = await testQueries.whereGreaterThanEqualToId(sdkClient, identityId, 'asc');
 
@@ -187,10 +179,10 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
         names.push(r.getData().label);
       }
 
-      // console.log(`\tReceived document with name(s): ${names}`);
+      console.log(`\tReceived document with name(s): ${names}`);
       expect(result).to.have.lengthOf(identityName.length);
       expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+      expect(result[0].id.toJSON()).to.be.equal(documentId);
     });
 
     it(`in (desc) - should return all existing names from list (all do exist) - (${identityName})`, async function () {
@@ -202,10 +194,10 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
         names.push(r.getData().label);
       }
 
-      // console.log(`\tReceived document with name(s): ${names}`);
+      console.log(`\tReceived document with name(s): ${names}`);
       expect(result).to.have.lengthOf(identityName.length);
       expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.be.equal(documentId);
+      expect(result[0].id.toJSON()).to.not.be.equal(documentId);
     });
 
     it('in (asc)- should return all existing names from list (some do not)', async function () {
@@ -222,7 +214,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       console.log(`\tReceived document with name: ${names}`);
       expect(result).to.have.lengthOf(identityName.length);
       expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+      expect(result[0].id.toJSON()).to.be.equal(documentId);
     });
 
     it('in (desc)- should return all existing names from list (some do not)', async function () {
@@ -239,7 +231,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       console.log(`\tReceived document with name: ${names}`);
       expect(result).to.have.lengthOf(identityName.length);
       expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.be.equal(documentId);
+      expect(result[0].id.toJSON()).to.not.be.equal(documentId);
     });
   });
 
