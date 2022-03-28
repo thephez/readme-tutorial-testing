@@ -19,7 +19,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [14]
 
     timeout-minutes: 15
 
@@ -38,4 +38,4 @@ jobs:
       env:
         CI: true
         WALLET_MNEMONIC: ${{ secrets.WALLET_MNEMONIC }}
-        DPNS_CONTRACT_ID: ${{ 'EBnvxB5RSW8NbBbXdRS3zPqFEaZnjCZ8WeurjvLTaru7' }}
+        # DPNS_CONTRACT_ID: ${{ 'FBzwdxUzv1BLZCdpwdYRVCihTLtYe73UxviWsxJd7FYQ' }}

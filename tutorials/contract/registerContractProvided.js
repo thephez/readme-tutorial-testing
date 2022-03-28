@@ -28,7 +28,7 @@ async function registerContract(client, identityId, contractDocumentSchema, cont
   if (validationResult.isValid()) {
     /* console.log('Validation passed, broadcasting contract..'); */
     // Sign and submit the data contract
-    return platform.contracts.broadcast(contract, identity);
+    return platform.contracts.publish(contract, identity);
   }
   console.error(validationResult); // An array of detailed validation errors
   throw validationResult.errors[0];

@@ -1,6 +1,6 @@
 {
   "name": "readme-tutorial-testing",
-  "version": "0.21.5",
+  "version": "0.22.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,12 +10,12 @@
   "author": "thephez",
   "license": "MIT",
   "dependencies": {
-    "@dashevo/dpp": "^0.21.5",
-    "dash": "^3.21.5"
+    "@dashevo/dpp": "^0.22.1",
+    "dash": "^3.22.1"
   },
   "devDependencies": {
     "chai": "^4.3.4",
-    "dotenv": "^10.0.0",
+    "dotenv": "^16.0.0",
     "eslint": "^8.6.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.22.1",

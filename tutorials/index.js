@@ -13,6 +13,7 @@ module.exports = {
   ...require('./name/retrieveNameBySearch'),
   ...require('./contract/registerContract'),
   ...require('./contract/registerContractProvided'),
+  ...require('./contract/updateContractProvided'),
   ...require('./contract/retrieveContract'),
   ...require('./document/submitDocument'),
   ...require('./document/getDocument'),
