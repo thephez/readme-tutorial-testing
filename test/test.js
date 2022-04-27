@@ -119,7 +119,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       const balance = await account.getTotalBalance();
       console.log(`\tCurrent balance: ${balance}`);
       expect(balance, 'account balance').to.be.greaterThan(0);
-    }).timeout(600000);
+    }).timeout(900000);
 
     it('Should create an identity', async function () {
       checkForIdentity = true;
