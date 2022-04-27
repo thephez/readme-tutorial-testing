@@ -20,6 +20,7 @@ const binaryContractDocumentSchema = require('../tutorials/contract/contracts/co
 
 dotenv.config();
 const mnemonic = process.env.WALLET_MNEMONIC;
+const newIdentityBalance = 9999000; // ~ minimum credit balance of new identity
 const syncStartHeight = 670000;
 // const syncStartHeight = 0; // devnet
 const network = 'testnet';
@@ -123,6 +124,8 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       identity = await tutorials.createIdentity(sdkClient);
       console.log(`\tRegistered identity: ${identity.id}`);
       expect(identity).to.be.instanceOf(Identity);
+      // New identity credit balance should be (10000 duffs - a small fee) * 1000
+      expect(identity.balance).to.be.above(newIdentityBalance);
       // assert.containsAllKeys(identity.toJSON(), ['id', 'publicKeys', 'balance', 'revision']);
     }).timeout(45000);
 
