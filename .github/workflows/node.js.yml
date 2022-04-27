@@ -39,8 +39,6 @@ jobs:
         CI: true
         WALLET_MNEMONIC: ${{ secrets.WALLET_MNEMONIC }}
         # DPNS_CONTRACT_ID: ${{ 'FBzwdxUzv1BLZCdpwdYRVCihTLtYe73UxviWsxJd7FYQ' }}
-
-    - name: Store wallet database
     - uses: actions/upload-artifact@v3
       with:
         name: wallet-data
