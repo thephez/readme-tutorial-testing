@@ -7,6 +7,7 @@ const DataContract = require('@dashevo/dpp/lib/dataContract/DataContract');
 const Document = require('@dashevo/dpp/lib/document/Document');
 const Identifier = require('@dashevo/dpp/lib/Identifier');
 const Identity = require('@dashevo/dpp/lib/identity/Identity');
+const { NodeForage } = require('nodeforage');
 const { assert, expect } = require('chai');
 const faker = require('faker');
 const dotenv = require('dotenv');
@@ -21,7 +22,8 @@ const binaryContractDocumentSchema = require('../tutorials/contract/contracts/co
 dotenv.config();
 const mnemonic = process.env.WALLET_MNEMONIC;
 const newIdentityBalance = 9999000; // ~ minimum credit balance of new identity
-const syncStartHeight = 670000;
+const adapter = new NodeForage({ name: 'wallet' });
+// const syncStartHeight = 670000;
 // const syncStartHeight = 0; // devnet
 const network = 'testnet';
 // const network = 'devnet';
@@ -89,9 +91,10 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         network,
         wallet: {
           mnemonic,
-          unsafeOptions: {
-            skipSynchronizationBeforeHeight: syncStartHeight,
-          },
+          adapter,
+          // unsafeOptions: {
+          //   skipSynchronizationBeforeHeight: syncStartHeight,
+          // },
         },
         dapiAddresses: [selectedNode],
       });
