@@ -109,7 +109,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       }
     });
 
-    it.only('Client should connect without error', async function () {
+    it('Client should connect without error', async function () {
       const result = await tutorials.checkNetworkConnection(sdkClient);
       expect(result).to.have.lengthOf(64);
     });
