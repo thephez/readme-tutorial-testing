@@ -30,7 +30,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Cache wallet data
-      uses: actions/cache@v3
+      uses: gerbal/always-cache@v1.0.3
       id: wallet-data
       with:
         path: wallet.db.json
@@ -38,10 +38,6 @@ jobs:
 
     - name: View filesystem
       run: ls -alh
-    # - name: Download wallet data
-    #   uses: actions/download-artifact@v3
-    #   with:
-    #     name: wallet-data
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
