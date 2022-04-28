@@ -28,6 +28,12 @@ jobs:
       run: git config --global url."https://github.com/".insteadOf ssh://git@github.com/
 
     - uses: actions/checkout@v2
+    
+    - name: Download wallet data
+      uses: actions/download-artifact@v3
+      with:
+        name: wallet-data
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
