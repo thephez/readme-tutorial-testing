@@ -33,11 +33,14 @@ jobs:
       uses: gerbal/always-cache@v1.0.3
       id: wallet-data
       with:
-        path: wallet.db.json
+        path: ./*.json
         key: wallet-data
 
     - name: View filesystem
+      if: always()
       run: ls -alh
+
+    - run: pwd
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -51,6 +54,10 @@ jobs:
         WALLET_MNEMONIC: ${{ secrets.WALLET_MNEMONIC }}
         # DPNS_CONTRACT_ID: ${{ 'FBzwdxUzv1BLZCdpwdYRVCihTLtYe73UxviWsxJd7FYQ' }}
    
+    - name: View filesystem
+      if: always()
+      run: ls -alh
+
     - name: Upload wallet data
       if: always()
       uses: actions/upload-artifact@v3
