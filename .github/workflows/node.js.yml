@@ -41,6 +41,7 @@ jobs:
         # DPNS_CONTRACT_ID: ${{ 'FBzwdxUzv1BLZCdpwdYRVCihTLtYe73UxviWsxJd7FYQ' }}
     
     - name: Upload wallet data
+      if: always()
       uses: actions/upload-artifact@v3
       with:
         name: wallet-data
