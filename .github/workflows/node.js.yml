@@ -28,11 +28,20 @@ jobs:
       run: git config --global url."https://github.com/".insteadOf ssh://git@github.com/
 
     - uses: actions/checkout@v2
-    
-    - name: Download wallet data
-      uses: actions/download-artifact@v3
+
+    - name: Cache wallet data
+      uses: actions/cache@v3
+      id: wallet-data
       with:
-        name: wallet-data
+        path: wallet.db.json
+        key: ${{ runner.os }}-wallet-data
+
+    - name: View filesystem
+      run: ls -alh
+    # - name: Download wallet data
+    #   uses: actions/download-artifact@v3
+    #   with:
+    #     name: wallet-data
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -45,7 +54,7 @@ jobs:
         CI: true
         WALLET_MNEMONIC: ${{ secrets.WALLET_MNEMONIC }}
         # DPNS_CONTRACT_ID: ${{ 'FBzwdxUzv1BLZCdpwdYRVCihTLtYe73UxviWsxJd7FYQ' }}
-    
+   
     - name: Upload wallet data
       if: always()
       uses: actions/upload-artifact@v3
