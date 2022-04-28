@@ -21,7 +21,7 @@ jobs:
       matrix:
         node-version: [14]
 
-    timeout-minutes: 15
+    timeout-minutes: 20
 
     steps:
     - name: Use https instead of ssh for git
@@ -39,7 +39,9 @@ jobs:
         CI: true
         WALLET_MNEMONIC: ${{ secrets.WALLET_MNEMONIC }}
         # DPNS_CONTRACT_ID: ${{ 'FBzwdxUzv1BLZCdpwdYRVCihTLtYe73UxviWsxJd7FYQ' }}
-    - uses: actions/upload-artifact@v3
+    
+    - name: Upload wallet data
+      uses: actions/upload-artifact@v3
       with:
         name: wallet-data
         path: wallet.db.json
