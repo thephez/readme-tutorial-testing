@@ -34,7 +34,7 @@ jobs:
       id: wallet-data
       with:
         path: wallet.db.json
-        key: ${{ runner.os }}-wallet-data
+        key: wallet-data
 
     - name: View filesystem
       run: ls -alh
