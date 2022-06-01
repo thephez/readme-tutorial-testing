@@ -10,9 +10,11 @@ const testQueries = require('../queries/testQueries');
 
 dotenv.config();
 const network = 'testnet';
-const documentId = 'HasA9uTupgxTMeYRVEAPZvJCiiLitrbL76KKExMmZLbr';
-const identityId = 'BThomA9JDLRFLNjqFWPL2uSTgEsLija2dUWq9QicwA7R';
-const identityName = ['RT-Camren-69924', 'RT-Verda-75110'];
+// const network = 'devnet';
+// const seedHost = 'seed-1.<devnet-name>.networks.dash.org';
+const documentId = '9qxiFFVRsmvGfq2HcEKk8i8QbwYocSLQK2CekX9dkuPh'; // DPNS domain document ID for identityId
+const identityId = '9KW24n9s3dsKMj2RFSKBsyc3CyM3rFCpQaGRg7xUBTYn'; // Identity ID for an identityName
+const identityName = ['RT-Delfina-71561', 'RT-Zachary-59760'];
 const startsWithString = 'RT-';
 
 let sdkClient;
@@ -181,8 +183,8 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
 
       console.log(`\tReceived document with name(s): ${names}`);
       expect(result).to.have.lengthOf(identityName.length);
-      expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.be.equal(documentId);
+      expect(result[1]).to.be.instanceOf(Document);
+      expect(result[1].id.toJSON()).to.be.equal(documentId);
     });
 
     it(`in (desc) - should return all existing names from list (all do exist) - (${identityName})`, async function () {
@@ -197,7 +199,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       console.log(`\tReceived document with name(s): ${names}`);
       expect(result).to.have.lengthOf(identityName.length);
       expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+      expect(result[0].id.toJSON()).to.be.equal(documentId);
     });
 
     it('in (asc)- should return all existing names from list (some do not)', async function () {
@@ -214,7 +216,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       console.log(`\tReceived document with name: ${names}`);
       expect(result).to.have.lengthOf(identityName.length);
       expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.be.equal(documentId);
+      expect(result[1].id.toJSON()).to.be.equal(documentId);
     });
 
     it('in (desc)- should return all existing names from list (some do not)', async function () {
@@ -231,7 +233,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       console.log(`\tReceived document with name: ${names}`);
       expect(result).to.have.lengthOf(identityName.length);
       expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+      expect(result[0].id.toJSON()).to.be.equal(documentId);
     });
   });
 
