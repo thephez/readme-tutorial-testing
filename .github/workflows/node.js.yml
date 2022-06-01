@@ -33,7 +33,7 @@ jobs:
       uses: gerbal/always-cache@v1.0.3
       id: wallet-data
       with:
-        path: ./*.json
+        path: wallet
         key: wallet-data
 
     - name: View filesystem
