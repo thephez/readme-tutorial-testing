@@ -38,9 +38,10 @@ jobs:
 
     - name: View filesystem
       if: always()
-      run: ls -alh
-
-    - run: pwd
+      run: | 
+        ls -alh
+        mv wallet/wallet.db.json .
+        ls -alh
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
