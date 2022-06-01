@@ -29,16 +29,15 @@ jobs:
 
     - uses: actions/checkout@v2
 
-    - name: Cache wallet data
+    - name: Wallet data caching
       uses: gerbal/always-cache@v1.0.3
       id: wallet-data
       with:
         path: wallet
         key: wallet-data-2022-06-01
 
-    - name: View filesystem
+    - name: Move cached wallet to project root
       if: always()
-      # Move cached wallet file out of cache sub-directory
       run: | 
         mv wallet/wallet.db.json .
         ls -alh
@@ -54,7 +53,7 @@ jobs:
         CI: true
         WALLET_MNEMONIC: ${{ secrets.WALLET_MNEMONIC }}
    
-    - name: View filesystem
+    - name: Copy wallet to cache directory
       if: always()
       # Create wallet directory if necessary and copy wallet file into it
       run: |
