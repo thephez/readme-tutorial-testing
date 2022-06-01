@@ -38,8 +38,8 @@ jobs:
 
     - name: View filesystem
       if: always()
+      # Move cached wallet file out of cache sub-directory
       run: | 
-        ls -alh
         mv wallet/wallet.db.json .
         ls -alh
 
@@ -53,21 +53,18 @@ jobs:
       env:
         CI: true
         WALLET_MNEMONIC: ${{ secrets.WALLET_MNEMONIC }}
-        # DPNS_CONTRACT_ID: ${{ 'FBzwdxUzv1BLZCdpwdYRVCihTLtYe73UxviWsxJd7FYQ' }}
    
     - name: View filesystem
       if: always()
+      # Create wallet directory if necessary and copy wallet file into it
       run: |
-        ls -alh
         mkdir -p wallet
         \cp -r wallet.db.json wallet/
-        ls -alh
-        ls -alh wallet/
 
-    - name: Upload wallet data
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: wallet-data
-        path: wallet.db.json
-        if-no-files-found: warn
+    # - name: Upload wallet data
+    #   if: always()
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: wallet-data
+    #     path: wallet.db.json
+    #     if-no-files-found: warn
