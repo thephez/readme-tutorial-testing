@@ -56,7 +56,12 @@ jobs:
    
     - name: View filesystem
       if: always()
-      run: ls -alh
+      run: |
+        ls -alh
+        mkdir -p wallet
+        \cp -r wallet.db.json wallet/
+        ls -alh
+        ls -alh wallet/
 
     - name: Upload wallet data
       if: always()
