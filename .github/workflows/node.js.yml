@@ -34,7 +34,7 @@ jobs:
       id: wallet-data
       with:
         path: wallet
-        key: wallet-data
+        key: wallet-data-2022-06-01
 
     - name: View filesystem
       if: always()
