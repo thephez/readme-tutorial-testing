@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-const Identifier = require('@dashevo/dpp/lib/Identifier');
+const { PlatformProtocol: { Identifier } } = require('dash');
 
 async function startAt(sdkClient, startAtId, limit = 1) {
   return sdkClient.platform.documents.get(

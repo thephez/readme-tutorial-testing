@@ -5,8 +5,6 @@
 const Dash = require('dash');
 const DataContract = require('@dashevo/dpp/lib/dataContract/DataContract');
 const Document = require('@dashevo/dpp/lib/document/Document');
-const Identifier = require('@dashevo/dpp/lib/Identifier');
-const Identity = require('@dashevo/dpp/lib/identity/Identity');
 const { assert, expect } = require('chai');
 const faker = require('faker');
 const dotenv = require('dotenv');
@@ -17,6 +15,9 @@ const timestampContractDocumentSchema = require('../tutorials/contract/contracts
 const refContractDocumentSchema = require('../tutorials/contract/contracts/contractWithRef.json');
 const refContractDefinitions = require('../tutorials/contract/contracts/contractWithRefDefinitions.json');
 const binaryContractDocumentSchema = require('../tutorials/contract/contracts/contractWithBinaryData.json');
+
+const { PlatformProtocol: { Identifier } } = Dash;
+const { PlatformProtocol: { Identity } } = Dash;
 
 dotenv.config();
 const mnemonic = process.env.WALLET_MNEMONIC;
