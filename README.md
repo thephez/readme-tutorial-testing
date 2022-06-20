@@ -2,6 +2,7 @@
 
 Repository for testing [dashplatform.readme.io](https://dashplatform.readme.io/docs/tutorials-introduction) JavaScript tutorials.
 
+[![SDK Version](https://img.shields.io/github/package-json/dependency-version/thephez/readme-tutorial-testing/dash)](https://github.com/thephez/readme-tutorial-testing/blob/main/package.json)
 [![Node.js CI](https://github.com/thephez/readme-tutorial-testing/workflows/Node.js%20CI/badge.svg)](https://github.com/thephez/readme-tutorial-testing/actions?query=workflow%3A%22Node.js+CI%22)
 
 ## Install
