@@ -31,8 +31,8 @@ async function submitNoteDocument(client, identityId, message) {
 
   const documentBatch = {
     create: [noteDocument], // Document(s) to create
-    replace: [],            // Document(s) to update
-    delete: [],             // Document(s) to delete
+    replace: [], // Document(s) to update
+    delete: [], // Document(s) to delete
   };
   // Sign and submit the document(s)
   return platform.documents.broadcast(documentBatch, identity);

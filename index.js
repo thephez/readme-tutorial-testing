@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const Dash = require('dash');
 const dotenv = require('dotenv');
 const tutorials = require('./tutorials');
@@ -20,7 +21,7 @@ const client = new Dash.Client({
   },
 });
 
-tutorials.checkNetworkConnection(client).then((x) => (console.log(x)));
+tutorials.checkNetworkConnection(client).then((x) => console.log(x));
 
 // Get first address of wallet
 getNewWalletInfo(client);
