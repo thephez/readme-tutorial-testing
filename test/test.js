@@ -182,7 +182,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       const registeredAlias = await tutorials.registerAlias(sdkClient, identity.id, alias);
       console.log(`\tRegistered ${alias} (${registeredAlias.toJSON().$id})`);
       expect(registeredAlias.toJSON().label).to.equal(alias);
-    }).timeout(60000);;
+    }).timeout(60000);
 
     it('Should retrieve a name by name', async function () {
       // assert.isDefined(identity);
