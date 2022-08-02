@@ -12,15 +12,15 @@ dotenv.config();
 const network = 'testnet';
 // const network = 'devnet';
 // const seedHost = 'seed-1.<devnet-name>.networks.dash.org';
-const documentId = '9qxiFFVRsmvGfq2HcEKk8i8QbwYocSLQK2CekX9dkuPh'; // DPNS domain document ID for identityId
-const identityId = '9KW24n9s3dsKMj2RFSKBsyc3CyM3rFCpQaGRg7xUBTYn'; // Identity ID for an identityName
-const identityName = ['RT-Delfina-71561', 'RT-Zachary-59760'];
+const documentId = '5U1Fx9ZyBcB7KaqaZLCiXX2aru9VL2JedYULTtwAtbMT'; // DPNS domain document ID for identityId
+const identityId = '47TRaU1SttEGFzAL7WusaXwfAXL6eVXw6Y5LicpZjocJ'; // Identity ID for an identityName
+const identityName = ['RT-Dolly-51519', 'RT-Letitia-60015'];
 const startsWithString = 'RT-';
 
 let sdkClient;
 let limit = 1;
 
-// selectedNode = '34.217.47.197:3000'; // devnet
+// selectedNode = '35.90.255.217:3000'; // devnet
 
 describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
   this.timeout(40000);
@@ -29,6 +29,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
     // console.log(`    Using node ${selectedNode} for tests`);
     sdkClient = new Dash.Client({
       network,
+      // Uncomment for devnets
       // seeds: [{ host: seedHost }],
       // dapiAddresses: [selectedNode],
     });
