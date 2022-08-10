@@ -159,6 +159,18 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(identityIds).to.include(identity.toJSON().id);
     });
 
+    it('Should update the identity (add key)', async function () {
+      const startingKeyCount = identity.toJSON().publicKeys.length;
+      const identityKeyAdded = await tutorials.updateIdentityAddKey(
+        sdkClient,
+        identity.id,
+        startingKeyCount, // 0-based index
+      );
+      // console.log(identityKeyAdded.toJSON().publicKeys);
+      expect(identityKeyAdded).to.be.instanceOf(Identity);
+      expect(identityKeyAdded.toJSON().publicKeys.length).to.equal(startingKeyCount + 1);
+    });
+
     it('Should register a name', async function () {
       // assert.isDefined(identity);
 
