@@ -6,6 +6,7 @@ module.exports = {
   ...require('./identity/retrieveIdentity.js'),
   ...require('./identity/topupIdentity.js'),
   ...require('./identity/updateIdentityAddKey'),
+  ...require('./identity/updateIdentityDisableKey'),
   ...require('./identity/retrieveAccountIdentityIds'),
   ...require('./name/registerName'),
   ...require('./name/registerAlias'),

@@ -169,6 +169,22 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       // console.log(identityKeyAdded.toJSON().publicKeys);
       expect(identityKeyAdded).to.be.instanceOf(Identity);
       expect(identityKeyAdded.toJSON().publicKeys.length).to.equal(startingKeyCount + 1);
+      identity = identityKeyAdded; // Update identity for use in following tests
+    });
+
+    it('Should update the identity (disable key)', async function () {
+      const keyIdToDisable = identity.toJSON().publicKeys.slice(-1)[0].id;
+      const identityKeyDisabled = await tutorials.updateIdentityDisableKey(
+        sdkClient,
+        identity.id,
+        keyIdToDisable,
+      );
+      // console.log(identityKeyDisabled.getPublicKeyById(keyIdToDisable));
+      expect(identityKeyDisabled).to.be.instanceOf(Identity);
+      // eslint-disable-next-line no-unused-expressions
+      expect(identityKeyDisabled.toJSON().publicKeys.slice(-1)[0].disabledAt).to.exist;
+      // eslint-disable-next-line no-unused-expressions
+      expect(identity.toJSON().publicKeys.slice(-1)[0].disabledAt).to.not.exist;
     });
 
     it('Should register a name', async function () {
