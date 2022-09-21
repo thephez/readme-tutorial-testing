@@ -22,6 +22,7 @@ const { PlatformProtocol: { Identity } } = Dash;
 dotenv.config();
 const mnemonic = process.env.WALLET_MNEMONIC;
 const newIdentityBalance = 9999000; // ~ minimum credit balance of new identity
+const initialName = 'RT-First-00000'; // Used to make query tests easier
 const syncStartHeight = 670000;
 // const syncStartHeight = 0; // devnet
 const network = 'testnet';
@@ -157,7 +158,15 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     it('Should register a name', async function () {
       // assert.isDefined(identity);
 
-      name = `RT-${faker.name.firstName()}-${faker.datatype.number()}`;
+      // Check if initial name already established on this network
+      const retrievedName = await tutorials.retrieveNameByName(noWalletClient, initialName);
+
+      if (retrievedName === null) {
+        name = initialName;
+      } else {
+        name = `RT-${faker.name.firstName()}-${faker.datatype.number()}`;
+      }
+
       const registeredName = await tutorials.registerName(sdkClient, identity.id, name);
       console.log(`\tRegistered ${name} (${registeredName.toJSON().$id})`);
       expect(registeredName.toJSON().label).to.equal(name);
