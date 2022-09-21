@@ -200,7 +200,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       }
 
       const registeredName = await tutorials.registerName(sdkClient, identity.id, name);
-      console.log(`\tRegistered ${name} (${registeredName.toJSON().$id})`);
+      console.log(`\tRegistered ${name} (Document id: ${registeredName.toJSON().$id})`);
       expect(registeredName.toJSON().label).to.equal(name);
     });
 
