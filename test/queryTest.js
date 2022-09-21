@@ -12,9 +12,9 @@ dotenv.config();
 const network = 'testnet';
 // const network = 'devnet';
 // const seedHost = 'seed-1.<devnet-name>.networks.dash.org';
-const documentId = '5U1Fx9ZyBcB7KaqaZLCiXX2aru9VL2JedYULTtwAtbMT'; // DPNS domain document ID for identityId
-const identityId = '47TRaU1SttEGFzAL7WusaXwfAXL6eVXw6Y5LicpZjocJ'; // Identity ID for an identityName
-const identityName = ['RT-Dolly-51519', 'RT-Letitia-60015'];
+const documentId = 'drXv2kRjBqLxjv2dU6k1xXywrghLZb7vYoRHd4CRk2A'; // DPNS domain document ID for identityId
+const identityId = '7Aq5TivLSDiPQrueKB3vMhkgZ2p6UmCiU1qQvEuX7Nv1'; // Identity ID for an identityName
+const identityName = ['RT-Jacinto-97359', 'e44dd22805e090714683'];
 const startsWithString = 'RT-';
 
 let sdkClient;
