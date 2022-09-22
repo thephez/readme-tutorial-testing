@@ -9,8 +9,9 @@ const dotenv = require('dotenv');
 const testQueries = require('../queries/testQueries');
 
 dotenv.config();
-const network = 'testnet';
+// const network = 'testnet';
 // const network = 'devnet';
+const network = 'local';
 // const seedHost = 'seed-1.<devnet-name>.networks.dash.org';
 const documentId = '9tPJHpEeqRL2brtkUWYGyWMnya7sUgDa6ar7feFL26pS'; // DPNS domain document ID for identityId
 const identityId = '9QoDBjrLnMQ1VwaSr1waQaKnRJNso5rqq3vqKvX2pren'; // Identity ID for an identityName
