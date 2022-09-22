@@ -64,7 +64,8 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
     it('Should create a wallet and get an unused address without error', async function () {
       const result = await tutorials.getNewWalletInfo(emptyWalletClient);
-      // console.log(result);
+      console.log(`\tMnemonic: ${result.mnemonic}`);
+      console.log(`\tAddress: ${result.address}`);
       assert.hasAllKeys(result, ['mnemonic', 'address']);
       expect(result.mnemonic.split(' '), 'mnemonic words').to.have.lengthOf(12);
     }).timeout(30000);
