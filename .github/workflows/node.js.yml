@@ -38,4 +38,4 @@ jobs:
       env:
         CI: true
         WALLET_MNEMONIC: ${{ secrets.WALLET_MNEMONIC }}
-        # DPNS_CONTRACT_ID: ${{ 'FBzwdxUzv1BLZCdpwdYRVCihTLtYe73UxviWsxJd7FYQ' }}
+        SYNC_START_HEIGHT: 0

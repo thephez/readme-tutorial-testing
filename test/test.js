@@ -23,8 +23,7 @@ dotenv.config();
 const mnemonic = process.env.WALLET_MNEMONIC;
 const newIdentityBalance = 9999000; // ~ minimum credit balance of new identity
 const initialName = 'RT-First-00000'; // Used to make query tests easier
-// const syncStartHeight = 670000;
-const syncStartHeight = 0; // devnet
+const syncStartHeight = process.env.SYNC_START_HEIGHT;
 // const network = 'testnet';
 const network = 'devnet';
 // List of DCG testnet nodes
@@ -119,6 +118,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     });
 
     it('Client wallet should have a balance > 0', async function () {
+      console.log(`\tSyncing wallet from height: ${syncStartHeight}`);
       account = await sdkClient.getWalletAccount();
       const balance = await account.getTotalBalance();
       console.log(`\tCurrent balance: ${balance}`);
