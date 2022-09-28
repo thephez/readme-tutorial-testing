@@ -13,9 +13,10 @@ npm install
 
 ## Usage
 
-Create an `.env` file that sets `WALLET_MNEMONIC` to a valid wallet mnemonic that you will fund and
-`SYNC_START_HEIGHT` to the height at which to begin the wallet sync process. See
-[.env.example](./.env.example) for an example `.env` file.
+Create an `.env` file that sets `WALLET_MNEMONIC` to a valid wallet mnemonic that you will fund,
+`NETWORK` to a network type (mainnet, testnet, or local), and `SYNC_START_HEIGHT` to the height at
+which to begin the wallet sync process. See [.env.example](./.env.example) for an example `.env`
+file.
 
 Once the wallet has been funded, run the following command:
 
