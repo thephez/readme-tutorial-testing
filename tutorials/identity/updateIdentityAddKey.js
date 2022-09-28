@@ -17,7 +17,7 @@ async function updateIdentityAddKey(sdkClient, identityId, keyId) {
 
   const account = await sdkClient.platform.client.getWalletAccount();
   const identityIndex = await account.getUnusedIdentityIndex();
-  console.log(`Unused identity index: ${identityIndex}`);
+  // console.log(`Unused identity index: ${identityIndex}`);
   // console.log(existingIdentity.getPublicKeyById(identityIndex));
 
   const { privateKey: identityPrivateKey } = account
