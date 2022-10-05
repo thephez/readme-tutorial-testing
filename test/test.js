@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable no-console */
 /* eslint-disable func-names */
 /* eslint-disable prefer-arrow-callback */
@@ -31,7 +32,8 @@ const initialName = 'RT-First-00000'; // Used to make query tests easier
 const syncStartHeight = process.env.SYNC_START_HEIGHT;
 const network = process.env.NETWORK;
 // eslint-disable-next-line prefer-const
-let selectedNode = goodNodes.goodNodes[Math.floor(Math.random() * goodNodes.goodNodes.length)];
+let selectedNode =
+  goodNodes.goodNodes[Math.floor(Math.random() * goodNodes.goodNodes.length)];
 selectedNode = '35.90.255.217:3000'; // devnet
 // selectedNode = '127.0.0.1:3000';
 
