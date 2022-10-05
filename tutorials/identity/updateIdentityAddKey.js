@@ -20,6 +20,7 @@ async function updateIdentityAddKey(sdkClient, identityId, keyId) {
   // console.log(`Unused identity index: ${identityIndex}`);
   // console.log(existingIdentity.getPublicKeyById(identityIndex));
 
+  // eslint-disable-next-line operator-linebreak
   const { privateKey: identityPrivateKey } =
     account.identities.getIdentityHDKeyByIndex(identityIndex, 0);
 
