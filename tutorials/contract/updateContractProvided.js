@@ -24,7 +24,9 @@ async function updateContract(client, identityId, contractId) {
 
   // Make sure contract passes validation checks
   await platform.dpp.initialize();
-  const validationResult = await platform.dpp.dataContract.validate(existingDataContract);
+  const validationResult = await platform.dpp.dataContract.validate(
+    existingDataContract,
+  );
 
   if (validationResult.isValid()) {
     // console.log('Validation passed, broadcasting contract..');
