@@ -20,22 +20,19 @@ async function updateIdentityAddKey(sdkClient, identityId, keyId) {
   // console.log(`Unused identity index: ${identityIndex}`);
   // console.log(existingIdentity.getPublicKeyById(identityIndex));
 
-  const { privateKey: identityPrivateKey } = account
-    .identities
-    .getIdentityHDKeyByIndex(identityIndex, 0);
+  const { privateKey: identityPrivateKey } =
+    account.identities.getIdentityHDKeyByIndex(identityIndex, 0);
 
   const identityPublicKey = identityPrivateKey.toPublicKey().toBuffer();
 
-  const newPublicKey = new IdentityPublicKey(
-    {
-      id: keyId,
-      type: IdentityPublicKey.TYPES.ECDSA_SECP256K1,
-      purpose: IdentityPublicKey.PURPOSES.AUTHENTICATION,
-      securityLevel: IdentityPublicKey.SECURITY_LEVELS.HIGH,
-      data: identityPublicKey,
-      readOnly: false,
-    },
-  );
+  const newPublicKey = new IdentityPublicKey({
+    id: keyId,
+    type: IdentityPublicKey.TYPES.ECDSA_SECP256K1,
+    purpose: IdentityPublicKey.PURPOSES.AUTHENTICATION,
+    securityLevel: IdentityPublicKey.SECURITY_LEVELS.HIGH,
+    data: identityPublicKey,
+    readOnly: false,
+  });
 
   // console.log(newPublicKey.toJSON());
 
@@ -45,13 +42,9 @@ async function updateIdentityAddKey(sdkClient, identityId, keyId) {
 
   // console.log(updateAdd);
 
-  await sdkClient.platform.identities.update(
-    existingIdentity,
-    updateAdd,
-    {
-      [newPublicKey.getId()]: identityPrivateKey,
-    },
-  );
+  await sdkClient.platform.identities.update(existingIdentity, updateAdd, {
+    [newPublicKey.getId()]: identityPrivateKey,
+  });
 
   return sdkClient.platform.identities.get(identityId);
 }

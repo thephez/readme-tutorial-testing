@@ -16,8 +16,12 @@ const refContractDocumentSchema = require('../tutorials/contract/contracts/contr
 const refContractDefinitions = require('../tutorials/contract/contracts/contractWithRefDefinitions.json');
 const binaryContractDocumentSchema = require('../tutorials/contract/contracts/contractWithBinaryData.json');
 
-const { PlatformProtocol: { Identifier } } = Dash;
-const { PlatformProtocol: { Identity } } = Dash;
+const {
+  PlatformProtocol: { Identifier },
+} = Dash;
+const {
+  PlatformProtocol: { Identity },
+} = Dash;
 
 dotenv.config();
 const mnemonic = process.env.WALLET_MNEMONIC;
@@ -26,7 +30,121 @@ const initialName = 'RT-First-00000'; // Used to make query tests easier
 const syncStartHeight = process.env.SYNC_START_HEIGHT;
 const network = process.env.NETWORK;
 // List of DCG testnet nodes
-const goodNodes = ['34.215.201.169:3000', '34.213.226.143:3000', '35.90.175.105:3000', '54.212.56.164:3000', '34.220.85.19:3000', '34.222.76.26:3000', '54.184.106.44:3000', '54.185.174.141:3000', '35.90.236.1:3000', '18.237.79.212:3000', '54.202.25.226:3000', '35.167.3.35:3000', '34.208.249.51:3000', '52.26.78.151:3000', '34.221.77.65:3000', '54.202.62.244:3000', '35.165.175.185:3000', '52.38.43.254:3000', '35.89.135.84:3000', '54.202.179.253:3000', '34.219.104.40:3000', '52.13.19.26:3000', '54.213.45.110:3000', '35.90.129.145:3000', '34.216.128.111:3000', '35.90.96.31:3000', '35.90.165.61:3000', '34.222.138.111:3000', '34.216.130.211:3000', '35.165.59.241:3000', '34.220.227.165:3000', '52.32.232.156:3000', '34.212.226.44:3000', '35.160.140.37:3000', '52.11.133.244:3000', '54.201.189.185:3000', '35.88.123.232:3000', '34.220.144.226:3000', '34.216.195.19:3000', '54.185.1.69:3000', '35.166.29.155:3000', '18.237.147.160:3000', '34.220.228.214:3000', '54.212.75.8:3000', '35.163.152.74:3000', '18.236.78.191:3000', '54.148.106.179:3000', '34.211.46.222:3000', '35.160.13.25:3000', '34.220.17.107:3000', '34.212.65.137:3000', '54.185.249.172:3000', '54.70.65.199:3000', '54.69.210.42:3000', '18.236.160.247:3000', '54.245.197.173:3000', '54.187.11.213:3000', '54.218.70.46:3000', '35.165.207.13:3000', '34.211.49.3:3000', '34.219.36.94:3000', '34.222.127.158:3000', '34.222.242.228:3000', '52.26.220.40:3000', '52.36.244.225:3000', '34.222.225.76:3000', '18.236.169.114:3000', '54.201.236.212:3000', '54.203.241.214:3000', '34.221.254.29:3000', '54.187.50.120:3000', '54.184.140.221:3000', '34.215.192.133:3000', '35.164.180.39:3000', '54.184.183.20:3000', '52.43.197.215:3000', '54.201.42.245:3000', '54.218.113.88:3000', '54.244.141.192:3000', '34.217.98.54:3000', '34.222.168.33:3000', '52.32.143.49:3000', '54.187.224.80:3000', '54.189.87.145:3000', '52.39.164.105:3000', '54.70.55.164:3000', '54.214.68.206:3000', '54.201.239.109:3000', '34.215.146.162:3000', '18.236.233.120:3000', '54.190.217.178:3000', '34.220.41.134:3000', '34.212.178.215:3000', '34.219.169.55:3000', '54.218.251.43:3000', '18.236.216.191:3000', '54.188.17.60:3000', '54.191.227.118:3000', '34.213.5.102:3000', '35.166.79.235:3000', '54.71.107.225:3000', '54.201.162.86:3000', '52.34.141.75:3000', '34.217.43.189:3000', '52.38.77.105:3000', '52.11.252.174:3000', '54.191.221.246:3000', '54.218.107.83:3000', '54.212.18.218:3000', '34.220.53.77:3000', '54.244.41.15:3000', '34.222.135.203:3000', '54.191.110.152:3000'];
+const goodNodes = [
+  '34.215.201.169:3000',
+  '34.213.226.143:3000',
+  '35.90.175.105:3000',
+  '54.212.56.164:3000',
+  '34.220.85.19:3000',
+  '34.222.76.26:3000',
+  '54.184.106.44:3000',
+  '54.185.174.141:3000',
+  '35.90.236.1:3000',
+  '18.237.79.212:3000',
+  '54.202.25.226:3000',
+  '35.167.3.35:3000',
+  '34.208.249.51:3000',
+  '52.26.78.151:3000',
+  '34.221.77.65:3000',
+  '54.202.62.244:3000',
+  '35.165.175.185:3000',
+  '52.38.43.254:3000',
+  '35.89.135.84:3000',
+  '54.202.179.253:3000',
+  '34.219.104.40:3000',
+  '52.13.19.26:3000',
+  '54.213.45.110:3000',
+  '35.90.129.145:3000',
+  '34.216.128.111:3000',
+  '35.90.96.31:3000',
+  '35.90.165.61:3000',
+  '34.222.138.111:3000',
+  '34.216.130.211:3000',
+  '35.165.59.241:3000',
+  '34.220.227.165:3000',
+  '52.32.232.156:3000',
+  '34.212.226.44:3000',
+  '35.160.140.37:3000',
+  '52.11.133.244:3000',
+  '54.201.189.185:3000',
+  '35.88.123.232:3000',
+  '34.220.144.226:3000',
+  '34.216.195.19:3000',
+  '54.185.1.69:3000',
+  '35.166.29.155:3000',
+  '18.237.147.160:3000',
+  '34.220.228.214:3000',
+  '54.212.75.8:3000',
+  '35.163.152.74:3000',
+  '18.236.78.191:3000',
+  '54.148.106.179:3000',
+  '34.211.46.222:3000',
+  '35.160.13.25:3000',
+  '34.220.17.107:3000',
+  '34.212.65.137:3000',
+  '54.185.249.172:3000',
+  '54.70.65.199:3000',
+  '54.69.210.42:3000',
+  '18.236.160.247:3000',
+  '54.245.197.173:3000',
+  '54.187.11.213:3000',
+  '54.218.70.46:3000',
+  '35.165.207.13:3000',
+  '34.211.49.3:3000',
+  '34.219.36.94:3000',
+  '34.222.127.158:3000',
+  '34.222.242.228:3000',
+  '52.26.220.40:3000',
+  '52.36.244.225:3000',
+  '34.222.225.76:3000',
+  '18.236.169.114:3000',
+  '54.201.236.212:3000',
+  '54.203.241.214:3000',
+  '34.221.254.29:3000',
+  '54.187.50.120:3000',
+  '54.184.140.221:3000',
+  '34.215.192.133:3000',
+  '35.164.180.39:3000',
+  '54.184.183.20:3000',
+  '52.43.197.215:3000',
+  '54.201.42.245:3000',
+  '54.218.113.88:3000',
+  '54.244.141.192:3000',
+  '34.217.98.54:3000',
+  '34.222.168.33:3000',
+  '52.32.143.49:3000',
+  '54.187.224.80:3000',
+  '54.189.87.145:3000',
+  '52.39.164.105:3000',
+  '54.70.55.164:3000',
+  '54.214.68.206:3000',
+  '54.201.239.109:3000',
+  '34.215.146.162:3000',
+  '18.236.233.120:3000',
+  '54.190.217.178:3000',
+  '34.220.41.134:3000',
+  '34.212.178.215:3000',
+  '34.219.169.55:3000',
+  '54.218.251.43:3000',
+  '18.236.216.191:3000',
+  '54.188.17.60:3000',
+  '54.191.227.118:3000',
+  '34.213.5.102:3000',
+  '35.166.79.235:3000',
+  '54.71.107.225:3000',
+  '54.201.162.86:3000',
+  '52.34.141.75:3000',
+  '34.217.43.189:3000',
+  '52.38.77.105:3000',
+  '52.11.252.174:3000',
+  '54.191.221.246:3000',
+  '54.218.107.83:3000',
+  '54.212.18.218:3000',
+  '34.220.53.77:3000',
+  '54.244.41.15:3000',
+  '34.222.135.203:3000',
+  '54.191.110.152:3000',
+];
 // eslint-disable-next-line prefer-const
 let selectedNode = goodNodes[Math.floor(Math.random() * goodNodes.length)];
 selectedNode = '35.90.255.217:3000'; // devnet
@@ -45,7 +163,9 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
   describe('Initial preparation', function () {
     before(function () {
       // selectedNode = '127.0.0.1:3000';
-      console.log(`\tUsing node ${selectedNode} for tests. Network type: ${network}`);
+      console.log(
+        `\tUsing node ${selectedNode} for tests. Network type: ${network}`,
+      );
       emptyWalletClient = new Dash.Client({
         network,
         wallet: {
@@ -136,7 +256,10 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     }).timeout(45000);
 
     it('Should retrieve the identity', async function () {
-      const retrievedIdentity = await tutorials.retrieveIdentity(sdkClient, identity.id);
+      const retrievedIdentity = await tutorials.retrieveIdentity(
+        sdkClient,
+        identity.id,
+      );
       expect(retrievedIdentity).to.be.instanceOf(Identity);
     });
 
@@ -144,7 +267,10 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       // assert.isDefined(identity);
 
       const startBalance = identity.balance;
-      const identityToppedUp = await tutorials.topupIdentity(sdkClient, identity.id);
+      const identityToppedUp = await tutorials.topupIdentity(
+        sdkClient,
+        identity.id,
+      );
 
       expect(identityToppedUp).to.be.instanceOf(Identity);
       expect(identityToppedUp.balance).to.not.equal(startBalance);
@@ -168,7 +294,9 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       );
       // console.log(identityKeyAdded.toJSON().publicKeys);
       expect(identityKeyAdded).to.be.instanceOf(Identity);
-      expect(identityKeyAdded.toJSON().publicKeys.length).to.equal(startingKeyCount + 1);
+      expect(identityKeyAdded.toJSON().publicKeys.length).to.equal(
+        startingKeyCount + 1,
+      );
       identity = identityKeyAdded; // Update identity for use in following tests
     });
 
@@ -182,7 +310,8 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       // console.log(identityKeyDisabled.getPublicKeyById(keyIdToDisable));
       expect(identityKeyDisabled).to.be.instanceOf(Identity);
       // eslint-disable-next-line no-unused-expressions
-      expect(identityKeyDisabled.toJSON().publicKeys.slice(-1)[0].disabledAt).to.exist;
+      expect(identityKeyDisabled.toJSON().publicKeys.slice(-1)[0].disabledAt).to
+        .exist;
       // eslint-disable-next-line no-unused-expressions
       expect(identity.toJSON().publicKeys.slice(-1)[0].disabledAt).to.not.exist;
     });
@@ -191,7 +320,10 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       // assert.isDefined(identity);
 
       // Check if initial name already established on this network
-      const retrievedName = await tutorials.retrieveNameByName(noWalletClient, initialName);
+      const retrievedName = await tutorials.retrieveNameByName(
+        noWalletClient,
+        initialName,
+      );
 
       if (retrievedName === null) {
         name = initialName;
@@ -199,8 +331,14 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         name = `RT-${faker.name.firstName()}-${faker.datatype.number()}`;
       }
 
-      const registeredName = await tutorials.registerName(sdkClient, identity.id, name);
-      console.log(`\tRegistered ${name} (Document id: ${registeredName.toJSON().$id})`);
+      const registeredName = await tutorials.registerName(
+        sdkClient,
+        identity.id,
+        name,
+      );
+      console.log(
+        `\tRegistered ${name} (Document id: ${registeredName.toJSON().$id})`,
+      );
       expect(registeredName.toJSON().label).to.equal(name);
     });
 
@@ -208,21 +346,31 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       // assert.isDefined(identity);
       const alias = `${name}-alias`;
 
-      const registeredAlias = await tutorials.registerAlias(sdkClient, identity.id, alias);
+      const registeredAlias = await tutorials.registerAlias(
+        sdkClient,
+        identity.id,
+        alias,
+      );
       console.log(`\tRegistered ${alias} (${registeredAlias.toJSON().$id})`);
       expect(registeredAlias.toJSON().label).to.equal(alias);
     }).timeout(60000);
 
     it('Should retrieve a name by name', async function () {
       // assert.isDefined(identity);
-      const retrievedName = await tutorials.retrieveNameByName(noWalletClient, name);
+      const retrievedName = await tutorials.retrieveNameByName(
+        noWalletClient,
+        name,
+      );
 
       expect(retrievedName.toJSON().label).to.equal(name);
     });
 
     it('Should retrieve a name by record', async function () {
       // assert.isDefined(identity);
-      const retrievedName = await tutorials.retrieveNameByRecord(noWalletClient, identity.id);
+      const retrievedName = await tutorials.retrieveNameByRecord(
+        noWalletClient,
+        identity.id,
+      );
 
       expect(retrievedName).to.be.an('array').that.has.lengthOf.at.least(1);
       expect(retrievedName[0]).to.be.an('object');
@@ -231,7 +379,10 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
     it('Should retrieve a name by search', async function () {
       // assert.isDefined(identity);
-      const retrievedName = await tutorials.retrieveNameBySearch(noWalletClient, name);
+      const retrievedName = await tutorials.retrieveNameBySearch(
+        noWalletClient,
+        name,
+      );
 
       expect(retrievedName).to.be.an('array').that.has.lengthOf.at.least(1);
       expect(retrievedName[0]).to.be.an('object');
@@ -251,9 +402,15 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     it('Should create a minimal contract', async function () {
       assert.isDefined(identity);
       // eslint-disable-next-line max-len
-      const contractTransition = await tutorials.registerContractProvided(sdkClient, identity.id, minimalContractDocumentSchema);
+      const contractTransition = await tutorials.registerContractProvided(
+        sdkClient,
+        identity.id,
+        minimalContractDocumentSchema,
+      );
       contract = contractTransition.toJSON().dataContract;
-      console.log(`\tRegistered minimal contract: ${contract.$id} ${contract.version}`);
+      console.log(
+        `\tRegistered minimal contract: ${contract.$id} ${contract.version}`,
+      );
 
       assert.containsAllKeys(contract.documents, ['note']);
     });
@@ -261,7 +418,10 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     it('Should retrieve the contract', async function () {
       assert.isDefined(contract);
       contractId = contract.$id;
-      retrievedContract = await tutorials.retrieveContract(noWalletClient, contractId);
+      retrievedContract = await tutorials.retrieveContract(
+        noWalletClient,
+        contractId,
+      );
 
       expect(retrievedContract).to.be.instanceOf(DataContract);
       expect(retrievedContract.toJSON()).to.deep.equal(contract);
@@ -360,21 +520,34 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     it('Should update the contract', async function () {
       assert.isDefined(contract);
       // eslint-disable-next-line max-len
-      const contractTransition = await tutorials.updateContractProvided(sdkClient, identity.id, contractId);
+      const contractTransition = await tutorials.updateContractProvided(
+        sdkClient,
+        identity.id,
+        contractId,
+      );
       updatedContract = contractTransition.toJSON().dataContract;
       console.log(`\tUpdated minimal contract: ${updatedContract.$id}`);
 
       assert.containsAllKeys(updatedContract.documents, ['note']);
-      assert.containsAllKeys(updatedContract.documents.note.properties, ['message', 'author']);
+      assert.containsAllKeys(updatedContract.documents.note.properties, [
+        'message',
+        'author',
+      ]);
     }).timeout();
 
     describe('Additional Contracts', function () {
       it('Should create a contract with indices', async function () {
         assert.isDefined(identity);
         // eslint-disable-next-line max-len
-        const contractTransition = await tutorials.registerContractProvided(sdkClient, identity.id, indexedContractDocumentSchema);
+        const contractTransition = await tutorials.registerContractProvided(
+          sdkClient,
+          identity.id,
+          indexedContractDocumentSchema,
+        );
         const indexedContract = contractTransition.toJSON().dataContract;
-        console.log(`\tRegistered contract with indices: ${indexedContract.$id}`);
+        console.log(
+          `\tRegistered contract with indices: ${indexedContract.$id}`,
+        );
 
         assert.containsAllKeys(indexedContract.documents.note, ['indices']);
       });
@@ -382,17 +555,31 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       it('Should create a contract with timestamps required', async function () {
         assert.isDefined(identity);
         // eslint-disable-next-line max-len
-        const contractTransition = await tutorials.registerContractProvided(sdkClient, identity.id, timestampContractDocumentSchema);
+        const contractTransition = await tutorials.registerContractProvided(
+          sdkClient,
+          identity.id,
+          timestampContractDocumentSchema,
+        );
         const timestampContract = contractTransition.toJSON().dataContract;
-        console.log(`\tRegistered contract with timestamps required: ${timestampContract.$id}`);
+        console.log(
+          `\tRegistered contract with timestamps required: ${timestampContract.$id}`,
+        );
 
-        expect(timestampContract.documents.note.required).to.include('$createdAt', '$updatedAt');
+        expect(timestampContract.documents.note.required).to.include(
+          '$createdAt',
+          '$updatedAt',
+        );
       });
 
       xit('Should create a contract with $ref', async function () {
         assert.isDefined(identity);
         // eslint-disable-next-line max-len
-        const contractTransition = await tutorials.registerContractProvided(sdkClient, identity.id, refContractDocumentSchema, refContractDefinitions);
+        const contractTransition = await tutorials.registerContractProvided(
+          sdkClient,
+          identity.id,
+          refContractDocumentSchema,
+          refContractDefinitions,
+        );
         const refContract = contractTransition.toJSON().dataContract;
         console.log(`\tRegistered contract with $ref: ${refContract.$id}`);
 
@@ -403,11 +590,19 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       it('Should create a contract with binary data', async function () {
         assert.isDefined(identity);
         // eslint-disable-next-line max-len
-        const contractTransition = await tutorials.registerContractProvided(sdkClient, identity.id, binaryContractDocumentSchema);
+        const contractTransition = await tutorials.registerContractProvided(
+          sdkClient,
+          identity.id,
+          binaryContractDocumentSchema,
+        );
         const binaryContract = contractTransition.toJSON().dataContract;
-        console.log(`\tRegistered contract with binary data: ${binaryContract.$id}`);
+        console.log(
+          `\tRegistered contract with binary data: ${binaryContract.$id}`,
+        );
 
-        expect(binaryContract.documents.block.properties.hash).to.have.property('byteArray');
+        expect(binaryContract.documents.block.properties.hash).to.have.property(
+          'byteArray',
+        );
       });
     });
   });
@@ -422,14 +617,8 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     it('Should execute DAPI client methods and return Dash Core status', async function () {
       const status = await tutorials.dapiClientMethods(noWalletClient);
       // console.dir(status);
-      expect(status.version).to.include.all.keys(
-        'software',
-        'protocol',
-      );
-      expect(status.chain).to.include.all.keys(
-        'name',
-        'blocksCount',
-      );
+      expect(status.version).to.include.all.keys('software', 'protocol');
+      expect(status.chain).to.include.all.keys('name', 'blocksCount');
     });
 
     after(function () {

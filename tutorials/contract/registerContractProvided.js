@@ -8,12 +8,20 @@ const clientOpts = {
 };
 const client = new Dash.Client(clientOpts); */
 
-async function registerContract(client, identityId, contractDocumentSchema, contractDefinitions) {
+async function registerContract(
+  client,
+  identityId,
+  contractDocumentSchema,
+  contractDefinitions,
+) {
   const { platform } = client;
   const identity = await platform.identities.get(identityId);
 
   // console.dir(contractDocumentSchema, { depth: null });
-  const contract = await platform.contracts.create(contractDocumentSchema, identity);
+  const contract = await platform.contracts.create(
+    contractDocumentSchema,
+    identity,
+  );
 
   // Add reusable definitions referred to by "$ref" to contract
   if (contractDefinitions) {

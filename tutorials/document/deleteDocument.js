@@ -20,7 +20,9 @@ async function deleteNoteDocument(client, identityId, documentId) {
   // Retrieve the existing document
   const [document] = await client.platform.documents.get(
     'tutorialContract.note',
-    { where: [['$id', '==', documentId]] },
+    {
+      where: [['$id', '==', documentId]],
+    },
   );
 
   // Sign and submit the document delete transition
