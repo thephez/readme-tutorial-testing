@@ -114,5 +114,3 @@ module.exports.goodNodes = [
   '34.222.135.203:3000',
   '54.191.110.152:3000',
 ];
-
-// export default goodNodes;
