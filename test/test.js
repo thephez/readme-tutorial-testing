@@ -34,7 +34,7 @@ const network = process.env.NETWORK;
 // eslint-disable-next-line prefer-const
 let selectedNode =
   goodNodes.goodNodes[Math.floor(Math.random() * goodNodes.goodNodes.length)];
-selectedNode = '35.90.255.217:3000'; // devnet
+// selectedNode = '35.90.255.217:3000'; // devnet
 // selectedNode = '127.0.0.1:3000';
 
 let noWalletClient;
