@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable no-console */
 /* eslint-disable func-names */
 /* eslint-disable prefer-arrow-callback */
@@ -7,13 +8,17 @@ const Document = require('@dashevo/dpp/lib/document/Document');
 const { expect } = require('chai');
 const dotenv = require('dotenv');
 const testQueries = require('../queries/testQueries');
+const goodNodes = require('./goodNodes');
 
 dotenv.config();
 const network = process.env.NETWORK;
 // const seedHost = 'seed-1.<devnet-name>.networks.dash.org';
-const documentId = '9tPJHpEeqRL2brtkUWYGyWMnya7sUgDa6ar7feFL26pS'; // DPNS domain document ID for identityId
-const identityId = '9QoDBjrLnMQ1VwaSr1waQaKnRJNso5rqq3vqKvX2pren'; // Identity ID for an identityName
-const identityName = ['RT-First-00000', 'e44dd22805e090714683'];
+// eslint-disable-next-line prefer-const
+let selectedNode =
+  goodNodes.goodNodes[Math.floor(Math.random() * goodNodes.goodNodes.length)];
+const documentId = '4KJaEDX65q33wxScMiY9R1oUjD6aRrUa6KPmKtFVRmdj'; // DPNS domain document ID for identityId
+const identityId = '2wwVtxRtj7saAtPZ69hcQ5LfK2PPT71pJCX3nd84DzKJ'; // Identity ID for an identityName
+const identityName = ['RT-First-00000', 'RT-First-00000-alias'];
 const startsWithString = 'RT-';
 
 let sdkClient;
@@ -30,7 +35,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       network,
       // Uncomment for devnets
       // seeds: [{ host: seedHost }],
-      // dapiAddresses: [selectedNode],
+      dapiAddresses: [selectedNode],
     });
   });
 
