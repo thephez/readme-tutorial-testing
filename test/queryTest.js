@@ -274,15 +274,20 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       const names = [];
+      let match = false;
       // eslint-disable-next-line no-restricted-syntax
       for (const r of result) {
         names.push(r.getData().label);
+        if (r.id.toJSON() === documentId) {
+          match = true;
+        }
       }
 
       console.log(`\tReceived document with name(s): ${names}`);
       expect(result).to.have.lengthOf(identityName.length);
       expect(result[1]).to.be.instanceOf(Document);
-      expect(result[1].id.toJSON()).to.be.equal(documentId);
+      // eslint-disable-next-line no-unused-expressions
+      expect(match).to.be.true;
     });
 
     it(`in (desc) - should return all existing names from list (all do exist) - (${identityName})`, async function () {
@@ -294,15 +299,20 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       const names = [];
+      let match = false;
       // eslint-disable-next-line no-restricted-syntax
       for (const r of result) {
         names.push(r.getData().label);
+        if (r.id.toJSON() === documentId) {
+          match = true;
+        }
       }
 
       console.log(`\tReceived document with name(s): ${names}`);
       expect(result).to.have.lengthOf(identityName.length);
       expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.be.equal(documentId);
+      // eslint-disable-next-line no-unused-expressions
+      expect(match).to.be.true;
     });
 
     it('in (asc)- should return all existing names from list (some do not)', async function () {
@@ -316,15 +326,20 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       const names = [];
+      let match = false;
       // eslint-disable-next-line no-restricted-syntax
       for (const r of result) {
         names.push(r.getData().label);
+        if (r.id.toJSON() === documentId) {
+          match = true;
+        }
       }
 
       console.log(`\tReceived document with name: ${names}`);
       expect(result).to.have.lengthOf(identityName.length);
       expect(result[0]).to.be.instanceOf(Document);
-      expect(result[1].id.toJSON()).to.be.equal(documentId);
+      // eslint-disable-next-line no-unused-expressions
+      expect(match).to.be.true;
     });
 
     it('in (desc)- should return all existing names from list (some do not)', async function () {
@@ -338,15 +353,20 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       const names = [];
+      let match = false;
       // eslint-disable-next-line no-restricted-syntax
       for (const r of result) {
         names.push(r.getData().label);
+        if (r.id.toJSON() === documentId) {
+          match = true;
+        }
       }
 
       console.log(`\tReceived document with name: ${names}`);
       expect(result).to.have.lengthOf(identityName.length);
       expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.be.equal(documentId);
+      // eslint-disable-next-line no-unused-expressions
+      expect(match).to.be.true;
     });
   });
 
