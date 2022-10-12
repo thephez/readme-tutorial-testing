@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable no-console */
 /* eslint-disable func-names */
 /* eslint-disable prefer-arrow-callback */
@@ -7,14 +8,17 @@ const Document = require('@dashevo/dpp/lib/document/Document');
 const { expect } = require('chai');
 const dotenv = require('dotenv');
 const testQueries = require('../queries/testQueries');
+const goodNodes = require('./goodNodes');
 
 dotenv.config();
-const network = 'testnet';
-// const network = 'devnet';
+const network = process.env.NETWORK;
 // const seedHost = 'seed-1.<devnet-name>.networks.dash.org';
-const documentId = '9tPJHpEeqRL2brtkUWYGyWMnya7sUgDa6ar7feFL26pS'; // DPNS domain document ID for identityId
-const identityId = '9QoDBjrLnMQ1VwaSr1waQaKnRJNso5rqq3vqKvX2pren'; // Identity ID for an identityName
-const identityName = ['RT-First-00000', 'e44dd22805e090714683'];
+// eslint-disable-next-line prefer-const
+let selectedNode =
+  goodNodes.goodNodes[Math.floor(Math.random() * goodNodes.goodNodes.length)];
+const documentId = '4KJaEDX65q33wxScMiY9R1oUjD6aRrUa6KPmKtFVRmdj'; // DPNS domain document ID for identityId
+const identityId = '2wwVtxRtj7saAtPZ69hcQ5LfK2PPT71pJCX3nd84DzKJ'; // Identity ID for an identityName
+const identityName = ['RT-First-00000', 'RT-First-00000-alias'];
 const startsWithString = 'RT-';
 
 let sdkClient;
@@ -31,7 +35,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       network,
       // Uncomment for devnets
       // seeds: [{ host: seedHost }],
-      // dapiAddresses: [selectedNode],
+      dapiAddresses: [selectedNode],
     });
   });
 
@@ -57,7 +61,13 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
     });
 
     it(`startAtComplex (asc)- should return name(s) starting at document id - (${documentId})`, async function () {
-      const result = await testQueries.startAtComplex(sdkClient, documentId, startsWithString, 'asc', 1);
+      const result = await testQueries.startAtComplex(
+        sdkClient,
+        documentId,
+        startsWithString,
+        'asc',
+        1,
+      );
 
       expect(result).to.have.lengthOf.at.most(1);
       expect(result[0]).to.be.instanceOf(Document);
@@ -65,7 +75,13 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
     });
 
     it(`startAtComplex (desc)- should return name(s) starting at document id - (${documentId})`, async function () {
-      const result = await testQueries.startAtComplex(sdkClient, documentId, startsWithString, 'desc', 1);
+      const result = await testQueries.startAtComplex(
+        sdkClient,
+        documentId,
+        startsWithString,
+        'desc',
+        1,
+      );
 
       expect(result).to.have.lengthOf.at.most(1);
       expect(result[0]).to.be.instanceOf(Document);
@@ -74,7 +90,13 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
 
     it(`startAtComplex (asc)- should return name(s) starting at document id - (${documentId})`, async function () {
       limit = 2;
-      const result = await testQueries.startAtComplex(sdkClient, documentId, startsWithString, 'asc', limit);
+      const result = await testQueries.startAtComplex(
+        sdkClient,
+        documentId,
+        startsWithString,
+        'asc',
+        limit,
+      );
 
       expect(result).to.have.lengthOf.at.most(limit);
       expect(result[0]).to.be.instanceOf(Document);
@@ -83,7 +105,13 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
 
     it(`startAtComplex (desc)- should return name(s) starting at document id - (${documentId})`, async function () {
       limit = 2;
-      const result = await testQueries.startAtComplex(sdkClient, documentId, startsWithString, 'desc', limit);
+      const result = await testQueries.startAtComplex(
+        sdkClient,
+        documentId,
+        startsWithString,
+        'desc',
+        limit,
+      );
 
       expect(result).to.have.lengthOf.at.most(limit);
       expect(result[0]).to.be.instanceOf(Document);
@@ -102,159 +130,275 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
 
   describe('Where - comparison operators', function () {
     it(`< id (desc) - should return name starting before id - (${identityId})`, async function () {
-      const result = await testQueries.whereLessThanId(sdkClient, identityId, 'desc');
+      const result = await testQueries.whereLessThanId(
+        sdkClient,
+        identityId,
+        'desc',
+      );
 
-      console.log(`\tReceived document with name/id: ${result[0].toJSON().label} ${result[0].toJSON().$ownerId}`);
+      console.log(
+        `\tReceived document with name/id: ${result[0].toJSON().label} ${
+          result[0].toJSON().$ownerId
+        }`,
+      );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(Document);
       expect(result[0].id.toJSON()).to.not.be.equal(documentId);
     });
 
     it(`< id (asc) - should return name starting before id - (${identityId})`, async function () {
-      const result = await testQueries.whereLessThanId(sdkClient, identityId, 'asc');
+      const result = await testQueries.whereLessThanId(
+        sdkClient,
+        identityId,
+        'asc',
+      );
 
-      console.log(`\tReceived document with name/id: ${result[0].toJSON().label} ${result[0].toJSON().$ownerId}`);
+      console.log(
+        `\tReceived document with name/id: ${result[0].toJSON().label} ${
+          result[0].toJSON().$ownerId
+        }`,
+      );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(Document);
       expect(result[0].id.toJSON()).to.not.be.equal(documentId);
     });
 
     it(`<= id (desc) - should return previous names starting with id - (${identityId})`, async function () {
-      const result = await testQueries.whereLessThanEqualToId(sdkClient, identityId, 'desc');
+      const result = await testQueries.whereLessThanEqualToId(
+        sdkClient,
+        identityId,
+        'desc',
+      );
 
-      console.log(`\tReceived document with name/id: ${result[0].toJSON().label} ${result[0].toJSON().$ownerId}`);
+      console.log(
+        `\tReceived document with name/id: ${result[0].toJSON().label} ${
+          result[0].toJSON().$ownerId
+        }`,
+      );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(Document);
       expect(result[0].id.toJSON()).to.be.equal(documentId);
     });
 
     it(`<= id (asc) - should return previous names starting with id - (${identityId})`, async function () {
-      const result = await testQueries.whereLessThanEqualToId(sdkClient, identityId, 'asc');
+      const result = await testQueries.whereLessThanEqualToId(
+        sdkClient,
+        identityId,
+        'asc',
+      );
 
-      console.log(`\tReceived document with name/id: ${result[0].toJSON().label} ${result[0].toJSON().$ownerId}`);
+      console.log(
+        `\tReceived document with name/id: ${result[0].toJSON().label} ${
+          result[0].toJSON().$ownerId
+        }`,
+      );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(Document);
       expect(result[0].id.toJSON()).to.not.be.equal(documentId);
     });
 
     it(`> id (desc) - should return name starting after id - (${identityId})`, async function () {
-      const result = await testQueries.whereGreaterThanId(sdkClient, identityId, 'desc');
+      const result = await testQueries.whereGreaterThanId(
+        sdkClient,
+        identityId,
+        'desc',
+      );
 
-      console.log(`\tReceived document with name/id: ${result[0].toJSON().label} ${result[0].toJSON().$ownerId}`);
+      console.log(
+        `\tReceived document with name/id: ${result[0].toJSON().label} ${
+          result[0].toJSON().$ownerId
+        }`,
+      );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(Document);
       expect(result[0].id.toJSON()).to.not.be.equal(documentId);
     });
 
     it(`> id (asc) - should return name starting after id - (${identityId})`, async function () {
-      const result = await testQueries.whereGreaterThanId(sdkClient, identityId, 'asc');
+      const result = await testQueries.whereGreaterThanId(
+        sdkClient,
+        identityId,
+        'asc',
+      );
 
-      console.log(`\tReceived document with name/id: ${result[0].toJSON().label} ${result[0].toJSON().$ownerId}`);
+      console.log(
+        `\tReceived document with name/id: ${result[0].toJSON().label} ${
+          result[0].toJSON().$ownerId
+        }`,
+      );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(Document);
       expect(result[0].id.toJSON()).to.not.be.equal(documentId);
     });
 
     it(`>= (desc) - should return names starting with id - (${identityId})`, async function () {
-      const result = await testQueries.whereGreaterThanEqualToId(sdkClient, identityId, 'desc');
+      const result = await testQueries.whereGreaterThanEqualToId(
+        sdkClient,
+        identityId,
+        'desc',
+      );
 
-      console.log(`\tReceived document with name/id: ${result[0].toJSON().label} ${result[0].toJSON().$ownerId}`);
+      console.log(
+        `\tReceived document with name/id: ${result[0].toJSON().label} ${
+          result[0].toJSON().$ownerId
+        }`,
+      );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(Document);
       expect(result[0].id.toJSON()).to.not.be.equal(documentId);
     });
 
     it(`>= (asc) - should return names starting with id - (${identityId})`, async function () {
-      const result = await testQueries.whereGreaterThanEqualToId(sdkClient, identityId, 'asc');
+      const result = await testQueries.whereGreaterThanEqualToId(
+        sdkClient,
+        identityId,
+        'asc',
+      );
 
-      console.log(`\tReceived document with name/id: ${result[0].toJSON().label} ${result[0].toJSON().$ownerId}`);
+      console.log(
+        `\tReceived document with name/id: ${result[0].toJSON().label} ${
+          result[0].toJSON().$ownerId
+        }`,
+      );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(Document);
       expect(result[0].id.toJSON()).to.be.equal(documentId);
     });
 
     it(`in (asc) - should return all existing names from list (all do exist) - (${identityName})`, async function () {
-      const result = await testQueries.whereIn(sdkClient, identityName, 'asc', 5);
+      const result = await testQueries.whereIn(
+        sdkClient,
+        identityName,
+        'asc',
+        5,
+      );
 
       const names = [];
+      let match = false;
       // eslint-disable-next-line no-restricted-syntax
       for (const r of result) {
         names.push(r.getData().label);
+        if (r.id.toJSON() === documentId) {
+          match = true;
+        }
       }
 
       console.log(`\tReceived document with name(s): ${names}`);
       expect(result).to.have.lengthOf(identityName.length);
       expect(result[1]).to.be.instanceOf(Document);
-      expect(result[1].id.toJSON()).to.be.equal(documentId);
+      // eslint-disable-next-line no-unused-expressions
+      expect(match).to.be.true;
     });
 
     it(`in (desc) - should return all existing names from list (all do exist) - (${identityName})`, async function () {
-      const result = await testQueries.whereIn(sdkClient, identityName, 'desc', 5);
+      const result = await testQueries.whereIn(
+        sdkClient,
+        identityName,
+        'desc',
+        5,
+      );
 
       const names = [];
+      let match = false;
       // eslint-disable-next-line no-restricted-syntax
       for (const r of result) {
         names.push(r.getData().label);
+        if (r.id.toJSON() === documentId) {
+          match = true;
+        }
       }
 
       console.log(`\tReceived document with name(s): ${names}`);
       expect(result).to.have.lengthOf(identityName.length);
       expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.be.equal(documentId);
+      // eslint-disable-next-line no-unused-expressions
+      expect(match).to.be.true;
     });
 
     it('in (asc)- should return all existing names from list (some do not)', async function () {
       const someUnknownNames = [...identityName];
       someUnknownNames.push('somerandom_name');
-      const result = await testQueries.whereIn(sdkClient, someUnknownNames, 'asc', 5);
+      const result = await testQueries.whereIn(
+        sdkClient,
+        someUnknownNames,
+        'asc',
+        5,
+      );
 
       const names = [];
+      let match = false;
       // eslint-disable-next-line no-restricted-syntax
       for (const r of result) {
         names.push(r.getData().label);
+        if (r.id.toJSON() === documentId) {
+          match = true;
+        }
       }
 
       console.log(`\tReceived document with name: ${names}`);
       expect(result).to.have.lengthOf(identityName.length);
       expect(result[0]).to.be.instanceOf(Document);
-      expect(result[1].id.toJSON()).to.be.equal(documentId);
+      // eslint-disable-next-line no-unused-expressions
+      expect(match).to.be.true;
     });
 
     it('in (desc)- should return all existing names from list (some do not)', async function () {
       const someUnknownNames = [...identityName];
       someUnknownNames.push('somerandom_name');
-      const result = await testQueries.whereIn(sdkClient, someUnknownNames, 'desc', 5);
+      const result = await testQueries.whereIn(
+        sdkClient,
+        someUnknownNames,
+        'desc',
+        5,
+      );
 
       const names = [];
+      let match = false;
       // eslint-disable-next-line no-restricted-syntax
       for (const r of result) {
         names.push(r.getData().label);
+        if (r.id.toJSON() === documentId) {
+          match = true;
+        }
       }
 
       console.log(`\tReceived document with name: ${names}`);
       expect(result).to.have.lengthOf(identityName.length);
       expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.be.equal(documentId);
+      // eslint-disable-next-line no-unused-expressions
+      expect(match).to.be.true;
     });
   });
 
   describe('Where - evaluation operators', function () {
     it(`startsWith (asc) - should return name starting with provide string - (${startsWithString})`, async function () {
-      const result = await testQueries.whereStartsWith(sdkClient, startsWithString, 'asc');
+      const result = await testQueries.whereStartsWith(
+        sdkClient,
+        startsWithString,
+        'asc',
+      );
 
       console.log(`\tReceived document with name: ${result[0].toJSON().label}`);
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].getData().label.slice(0, startsWithString.length)).to.be.equal(startsWithString);
+      expect(
+        result[0].getData().label.slice(0, startsWithString.length),
+      ).to.be.equal(startsWithString);
     });
 
     it(`startsWith (desc) - should return name starting with provide string - (${startsWithString})`, async function () {
-      const result = await testQueries.whereStartsWith(sdkClient, startsWithString, 'desc');
+      const result = await testQueries.whereStartsWith(
+        sdkClient,
+        startsWithString,
+        'desc',
+      );
 
       console.log(`\tReceived document with name: ${result[0].toJSON().label}`);
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].getData().label.slice(0, startsWithString.length)).to.be.equal(startsWithString);
+      expect(
+        result[0].getData().label.slice(0, startsWithString.length),
+      ).to.be.equal(startsWithString);
     });
 
     after(function () {

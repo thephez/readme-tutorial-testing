@@ -1,10 +1,12 @@
 /* eslint-disable global-require */
 module.exports = {
-  ...require('./checkNetworkConnection.js'),
-  ...require('./getNewWalletInfo.js'),
-  ...require('./identity/registerIdentity.js'),
-  ...require('./identity/retrieveIdentity.js'),
-  ...require('./identity/topupIdentity.js'),
+  ...require('./checkNetworkConnection'),
+  ...require('./getNewWalletInfo'),
+  ...require('./identity/registerIdentity'),
+  ...require('./identity/retrieveIdentity'),
+  ...require('./identity/topupIdentity'),
+  ...require('./identity/updateIdentityAddKey'),
+  ...require('./identity/updateIdentityDisableKey'),
   ...require('./identity/retrieveAccountIdentityIds'),
   ...require('./name/registerName'),
   ...require('./name/registerAlias'),

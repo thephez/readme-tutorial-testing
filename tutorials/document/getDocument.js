@@ -10,12 +10,9 @@ const clientOpts = {
 const client = new Dash.Client(clientOpts); */
 
 async function getDocuments(client) {
-  return client.platform.documents.get(
-    'tutorialContract.note',
-    {
-      limit: 2, // Only retrieve 1 document
-    },
-  );
+  return client.platform.documents.get('tutorialContract.note', {
+    limit: 2, // Only retrieve 1 document
+  });
 }
 
 /* getDocuments()

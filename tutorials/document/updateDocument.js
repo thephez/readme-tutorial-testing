@@ -20,7 +20,9 @@ async function updateNoteDocument(client, identityId, documentId, message) {
   // Retrieve the existing document
   const [document] = await client.platform.documents.get(
     'tutorialContract.note',
-    { where: [['$id', '==', documentId]] },
+    {
+      where: [['$id', '==', documentId]],
+    },
   );
 
   // Update document

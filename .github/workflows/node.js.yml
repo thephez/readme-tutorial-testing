@@ -19,7 +19,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14]
+        node-version: [16]
 
     timeout-minutes: 15
 
@@ -37,5 +37,6 @@ jobs:
     - run: npm test
       env:
         CI: true
+        NETWORK: 'testnet'
         WALLET_MNEMONIC: ${{ secrets.WALLET_MNEMONIC }}
-        # DPNS_CONTRACT_ID: ${{ 'FBzwdxUzv1BLZCdpwdYRVCihTLtYe73UxviWsxJd7FYQ' }}
+        SYNC_START_HEIGHT: 670000
