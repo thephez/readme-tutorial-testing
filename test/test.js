@@ -19,10 +19,8 @@ const refContractDefinitions = require('../tutorials/contract/contracts/contract
 const binaryContractDocumentSchema = require('../tutorials/contract/contracts/contractWithBinaryData.json');
 
 const {
-  PlatformProtocol: { Identifier },
-} = Dash;
-const {
   PlatformProtocol: { Identity },
+  PlatformProtocol: { Identifier },
 } = Dash;
 
 dotenv.config();
