@@ -30,7 +30,6 @@ async function registerContract(
   // console.dir({ contract }, { depth: null });
 
   // Make sure contract passes validation checks
-  await platform.dpp.initialize();
   const validationResult = await platform.dpp.dataContract.validate(contract);
 
   if (validationResult.isValid()) {
