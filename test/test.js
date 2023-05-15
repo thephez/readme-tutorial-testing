@@ -133,7 +133,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       checkForIdentity = true;
       assert.isDefined(account);
       identity = await tutorials.createIdentity(sdkClient);
-      console.log(`\tRegistered identity: ${identity.id}`);
+      console.log(`\tRegistered identity: ${identity.toJSON().id}`);
       expect(identity).to.be.instanceOf(Identity);
       // New identity credit balance should be (10000 duffs - a small fee) * 1000
       expect(identity.balance).to.be.above(newIdentityBalance);
@@ -143,7 +143,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     it('Should retrieve the identity', async function () {
       const retrievedIdentity = await tutorials.retrieveIdentity(
         sdkClient,
-        identity.id,
+        identity.toJSON().id,
       );
       expect(retrievedIdentity).to.be.instanceOf(Identity);
     });
@@ -154,7 +154,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       const startBalance = identity.balance;
       const identityToppedUp = await tutorials.topupIdentity(
         sdkClient,
-        identity.id,
+        identity.toJSON().id,
       );
 
       expect(identityToppedUp).to.be.instanceOf(Identity);
@@ -174,7 +174,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       const startingKeyCount = identity.toJSON().publicKeys.length;
       const identityKeyAdded = await tutorials.updateIdentityAddKey(
         sdkClient,
-        identity.id,
+        identity.toJSON().id,
         startingKeyCount, // 0-based index
       );
       // console.log(identityKeyAdded.toJSON().publicKeys);
@@ -189,7 +189,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       const keyIdToDisable = identity.toJSON().publicKeys.slice(-1)[0].id;
       const identityKeyDisabled = await tutorials.updateIdentityDisableKey(
         sdkClient,
-        identity.id,
+        identity.toJSON().id,
         keyIdToDisable,
       );
       // console.log(identityKeyDisabled.getPublicKeyById(keyIdToDisable));
@@ -218,7 +218,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
       const registeredName = await tutorials.registerName(
         sdkClient,
-        identity.id,
+        identity.toJSON().id,
         name,
       );
       console.log(
@@ -233,7 +233,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
       const registeredAlias = await tutorials.registerAlias(
         sdkClient,
-        identity.id,
+        identity.toJSON().id,
         alias,
       );
       console.log(`\tRegistered ${alias} (${registeredAlias.toJSON().$id})`);
@@ -254,7 +254,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       // assert.isDefined(identity);
       const retrievedName = await tutorials.retrieveNameByRecord(
         noWalletClient,
-        identity.id,
+        identity.toJSON().id,
       );
 
       expect(retrievedName).to.be.an('array').that.has.lengthOf.at.least(1);
@@ -289,7 +289,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       // eslint-disable-next-line max-len
       const contractTransition = await tutorials.registerContractProvided(
         sdkClient,
-        identity.id,
+        identity.toJSON().id,
         minimalContractDocumentSchema,
       );
       contract = contractTransition.toJSON().dataContract;
@@ -426,7 +426,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         // eslint-disable-next-line max-len
         const contractTransition = await tutorials.registerContractProvided(
           sdkClient,
-          identity.id,
+          identity.toJSON().id,
           indexedContractDocumentSchema,
         );
         const indexedContract = contractTransition.toJSON().dataContract;
@@ -442,7 +442,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         // eslint-disable-next-line max-len
         const contractTransition = await tutorials.registerContractProvided(
           sdkClient,
-          identity.id,
+          identity.toJSON().id,
           timestampContractDocumentSchema,
         );
         const timestampContract = contractTransition.toJSON().dataContract;
@@ -461,7 +461,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         // eslint-disable-next-line max-len
         const contractTransition = await tutorials.registerContractProvided(
           sdkClient,
-          identity.id,
+          identity.toJSON().id,
           refContractDocumentSchema,
           refContractDefinitions,
         );
@@ -477,7 +477,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         // eslint-disable-next-line max-len
         const contractTransition = await tutorials.registerContractProvided(
           sdkClient,
-          identity.id,
+          identity.toJSON().id,
           binaryContractDocumentSchema,
         );
         const binaryContract = contractTransition.toJSON().dataContract;
