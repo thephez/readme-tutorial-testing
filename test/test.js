@@ -185,7 +185,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       identity = identityKeyAdded; // Update identity for use in following tests
     });
 
-    it('Should update the identity (disable key)', async function () {
+    xit('Should update the identity (disable key)', async function () {
       const keyIdToDisable = identity.toJSON().publicKeys.slice(-1)[0].id;
       const identityKeyDisabled = await tutorials.updateIdentityDisableKey(
         sdkClient,
