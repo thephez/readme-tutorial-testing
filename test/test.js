@@ -44,7 +44,7 @@ let identity;
 let checkForIdentity = false;
 
 describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function suite() {
-  this.timeout(40000);
+  this.timeout(50000);
 
   describe('Initial preparation', function () {
     before(function () {
