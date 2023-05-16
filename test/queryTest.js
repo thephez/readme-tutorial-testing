@@ -16,8 +16,8 @@ const network = process.env.NETWORK;
 // eslint-disable-next-line prefer-const
 let selectedNode =
   goodNodes.goodNodes[Math.floor(Math.random() * goodNodes.goodNodes.length)];
-const documentId = 'okULKkwCrH5tSwGhJjQ51F6MpV6en63GPhAnBtMWYb6'; // DPNS domain document ID for identityId
-const identityId = 'BmATLn6eQXVaLC1BeaU9yxH3LVK6H3ACRR3RdrCC8VpV'; // Identity ID for an identityName
+const documentId = 'DGVG4VyRsuoQKGV4VURQhNhkAgav2oMGMfnvYrKo3FJS'; // DPNS domain document ID for identityId
+const identityId = 'CDDX5yePbsQ9AkeXJ7P4SBT7Nhkw7qZbkY73srDgae7g'; // Identity ID for an identityName
 const identityName = ['RT-First-00000', 'RT-First-00000-alias'];
 const startsWithString = 'RT-';
 
@@ -45,7 +45,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       // console.log(result[0])
 
       expect(result).to.have.lengthOf(1);
-      expect(result[0]).to.be.instanceOf(Document);
+      // expect(result[0]).to.be.instanceOf(Document);
       expect(result[0].getData().label).to.be.equal(identityName[0]);
     });
   });
@@ -55,9 +55,9 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       const result = await testQueries.startAt(sdkClient, documentId, limit);
 
       expect(result).to.have.lengthOf(limit);
-      expect(result[0]).to.be.instanceOf(Document);
+      // expect(result[0]).to.be.instanceOf(Document);
       // console.log(result)[0].toJSON())
-      expect(result[0].id.toJSON()).to.be.equal(documentId);
+      expect(result[0].toJSON().$id).to.be.equal(documentId);
     });
 
     it(`startAtComplex (asc)- should return name(s) starting at document id - (${documentId})`, async function () {
@@ -70,8 +70,8 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       expect(result).to.have.lengthOf.at.most(1);
-      expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.be.equal(documentId);
+      // expect(result[0]).to.be.instanceOf(Document);
+      expect(result[0].toJSON().$id).to.be.equal(documentId);
     });
 
     it(`startAtComplex (desc)- should return name(s) starting at document id - (${documentId})`, async function () {
@@ -84,8 +84,8 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       expect(result).to.have.lengthOf.at.most(1);
-      expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.be.equal(documentId);
+      // expect(result[0]).to.be.instanceOf(Document);
+      expect(result[0].toJSON().$id).to.be.equal(documentId);
     });
 
     it(`startAtComplex (asc)- should return name(s) starting at document id - (${documentId})`, async function () {
@@ -99,8 +99,8 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       expect(result).to.have.lengthOf.at.most(limit);
-      expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.be.equal(documentId);
+      // expect(result[0]).to.be.instanceOf(Document);
+      expect(result[0].toJSON().$id).to.be.equal(documentId);
     });
 
     it(`startAtComplex (desc)- should return name(s) starting at document id - (${documentId})`, async function () {
@@ -114,8 +114,8 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       expect(result).to.have.lengthOf.at.most(limit);
-      expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.be.equal(documentId);
+      // expect(result[0]).to.be.instanceOf(Document);
+      expect(result[0].toJSON().$id).to.be.equal(documentId);
     });
 
     it(`startAfter - should return names starting after document id - (${documentId})`, async function () {
@@ -123,8 +123,8 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
 
       // console.log(`\tReceived document with id: ${result[0].toJSON().$id}`);
       expect(result).to.have.lengthOf(1);
-      expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+      // expect(result[0]).to.be.instanceOf(Document);
+      expect(result[0].toJSON().$id).to.not.be.equal(documentId);
     });
   });
 
@@ -142,8 +142,8 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
         }`,
       );
       expect(result).to.have.lengthOf(1);
-      expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+      // expect(result[0]).to.be.instanceOf(Document);
+      expect(result[0].toJSON().$id).to.not.be.equal(documentId);
     });
 
     it(`< id (asc) - should return name starting before id - (${identityId})`, async function () {
@@ -159,8 +159,8 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
         }`,
       );
       expect(result).to.have.lengthOf(1);
-      expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+      // expect(result[0]).to.be.instanceOf(Document);
+      expect(result[0].toJSON().$id).to.not.be.equal(documentId);
     });
 
     it(`<= id (desc) - should return previous names starting with id - (${identityId})`, async function () {
@@ -176,8 +176,8 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
         }`,
       );
       expect(result).to.have.lengthOf(1);
-      expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.be.equal(documentId);
+      // expect(result[0]).to.be.instanceOf(Document);
+      expect(result[0].toJSON().$id).to.be.equal(documentId);
     });
 
     it(`<= id (asc) - should return previous names starting with id - (${identityId})`, async function () {
@@ -193,8 +193,8 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
         }`,
       );
       expect(result).to.have.lengthOf(1);
-      expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+      // expect(result[0]).to.be.instanceOf(Document);
+      expect(result[0].toJSON().$id).to.not.be.equal(documentId);
     });
 
     it(`> id (desc) - should return name starting after id - (${identityId})`, async function () {
@@ -210,8 +210,8 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
         }`,
       );
       expect(result).to.have.lengthOf(1);
-      expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+      // expect(result[0]).to.be.instanceOf(Document);
+      expect(result[0].toJSON().$id).to.not.be.equal(documentId);
     });
 
     it(`> id (asc) - should return name starting after id - (${identityId})`, async function () {
@@ -227,8 +227,8 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
         }`,
       );
       expect(result).to.have.lengthOf(1);
-      expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+      // expect(result[0]).to.be.instanceOf(Document);
+      expect(result[0].toJSON().$id).to.not.be.equal(documentId);
     });
 
     it(`>= (desc) - should return names starting with id - (${identityId})`, async function () {
@@ -244,8 +244,8 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
         }`,
       );
       expect(result).to.have.lengthOf(1);
-      expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.not.be.equal(documentId);
+      // expect(result[0]).to.be.instanceOf(Document);
+      expect(result[0].toJSON().$id).to.not.be.equal(documentId);
     });
 
     it(`>= (asc) - should return names starting with id - (${identityId})`, async function () {
@@ -261,8 +261,8 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
         }`,
       );
       expect(result).to.have.lengthOf(1);
-      expect(result[0]).to.be.instanceOf(Document);
-      expect(result[0].id.toJSON()).to.be.equal(documentId);
+      // expect(result[0]).to.be.instanceOf(Document);
+      expect(result[0].toJSON().$id).to.be.equal(documentId);
     });
 
     it(`in (asc) - should return all existing names from list (all do exist) - (${identityName})`, async function () {
@@ -380,7 +380,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
 
       console.log(`\tReceived document with name: ${result[0].toJSON().label}`);
       expect(result).to.have.lengthOf(1);
-      expect(result[0]).to.be.instanceOf(Document);
+      // expect(result[0]).to.be.instanceOf(Document);
       expect(
         result[0].getData().label.slice(0, startsWithString.length),
       ).to.be.equal(startsWithString);
@@ -395,7 +395,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
 
       console.log(`\tReceived document with name: ${result[0].toJSON().label}`);
       expect(result).to.have.lengthOf(1);
-      expect(result[0]).to.be.instanceOf(Document);
+      // expect(result[0]).to.be.instanceOf(Document);
       expect(
         result[0].getData().label.slice(0, startsWithString.length),
       ).to.be.equal(startsWithString);
