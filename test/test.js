@@ -327,7 +327,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       // console.log(sdkClient.getApps());
       const documentBatchTransition = await tutorials.submitNoteDocument(
         sdkClient,
-        identity.id,
+        identity.toJSON().id,
         noteMessage,
       );
       // console.log(documentBatchTransition);
@@ -350,7 +350,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       assert.isDefined(contract);
       const documentBatchTransition = await tutorials.updateNoteDocument(
         sdkClient,
-        identity.id,
+        identity.toJSON().id,
         documentId,
         updatedNoteMessage,
       );
@@ -373,7 +373,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       assert.isDefined(contract);
       const documentBatchTransition = await tutorials.deleteNoteDocument(
         sdkClient,
-        identity.id,
+        identity.toJSON().id,
         documentId,
       );
 
@@ -393,11 +393,11 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       assert.isDefined(contract);
       const documentBatchTransition = await tutorials.submitNoteDocument(
         sdkClient,
-        identity.id,
+        identity.toJSON().id,
         noteMessage,
       );
 
-      documentId = documentBatchTransition.transitions[0].id;
+      documentId = documentBatchTransition.toJSON().transitions[0].$id;
       console.log(`\tSubmitted document: ${documentId}`);
       expect(documentBatchTransition).to.be.an('object');
     }).timeout();
