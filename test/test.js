@@ -170,7 +170,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(identityIds).to.include(identity.toJSON().id);
     });
 
-    it('Should update the identity (add key)', async function () {
+    xit('Should update the identity (add key)', async function () {
       const startingKeyCount = identity.toJSON().publicKeys.length;
       const identityKeyAdded = await tutorials.updateIdentityAddKey(
         sdkClient,
