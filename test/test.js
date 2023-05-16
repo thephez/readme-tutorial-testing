@@ -6,6 +6,7 @@
 const Dash = require('dash');
 const DataContract = require('@dashevo/dpp/lib/dataContract/DataContract');
 const Document = require('@dashevo/dpp/lib/document/Document');
+const { ExtendedDocument } = require('@dashevo/wasm-dpp/');
 const { assert, expect } = require('chai');
 const faker = require('faker');
 const dotenv = require('dotenv');
@@ -342,7 +343,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       // console.log(documents);
 
       expect(documents, 'number of documents').to.have.lengthOf(1);
-      // expect(documents[0]).to.be.instanceOf(Document); // TODO: update to work with v0.24
+      expect(documents[0]).to.be.instanceOf(ExtendedDocument);
       expect(documents[0].getData().message).to.deep.equal(noteMessage);
     });
 
@@ -365,7 +366,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       // console.log(documents);
 
       expect(documents, 'number of documents').to.have.lengthOf(1);
-      // expect(documents[0]).to.be.instanceOf(Document); // TODO: update to work with v0.24
+      expect(documents[0]).to.be.instanceOf(ExtendedDocument);
       expect(documents[0].getData().message).to.deep.equal(updatedNoteMessage);
     });
 
