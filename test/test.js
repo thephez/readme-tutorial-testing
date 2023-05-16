@@ -407,7 +407,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       // eslint-disable-next-line max-len
       const contractTransition = await tutorials.updateContractProvided(
         sdkClient,
-        identity.id,
+        identity.toJSON().id,
         contractId,
       );
       updatedContract = contractTransition.toJSON().dataContract;

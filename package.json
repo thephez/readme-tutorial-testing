@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "@dashevo/dpp": "^0.24.1",
+    "@dashevo/wasm-dpp": "^0.24.1",
     "dash": "^3.24.1"
   },
   "devDependencies": {
