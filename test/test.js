@@ -308,8 +308,8 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         contractId,
       );
 
-      // expect(retrievedContract).to.be.instanceOf(DataContract);
-      // expect(retrievedContract.toJSON()).to.deep.equal(contract);
+      // expect(retrievedContract).to.be.instanceOf(DataContract); // TODO: update to work with v0.24
+      // expect(retrievedContract.toJSON()).to.deep.equal(contract); // TODO: update to work with v0.24
 
       // Manually add contract with name "tutorialContract"
       sdkClient.apps.apps.tutorialContract = {
@@ -342,8 +342,8 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       // console.log(documents);
 
       expect(documents, 'number of documents').to.have.lengthOf(1);
-      // expect(documents[0]).to.be.instanceOf(Document);
-      // expect(documents[0].getData().message).to.deep.equal(noteMessage);
+      // expect(documents[0]).to.be.instanceOf(Document); // TODO: update to work with v0.24
+      expect(documents[0].getData().message).to.deep.equal(noteMessage);
     });
 
     it('Should update the document', async function () {
@@ -365,7 +365,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       // console.log(documents);
 
       expect(documents, 'number of documents').to.have.lengthOf(1);
-      // expect(documents[0]).to.be.instanceOf(Document);
+      // expect(documents[0]).to.be.instanceOf(Document); // TODO: update to work with v0.24
       expect(documents[0].getData().message).to.deep.equal(updatedNoteMessage);
     });
 
