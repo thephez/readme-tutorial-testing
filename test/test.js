@@ -170,7 +170,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(identityIds).to.include(identity.toJSON().id);
     });
 
-    xit('Should update the identity (add key)', async function () {
+    it('Should update the identity (add key)', async function () {
       const startingKeyCount = identity.toJSON().publicKeys.length;
       const identityKeyAdded = await tutorials.updateIdentityAddKey(
         sdkClient,
@@ -185,7 +185,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       identity = identityKeyAdded; // Update identity for use in following tests
     });
 
-    xit('Should update the identity (disable key)', async function () {
+    it('Should update the identity (disable key)', async function () {
       const keyIdToDisable = identity.toJSON().publicKeys.slice(-1)[0].id;
       const identityKeyDisabled = await tutorials.updateIdentityDisableKey(
         sdkClient,

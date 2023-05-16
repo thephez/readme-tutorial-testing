@@ -9,7 +9,7 @@ const clientOpts = {
 const client = new Dash.Client(clientOpts);
 const identityId = '';
 const keyId = 1; */
-const IdentityPublicKey = require('@dashevo/dpp/lib/identity/IdentityPublicKey');
+const { IdentityPublicKey, IdentityPublicKeyWithWitness } = require('@dashevo/wasm-dpp');
 
 async function updateIdentityAddKey(sdkClient, identityId, keyId) {
   const existingIdentity = await sdkClient.platform.identities.get(identityId);
@@ -26,13 +26,14 @@ async function updateIdentityAddKey(sdkClient, identityId, keyId) {
 
   const identityPublicKey = identityPrivateKey.toPublicKey().toBuffer();
 
-  const newPublicKey = new IdentityPublicKey({
+  const newPublicKey = new IdentityPublicKeyWithWitness({
     id: keyId,
     type: IdentityPublicKey.TYPES.ECDSA_SECP256K1,
-    purpose: IdentityPublicKey.PURPOSES.AUTHENTICATION,
-    securityLevel: IdentityPublicKey.SECURITY_LEVELS.HIGH,
     data: identityPublicKey,
+    purpose: IdentityPublicKey.PURPOSES.AUTHENTICATION,
+    securityLevel: IdentityPublicKey.SECURITY_LEVELS.CRITICAL,
     readOnly: false,
+    signature: Buffer.alloc(0),
   });
 
   // console.log(newPublicKey.toJSON());
