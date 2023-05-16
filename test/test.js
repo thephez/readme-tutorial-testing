@@ -330,10 +330,10 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         identity.toJSON().id,
         noteMessage,
       );
-      // console.log(documentBatchTransition);
+      // console.log(documentBatchTransition.toJSON());
 
       documentId = documentBatchTransition.toJSON().transitions[0].$id;
-      expect(documentBatchTransition).to.be.an('object');
+      expect(documentBatchTransition.toJSON()).to.be.an('object');
     }).timeout();
 
     it('Should get the document', async function () {
@@ -356,7 +356,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       );
 
       // console.log(documentBatchTransition);
-      // expect(documentBatchTransition).to.be.an('object');
+      expect(documentBatchTransition.toJSON()).to.be.an('object');
     });
 
     it('Should get the updated document', async function () {
