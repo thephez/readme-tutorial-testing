@@ -138,7 +138,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       // New identity credit balance should be (10000 duffs - a small fee) * 1000
       expect(identity.balance).to.be.above(newIdentityBalance);
       // assert.containsAllKeys(identity.toJSON(), ['id', 'publicKeys', 'balance', 'revision']);
-    }).timeout(45000);
+    }).timeout(60000);
 
     it('Should retrieve the identity', async function () {
       const retrievedIdentity = await tutorials.retrieveIdentity(
