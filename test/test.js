@@ -156,7 +156,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         sdkClient,
         identity.toJSON().id,
       );
-
+      // console.log(`New balance: ${identityToppedUp.balance}`);
       expect(identityToppedUp).to.be.instanceOf(Identity);
       expect(identityToppedUp.balance).to.not.equal(startBalance);
     });
@@ -307,7 +307,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         noWalletClient,
         contractId,
       );
-
+      // console.dir(retrievedContract.toJSON(), { depth: 5 })
       // expect(retrievedContract).to.be.instanceOf(DataContract); // TODO: update to work with v0.24
       // expect(retrievedContract.toJSON()).to.deep.equal(contract); // TODO: update to work with v0.24
 
@@ -339,7 +339,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     it('Should get the document', async function () {
       assert.isDefined(contract);
       const documents = await tutorials.getDocuments(noWalletClient);
-      // console.log(documents);
+      // console.log(documents[0].toJSON());
 
       expect(documents, 'number of documents').to.have.lengthOf(1);
       expect(documents[0]).to.be.instanceOf(ExtendedDocument);
@@ -355,7 +355,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         updatedNoteMessage,
       );
 
-      // console.log(documentBatchTransition);
+      // console.log(documentBatchTransition.toJSON());
       expect(documentBatchTransition.toJSON()).to.be.an('object');
     });
 
@@ -377,7 +377,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         documentId,
       );
 
-      // console.log(documentBatchTransition);
+      // console.log(documentBatchTransition.toJSON());
       expect(documentBatchTransition).to.be.an('object');
     });
 
