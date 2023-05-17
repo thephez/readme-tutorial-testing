@@ -5,7 +5,6 @@
 /* eslint-disable no-undef */
 const Dash = require('dash');
 const DataContract = require('@dashevo/dpp/lib/dataContract/DataContract');
-const Document = require('@dashevo/dpp/lib/document/Document');
 const { ExtendedDocument } = require('@dashevo/wasm-dpp/');
 const { assert, expect } = require('chai');
 const faker = require('faker');
