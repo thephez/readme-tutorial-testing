@@ -23,7 +23,6 @@ async function updateContract(client, identityId, contractId) {
   // console.dir({existingDataContract}, {depth:null})
 
   // Make sure contract passes validation checks
-  await platform.dpp.initialize();
   const validationResult = await platform.dpp.dataContract.validate(
     existingDataContract,
   );
