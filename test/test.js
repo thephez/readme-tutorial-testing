@@ -4,7 +4,6 @@
 /* eslint-disable prefer-arrow-callback */
 /* eslint-disable no-undef */
 const Dash = require('dash');
-const DataContract = require('@dashevo/dpp/lib/dataContract/DataContract');
 const { ExtendedDocument } = require('@dashevo/wasm-dpp/');
 const { assert, expect } = require('chai');
 const faker = require('faker');
@@ -20,6 +19,7 @@ const binaryContractDocumentSchema = require('../tutorials/contract/contracts/co
 
 const {
   PlatformProtocol: { Identity },
+  PlatformProtocol: { DataContract },
   PlatformProtocol: { Identifier },
 } = Dash;
 
@@ -308,7 +308,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         contractId,
       );
       // console.dir(retrievedContract.toJSON(), { depth: 5 })
-      // expect(retrievedContract).to.be.instanceOf(DataContract); // TODO: update to work with v0.24
+      expect(retrievedContract).to.be.instanceOf(DataContract);
       // expect(retrievedContract.toJSON()).to.deep.equal(contract); // TODO: update to work with v0.24
 
       // Manually add contract with name "tutorialContract"
