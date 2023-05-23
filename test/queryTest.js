@@ -4,7 +4,6 @@
 /* eslint-disable prefer-arrow-callback */
 /* eslint-disable no-undef */
 const Dash = require('dash');
-const Document = require('@dashevo/dpp/lib/document/Document');
 const { ExtendedDocument } = require('@dashevo/wasm-dpp/');
 const { expect } = require('chai');
 const dotenv = require('dotenv');
