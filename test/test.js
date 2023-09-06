@@ -28,11 +28,11 @@ const mnemonic = process.env.WALLET_MNEMONIC;
 const newIdentityBalance = 9999000; // ~ minimum credit balance of new identity
 const initialName = 'RT-First-00000'; // Used to make query tests easier
 const syncStartHeight = process.env.SYNC_START_HEIGHT;
-const network = 'devnet'; //process.env.NETWORK;
+const network = process.env.NETWORK;
 // eslint-disable-next-line prefer-const
 let selectedNode =
   goodNodes.goodNodes[Math.floor(Math.random() * goodNodes.goodNodes.length)];
-selectedNode = '35.88.162.148:1443:self-signed'; // devnet
+// selectedNode = '35.88.162.148:1443:self-signed'; // devnet
 // selectedNode = '127.0.0.1:3000';
 
 let noWalletClient;
