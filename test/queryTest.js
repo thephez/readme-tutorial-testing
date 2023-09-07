@@ -16,8 +16,8 @@ const network = process.env.NETWORK;
 // eslint-disable-next-line prefer-const
 let selectedNode =
   goodNodes.goodNodes[Math.floor(Math.random() * goodNodes.goodNodes.length)];
-const documentId = '8d6cmvBtcRPYYkiPyPrvLiT5rCB8Minzk6rQJNvrHio2'; // DPNS domain document ID for identityId
-const identityId = 'H8mcYp4kQ613MuGY1DtZ23p7j7HU7x79RQBPcTLkkUjU'; // Identity ID for an identityName
+const documentId = 'mLHNBEDqSgBQfzovkqmKi1YZwzZDPoWFdxTpGsjizUi'; // DPNS domain document ID for identityId
+const identityId = 'Frfp19J8bveWrQGsbWQheRU5Z9xc5cDmzJzXAchRAiJ3'; // Identity ID for an identityName (e.g. RT-First-00000)
 const identityName = ['RT-First-00000', 'RT-First-00000-alias'];
 const startsWithString = 'RT-';
 
@@ -42,7 +42,9 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
   describe('Basic where queries', function () {
     it(`== - should return requested name - (${identityName[0]})`, async function () {
       const result = await testQueries.whereEqual(sdkClient, identityName[0]);
-      // console.log(result[0])
+      // console.log(result[0].toObject());
+      // console.log(result[0].getId().toString());
+      // console.log(result[0].getData());
 
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
