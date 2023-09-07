@@ -292,17 +292,18 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         identity.toJSON().id,
         minimalContractDocumentSchema,
       );
-      contract = contractTransition.toJSON().dataContract;
+      // console.log(contractTransition.toJSON());
+      contract = contractTransition.toJSON();
       console.log(
-        `\tRegistered minimal contract: ${contract.$id} ${contract.version}`,
+        `\tRegistered minimal contract: ${contract.id} ${contract.version}`,
       );
 
-      assert.containsAllKeys(contract.documents, ['note']);
+      assert.containsAllKeys(contract.documentSchemas, ['note']);
     });
 
     it('Should retrieve the contract', async function () {
       assert.isDefined(contract);
-      contractId = contract.$id;
+      contractId = contract.id;
       retrievedContract = await tutorials.retrieveContract(
         noWalletClient,
         contractId,
@@ -312,14 +313,14 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       // expect(retrievedContract.toJSON()).to.deep.equal(contract); // TODO: update to work with v0.24
 
       // Manually add contract with name "tutorialContract"
-      sdkClient.apps.apps.tutorialContract = {
-        contractId: Identifier.from(contractId),
-        retrievedContract,
-      };
-      noWalletClient.apps.apps.tutorialContract = {
-        contractId: Identifier.from(contractId),
-        retrievedContract,
-      };
+      sdkClient.getApps().set('tutorialContract', {
+        contractId: retrievedContract.getId(),
+        contract: retrievedContract,
+      });
+      noWalletClient.getApps().set('tutorialContract', {
+        contractId: retrievedContract.getId(),
+        contract: retrievedContract,
+      });
     });
 
     it('Should submit a new document to be updated then deleted', async function () {
@@ -429,12 +430,12 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
           identity.toJSON().id,
           indexedContractDocumentSchema,
         );
-        const indexedContract = contractTransition.toJSON().dataContract;
+        const indexedContract = contractTransition.toJSON();
         console.log(
-          `\tRegistered contract with indices: ${indexedContract.$id}`,
+          `\tRegistered contract with indices: ${indexedContract.id}`,
         );
 
-        assert.containsAllKeys(indexedContract.documents.note, ['indices']);
+        assert.containsAllKeys(indexedContract.documentSchemas.note, ['indices']);
       });
 
       it('Should create a contract with timestamps required', async function () {
@@ -445,12 +446,12 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
           identity.toJSON().id,
           timestampContractDocumentSchema,
         );
-        const timestampContract = contractTransition.toJSON().dataContract;
+        const timestampContract = contractTransition.toJSON();
         console.log(
-          `\tRegistered contract with timestamps required: ${timestampContract.$id}`,
+          `\tRegistered contract with timestamps required: ${timestampContract.id}`,
         );
 
-        expect(timestampContract.documents.note.required).to.include(
+        expect(timestampContract.documentSchemas.note.required).to.include(
           '$createdAt',
           '$updatedAt',
         );
@@ -465,8 +466,8 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
           refContractDocumentSchema,
           refContractDefinitions,
         );
-        const refContract = contractTransition.toJSON().dataContract;
-        console.log(`\tRegistered contract with $ref: ${refContract.$id}`);
+        const refContract = contractTransition.toJSON();
+        console.log(`\tRegistered contract with $ref: ${refContract.id}`);
 
         expect(refContract.$defs).to.be.an('object');
         expect(refContract.$defs).to.have.property('address');
@@ -480,12 +481,12 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
           identity.toJSON().id,
           binaryContractDocumentSchema,
         );
-        const binaryContract = contractTransition.toJSON().dataContract;
+        const binaryContract = contractTransition.toJSON();
         console.log(
-          `\tRegistered contract with binary data: ${binaryContract.$id}`,
+          `\tRegistered contract with binary data: ${binaryContract.id}`,
         );
 
-        expect(binaryContract.documents.block.properties.hash).to.have.property(
+        expect(binaryContract.documentSchemas.block.properties.hash).to.have.property(
           'byteArray',
         );
       });
