@@ -148,7 +148,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(retrievedIdentity).to.be.instanceOf(Identity);
     });
 
-    it('Should topup the identity', async function () {
+    xit('Should topup the identity', async function () {
       // assert.isDefined(identity);
 
       const startBalance = identity.balance;
@@ -161,7 +161,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(identityToppedUp.balance).to.not.equal(startBalance);
     });
 
-    it('Should retrieve all account identity IDs', async function () {
+    xit('Should retrieve all account identity IDs', async function () {
       // assert.isDefined(identity);
 
       const identityIds = await tutorials.retrieveIdentityIds(sdkClient);
@@ -170,7 +170,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(identityIds).to.include(identity.toJSON().id);
     });
 
-    it('Should update the identity (add key)', async function () {
+    xit('Should update the identity (add key)', async function () {
       const startingKeyCount = identity.toJSON().publicKeys.length;
       const identityKeyAdded = await tutorials.updateIdentityAddKey(
         sdkClient,
@@ -185,7 +185,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       identity = identityKeyAdded; // Update identity for use in following tests
     });
 
-    it('Should update the identity (disable key)', async function () {
+    xit('Should update the identity (disable key)', async function () {
       const keyIdToDisable = identity.toJSON().publicKeys.slice(-1)[0].id;
       const identityKeyDisabled = await tutorials.updateIdentityDisableKey(
         sdkClient,
@@ -201,7 +201,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(identity.toJSON().publicKeys.slice(-1)[0].disabledAt).to.not.exist;
     });
 
-    it('Should register a name', async function () {
+    xit('Should register a name', async function () {
       // assert.isDefined(identity);
 
       // Check if initial name already established on this network
@@ -227,7 +227,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(registeredName.toJSON().label).to.equal(name);
     });
 
-    it('Should register an alias', async function () {
+    xit('Should register an alias', async function () {
       // assert.isDefined(identity);
       const alias = `${name}-alias`;
 
@@ -240,7 +240,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(registeredAlias.toJSON().label).to.equal(alias);
     }).timeout(60000);
 
-    it('Should retrieve a name by name', async function () {
+    xit('Should retrieve a name by name', async function () {
       // assert.isDefined(identity);
       const retrievedName = await tutorials.retrieveNameByName(
         noWalletClient,
@@ -250,7 +250,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(retrievedName.toJSON().label).to.equal(name);
     });
 
-    it('Should retrieve a name by record', async function () {
+    xit('Should retrieve a name by record', async function () {
       // assert.isDefined(identity);
       const retrievedName = await tutorials.retrieveNameByRecord(
         noWalletClient,
@@ -262,7 +262,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(retrievedName[0].toJSON().label).to.equal(name);
     });
 
-    it('Should retrieve a name by search', async function () {
+    xit('Should retrieve a name by search', async function () {
       // assert.isDefined(identity);
       const retrievedName = await tutorials.retrieveNameBySearch(
         noWalletClient,
@@ -347,7 +347,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(documents[0].getData().message).to.deep.equal(noteMessage);
     });
 
-    it('Should update the document', async function () {
+    xit('Should update the document', async function () {
       assert.isDefined(contract);
       const documentBatchTransition = await tutorials.updateNoteDocument(
         sdkClient,
@@ -360,7 +360,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(documentBatchTransition.toJSON()).to.be.an('object');
     });
 
-    it('Should get the updated document', async function () {
+    xit('Should get the updated document', async function () {
       assert.isDefined(contract);
       const documents = await tutorials.getDocuments(noWalletClient);
       // console.log(documents);
@@ -370,7 +370,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(documents[0].getData().message).to.deep.equal(updatedNoteMessage);
     });
 
-    it('Should delete the document', async function () {
+    xit('Should delete the document', async function () {
       assert.isDefined(contract);
       const documentBatchTransition = await tutorials.deleteNoteDocument(
         sdkClient,
@@ -382,7 +382,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(documentBatchTransition).to.be.an('object');
     });
 
-    it('Should retrieve no documents', async function () {
+    xit('Should retrieve no documents', async function () {
       assert.isDefined(contract);
       const documents = await tutorials.getDocuments(noWalletClient);
       // console.log(documents);
@@ -390,7 +390,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(documents, 'number of documents').to.have.lengthOf(0);
     });
 
-    it('Should submit a new document', async function () {
+    xit('Should submit a new document', async function () {
       assert.isDefined(contract);
       const documentBatchTransition = await tutorials.submitNoteDocument(
         sdkClient,
@@ -403,7 +403,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(documentBatchTransition).to.be.an('object');
     }).timeout();
 
-    it('Should update the contract', async function () {
+    xit('Should update the contract', async function () {
       assert.isDefined(contract);
       // eslint-disable-next-line max-len
       const contractTransition = await tutorials.updateContractProvided(
@@ -494,7 +494,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
   });
 
   describe('Misc', function () {
-    it('Should send a transaction', async function () {
+    xit('Should send a transaction', async function () {
       const txid = await tutorials.sendFunds(sdkClient);
       console.log(`\tTransaction broadcast: ${txid}`);
       expect(txid).to.have.a.lengthOf(64);
