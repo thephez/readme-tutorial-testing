@@ -7,7 +7,6 @@ async function startAt(sdkClient, startAtId, limit = 1) {
   return sdkClient.platform.documents.get('dpns.domain', {
     limit,
     startAt: Buffer.from(Identifier.from(startAtId)),
-    where: [], // Temp fix for v0.25-dev.21
   });
 }
 
@@ -33,7 +32,6 @@ async function startAfter(sdkClient, startAfterId, limit = 1) {
   return sdkClient.platform.documents.get('dpns.domain', {
     limit,
     startAfter: Buffer.from(Identifier.from(startAfterId)),
-    where: [], // Temp fix for v0.25-dev.21
   });
 }
 
