@@ -59,7 +59,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       expect(result).to.have.lengthOf(limit);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
       // console.log(result)[0].toJSON())
-      expect(result[0].toJSON().$id).to.be.equal(documentId);
+      expect(result[0].getId().toString()).to.be.equal(documentId);
     });
 
     it(`startAtComplex (asc)- should return name(s) starting at document id - (${documentId})`, async function () {
@@ -73,7 +73,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
 
       expect(result).to.have.lengthOf.at.most(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
-      expect(result[0].toJSON().$id).to.be.equal(documentId);
+      expect(result[0].getId().toString()).to.be.equal(documentId);
     });
 
     it(`startAtComplex (desc)- should return name(s) starting at document id - (${documentId})`, async function () {
@@ -87,7 +87,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
 
       expect(result).to.have.lengthOf.at.most(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
-      expect(result[0].toJSON().$id).to.be.equal(documentId);
+      expect(result[0].getId().toString()).to.be.equal(documentId);
     });
 
     it(`startAtComplex (asc)- should return name(s) starting at document id - (${documentId})`, async function () {
@@ -102,7 +102,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
 
       expect(result).to.have.lengthOf.at.most(limit);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
-      expect(result[0].toJSON().$id).to.be.equal(documentId);
+      expect(result[0].getId().toString()).to.be.equal(documentId);
     });
 
     it(`startAtComplex (desc)- should return name(s) starting at document id - (${documentId})`, async function () {
@@ -117,16 +117,16 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
 
       expect(result).to.have.lengthOf.at.most(limit);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
-      expect(result[0].toJSON().$id).to.be.equal(documentId);
+      expect(result[0].getId().toString()).to.be.equal(documentId);
     });
 
     it(`startAfter - should return names starting after document id - (${documentId})`, async function () {
       const result = await testQueries.startAfter(sdkClient, documentId);
 
-      // console.log(`\tReceived document with id: ${result[0].toJSON().$id}`);
+      // console.log(`\tReceived document with id: ${result[0].getId().toString()}`);
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
-      expect(result[0].toJSON().$id).to.not.be.equal(documentId);
+      expect(result[0].getId().toString()).to.not.be.equal(documentId);
     });
   });
 
@@ -139,13 +139,13 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       console.log(
-        `\tReceived document with name/id: ${result[0].toJSON().label} ${
-          result[0].toJSON().$ownerId
+        `\tReceived document with name/id: ${result[0].getData().label} ${
+          result[0].getOwnerId().toString()
         }`,
       );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
-      expect(result[0].toJSON().$id).to.not.be.equal(documentId);
+      expect(result[0].getId().toString()).to.not.be.equal(documentId);
     });
 
     it(`< id (asc) - should return name starting before id - (${identityId})`, async function () {
@@ -156,13 +156,13 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       console.log(
-        `\tReceived document with name/id: ${result[0].toJSON().label} ${
-          result[0].toJSON().$ownerId
+        `\tReceived document with name/id: ${result[0].getData().label} ${
+          result[0].getOwnerId().toString()
         }`,
       );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
-      expect(result[0].toJSON().$id).to.not.be.equal(documentId);
+      expect(result[0].getId().toString()).to.not.be.equal(documentId);
     });
 
     it(`<= id (desc) - should return previous names starting with id - (${identityId})`, async function () {
@@ -173,13 +173,13 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       console.log(
-        `\tReceived document with name/id: ${result[0].toJSON().label} ${
-          result[0].toJSON().$ownerId
+        `\tReceived document with name/id: ${result[0].getData().label} ${
+          result[0].getOwnerId().toString()
         }`,
       );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
-      expect(result[0].toJSON().$id).to.be.equal(documentId);
+      expect(result[0].getId().toString()).to.be.equal(documentId);
     });
 
     it(`<= id (asc) - should return previous names starting with id - (${identityId})`, async function () {
@@ -190,13 +190,13 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       console.log(
-        `\tReceived document with name/id: ${result[0].toJSON().label} ${
-          result[0].toJSON().$ownerId
+        `\tReceived document with name/id: ${result[0].getData().label} ${
+          result[0].getOwnerId().toString()
         }`,
       );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
-      expect(result[0].toJSON().$id).to.not.be.equal(documentId);
+      expect(result[0].getId().toString()).to.not.be.equal(documentId);
     });
 
     it(`> id (desc) - should return name starting after id - (${identityId})`, async function () {
@@ -207,13 +207,13 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       console.log(
-        `\tReceived document with name/id: ${result[0].toJSON().label} ${
-          result[0].toJSON().$ownerId
+        `\tReceived document with name/id: ${result[0].getData().label} ${
+          result[0].getOwnerId().toString()
         }`,
       );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
-      expect(result[0].toJSON().$id).to.not.be.equal(documentId);
+      expect(result[0].getId().toString()).to.not.be.equal(documentId);
     });
 
     it(`> id (asc) - should return name starting after id - (${identityId})`, async function () {
@@ -224,13 +224,13 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       console.log(
-        `\tReceived document with name/id: ${result[0].toJSON().label} ${
-          result[0].toJSON().$ownerId
+        `\tReceived document with name/id: ${result[0].getData().label} ${
+          result[0].getOwnerId().toString()
         }`,
       );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
-      expect(result[0].toJSON().$id).to.not.be.equal(documentId);
+      expect(result[0].getId().toString()).to.not.be.equal(documentId);
     });
 
     it(`>= (desc) - should return names starting with id - (${identityId})`, async function () {
@@ -241,13 +241,13 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       console.log(
-        `\tReceived document with name/id: ${result[0].toJSON().label} ${
-          result[0].toJSON().$ownerId
+        `\tReceived document with name/id: ${result[0].getData().label} ${
+          result[0].getOwnerId().toString()
         }`,
       );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
-      expect(result[0].toJSON().$id).to.not.be.equal(documentId);
+      expect(result[0].getId().toString()).to.not.be.equal(documentId);
     });
 
     it(`>= (asc) - should return names starting with id - (${identityId})`, async function () {
@@ -258,13 +258,13 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       console.log(
-        `\tReceived document with name/id: ${result[0].toJSON().label} ${
-          result[0].toJSON().$ownerId
+        `\tReceived document with name/id: ${result[0].getData().label} ${
+          result[0].getOwnerId().toString()
         }`,
       );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
-      expect(result[0].toJSON().$id).to.be.equal(documentId);
+      expect(result[0].getId().toString()).to.be.equal(documentId);
     });
 
     it(`in (asc) - should return all existing names from list (all do exist) - (${identityName})`, async function () {
@@ -279,8 +279,8 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       let match = false;
       // eslint-disable-next-line no-restricted-syntax
       for (const r of result) {
-        names.push(r.toJSON().label);
-        if (r.toJSON().$id === documentId) {
+        names.push(r.getData().label);
+        if (r.getId().toString() === documentId) {
           match = true;
         }
       }
@@ -304,8 +304,8 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       let match = false;
       // eslint-disable-next-line no-restricted-syntax
       for (const r of result) {
-        names.push(r.toJSON().label);
-        if (r.toJSON().$id === documentId) {
+        names.push(r.getData().label);
+        if (r.getId().toString() === documentId) {
           match = true;
         }
       }
@@ -331,8 +331,8 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       let match = false;
       // eslint-disable-next-line no-restricted-syntax
       for (const r of result) {
-        names.push(r.toJSON().label);
-        if (r.toJSON().$id === documentId) {
+        names.push(r.getData().label);
+        if (r.getId().toString() === documentId) {
           match = true;
         }
       }
@@ -358,8 +358,8 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       let match = false;
       // eslint-disable-next-line no-restricted-syntax
       for (const r of result) {
-        names.push(r.toJSON().label);
-        if (r.toJSON().$id === documentId) {
+        names.push(r.getData().label);
+        if (r.getId().toString() === documentId) {
           match = true;
         }
       }
@@ -380,7 +380,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
         'asc',
       );
 
-      console.log(`\tReceived document with name: ${result[0].toJSON().label}`);
+      console.log(`\tReceived document with name: ${result[0].getData().label}`);
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
       expect(
@@ -395,7 +395,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
         'desc',
       );
 
-      console.log(`\tReceived document with name: ${result[0].toJSON().label}`);
+      console.log(`\tReceived document with name: ${result[0].getData().label}`);
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
       expect(
