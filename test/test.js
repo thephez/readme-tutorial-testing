@@ -403,19 +403,20 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(documentBatchTransition).to.be.an('object');
     }).timeout();
 
-    xit('Should update the contract', async function () {
+    it('Should update the contract', async function () {
       assert.isDefined(contract);
       // eslint-disable-next-line max-len
       const contractTransition = await tutorials.updateContractProvided(
         sdkClient,
         identity.toJSON().id,
         contractId,
+        'note',
       );
-      updatedContract = contractTransition.toJSON().dataContract;
-      console.log(`\tUpdated minimal contract: ${updatedContract.$id}`);
+      updatedContract = contractTransition.toJSON();
+      console.log(`\tUpdated minimal contract: ${updatedContract.id}`);
 
-      assert.containsAllKeys(updatedContract.documents, ['note']);
-      assert.containsAllKeys(updatedContract.documents.note.properties, [
+      assert.containsAllKeys(updatedContract.documentSchemas, ['note']);
+      assert.containsAllKeys(updatedContract.documentSchemas.note.properties, [
         'message',
         'author',
       ]);
