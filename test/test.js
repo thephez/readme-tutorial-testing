@@ -323,7 +323,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       });
     });
 
-    xit('Should submit a new document to be updated then deleted', async function () {
+    it('Should submit a new document to be updated then deleted', async function () {
       assert.isDefined(contract);
       // console.log(sdkClient.getApps());
       const documentBatchTransition = await tutorials.submitNoteDocument(
@@ -337,7 +337,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(documentBatchTransition.toJSON()).to.be.an('object');
     }).timeout();
 
-    xit('Should get the document', async function () {
+    it('Should get the document', async function () {
       assert.isDefined(contract);
       const documents = await tutorials.getDocuments(noWalletClient);
       // console.log(documents[0].toJSON());
@@ -347,7 +347,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(documents[0].getData().message).to.deep.equal(noteMessage);
     });
 
-    xit('Should update the document', async function () {
+    it('Should update the document', async function () {
       assert.isDefined(contract);
       const documentBatchTransition = await tutorials.updateNoteDocument(
         sdkClient,
@@ -360,7 +360,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(documentBatchTransition.toJSON()).to.be.an('object');
     });
 
-    xit('Should get the updated document', async function () {
+    it('Should get the updated document', async function () {
       assert.isDefined(contract);
       const documents = await tutorials.getDocuments(noWalletClient);
       // console.log(documents);
@@ -370,7 +370,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(documents[0].getData().message).to.deep.equal(updatedNoteMessage);
     });
 
-    xit('Should delete the document', async function () {
+    it('Should delete the document', async function () {
       assert.isDefined(contract);
       const documentBatchTransition = await tutorials.deleteNoteDocument(
         sdkClient,
@@ -382,7 +382,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(documentBatchTransition).to.be.an('object');
     });
 
-    xit('Should retrieve no documents', async function () {
+    it('Should retrieve no documents', async function () {
       assert.isDefined(contract);
       const documents = await tutorials.getDocuments(noWalletClient);
       // console.log(documents);
@@ -390,7 +390,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(documents, 'number of documents').to.have.lengthOf(0);
     });
 
-    xit('Should submit a new document', async function () {
+    it('Should submit a new document', async function () {
       assert.isDefined(contract);
       const documentBatchTransition = await tutorials.submitNoteDocument(
         sdkClient,
