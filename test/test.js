@@ -495,7 +495,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
   });
 
   describe('Misc', function () {
-    xit('Should send a transaction', async function () {
+    it('Should send a transaction', async function () {
       const txid = await tutorials.sendFunds(sdkClient);
       console.log(`\tTransaction broadcast: ${txid}`);
       expect(txid).to.have.a.lengthOf(64);
