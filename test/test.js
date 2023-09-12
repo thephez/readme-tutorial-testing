@@ -284,7 +284,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     const updatedNoteMessage = `${noteMessage} (updated)`;
 
     it('Should create a minimal contract', async function () {
-      assert.isDefined(identity);
+      assert.isDefined(identity, 'Expected identity to be defined.');
       // eslint-disable-next-line max-len
       const contractTransition = await tutorials.registerContractProvided(
         sdkClient,
@@ -301,7 +301,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     });
 
     it('Should retrieve the contract', async function () {
-      assert.isDefined(contract);
+      assert.isDefined(contract, 'Expected contract to be defined.');
       contractId = contract.id;
       retrievedContract = await tutorials.retrieveContract(
         noWalletClient,
@@ -323,7 +323,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     });
 
     it('Should submit a new document to be updated then deleted', async function () {
-      assert.isDefined(contract);
+      assert.isDefined(contract, 'Expected contract to be defined.');
       // console.log(sdkClient.getApps());
       const documentBatchTransition = await tutorials.submitNoteDocument(
         sdkClient,
@@ -337,7 +337,8 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     }).timeout();
 
     it('Should get the document', async function () {
-      assert.isDefined(contract);
+      assert.isDefined(contract, 'Expected contract to be defined.');
+      assert.isDefined(documentId, 'Expected documentId to be defined.');
       const documents = await tutorials.getDocuments(noWalletClient);
       // console.log(documents[0].toJSON());
 
@@ -347,7 +348,8 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     });
 
     it('Should update the document', async function () {
-      assert.isDefined(contract);
+      assert.isDefined(contract, 'Expected contract to be defined.');
+      assert.isDefined(documentId, 'Expected documentId to be defined.');
       const documentBatchTransition = await tutorials.updateNoteDocument(
         sdkClient,
         identity.toJSON().id,
@@ -360,7 +362,8 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     });
 
     it('Should get the updated document', async function () {
-      assert.isDefined(contract);
+      assert.isDefined(contract, 'Expected contract to be defined.');
+      assert.isDefined(documentId, 'Expected documentId to be defined.');
       const documents = await tutorials.getDocuments(noWalletClient);
       // console.log(documents);
 
@@ -370,7 +373,8 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     });
 
     it('Should delete the document', async function () {
-      assert.isDefined(contract);
+      assert.isDefined(contract, 'Expected contract to be defined.');
+      assert.isDefined(documentId, 'Expected documentId to be defined.');
       const documentBatchTransition = await tutorials.deleteNoteDocument(
         sdkClient,
         identity.toJSON().id,
@@ -382,7 +386,8 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     });
 
     it('Should retrieve no documents', async function () {
-      assert.isDefined(contract);
+      assert.isDefined(contract, 'Expected contract to be defined');
+      assert.isDefined(documentId, 'Expected documentId to be defined.');
       const documents = await tutorials.getDocuments(noWalletClient);
       // console.log(documents);
 
@@ -390,7 +395,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     });
 
     it('Should submit a new document', async function () {
-      assert.isDefined(contract);
+      assert.isDefined(contract, 'Expected contract to be defined.');
       const documentBatchTransition = await tutorials.submitNoteDocument(
         sdkClient,
         identity.toJSON().id,
@@ -403,7 +408,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     }).timeout();
 
     it('Should update the contract', async function () {
-      assert.isDefined(contract);
+      assert.isDefined(contract, 'Expected contract to be defined.');
       // eslint-disable-next-line max-len
       const contractTransition = await tutorials.updateContractProvided(
         sdkClient,
@@ -423,7 +428,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
     describe('Additional Contracts', function () {
       it('Should create a contract with indices', async function () {
-        assert.isDefined(identity);
+        assert.isDefined(identity, 'Expected identity to be defined.');
         // eslint-disable-next-line max-len
         const contractTransition = await tutorials.registerContractProvided(
           sdkClient,
@@ -439,7 +444,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       });
 
       it('Should create a contract with timestamps required', async function () {
-        assert.isDefined(identity);
+        assert.isDefined(identity, 'Expected identity to be defined.');
         // eslint-disable-next-line max-len
         const contractTransition = await tutorials.registerContractProvided(
           sdkClient,
@@ -458,7 +463,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       });
 
       xit('Should create a contract with $ref', async function () {
-        assert.isDefined(identity);
+        assert.isDefined(identity, 'Expected identity to be defined.');
         // eslint-disable-next-line max-len
         const contractTransition = await tutorials.registerContractProvided(
           sdkClient,
@@ -474,7 +479,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       });
 
       it('Should create a contract with binary data', async function () {
-        assert.isDefined(identity);
+        assert.isDefined(identity, 'Expected identity to be defined.');
         // eslint-disable-next-line max-len
         const contractTransition = await tutorials.registerContractProvided(
           sdkClient,
