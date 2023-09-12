@@ -18,7 +18,6 @@ async function updateIdentityAddKey(sdkClient, identityId, keyId) {
   const account = await sdkClient.platform.client.getWalletAccount();
   const identityIndex = await account.getUnusedIdentityIndex();
   // console.log(`Unused identity index: ${identityIndex}`);
-  // console.log(existingIdentity.getPublicKeyById(identityIndex));
 
   // eslint-disable-next-line operator-linebreak
   const { privateKey: identityPrivateKey } =
@@ -26,15 +25,10 @@ async function updateIdentityAddKey(sdkClient, identityId, keyId) {
 
   const identityPublicKey = identityPrivateKey.toPublicKey().toBuffer();
 
-  const newPublicKey = new IdentityPublicKeyWithWitness({
-    id: keyId,
-    type: IdentityPublicKey.TYPES.ECDSA_SECP256K1,
-    data: identityPublicKey,
-    purpose: IdentityPublicKey.PURPOSES.AUTHENTICATION,
-    securityLevel: IdentityPublicKey.SECURITY_LEVELS.CRITICAL,
-    readOnly: false,
-    signature: Buffer.alloc(0),
-  });
+  const newPublicKey = new IdentityPublicKeyWithWitness(1);
+  newPublicKey.setId(keyId);
+  newPublicKey.setSecurityLevel(IdentityPublicKey.SECURITY_LEVELS.MEDIUM);
+  newPublicKey.setData(identityPublicKey);
 
   // console.log(newPublicKey.toJSON());
 
