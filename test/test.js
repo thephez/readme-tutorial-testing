@@ -148,7 +148,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(retrievedIdentity).to.be.instanceOf(Identity);
     });
 
-    xit('Should topup the identity', async function () {
+    it('Should topup the identity', async function () {
       // assert.isDefined(identity);
 
       const startBalance = identity.balance;
