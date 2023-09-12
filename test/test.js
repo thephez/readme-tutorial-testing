@@ -333,7 +333,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       );
       // console.log(documentBatchTransition.toJSON());
 
-      documentId = documentBatchTransition.toJSON().transitions[0].$id;
+      documentId = documentBatchTransition.toJSON().$id;
       expect(documentBatchTransition.toJSON()).to.be.an('object');
     }).timeout();
 
@@ -347,7 +347,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(documents[0].getData().message).to.deep.equal(noteMessage);
     });
 
-    xit('Should update the document', async function () {
+    it('Should update the document', async function () {
       assert.isDefined(contract);
       const documentBatchTransition = await tutorials.updateNoteDocument(
         sdkClient,
@@ -360,7 +360,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(documentBatchTransition.toJSON()).to.be.an('object');
     });
 
-    xit('Should get the updated document', async function () {
+    it('Should get the updated document', async function () {
       assert.isDefined(contract);
       const documents = await tutorials.getDocuments(noWalletClient);
       // console.log(documents);
@@ -398,7 +398,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         noteMessage,
       );
 
-      documentId = documentBatchTransition.toJSON().transitions[0].$id;
+      documentId = documentBatchTransition.toJSON().$id;
       console.log(`\tSubmitted document: ${documentId}`);
       expect(documentBatchTransition).to.be.an('object');
     }).timeout();

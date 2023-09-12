@@ -30,7 +30,8 @@ async function updateNoteDocument(client, identityId, documentId, message) {
   document.set('message', message);
 
   // Sign and submit the document replace transition
-  return platform.documents.broadcast({ replace: [document] }, identity);
+  await platform.documents.broadcast({ replace: [document] }, identity);
+  return document;
 }
 
 /* updateNoteDocument()

@@ -26,7 +26,8 @@ async function deleteNoteDocument(client, identityId, documentId) {
   );
 
   // Sign and submit the document delete transition
-  return platform.documents.broadcast({ delete: [document] }, identity);
+  await platform.documents.broadcast({ delete: [document] }, identity);
+  return document;
 }
 
 /* deleteNoteDocument()
