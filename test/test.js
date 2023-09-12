@@ -20,7 +20,6 @@ const binaryContractDocumentSchema = require('../tutorials/contract/contracts/co
 const {
   PlatformProtocol: { Identity },
   PlatformProtocol: { DataContract },
-  PlatformProtocol: { Identifier },
 } = Dash;
 
 dotenv.config();
