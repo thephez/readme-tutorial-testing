@@ -9,7 +9,10 @@ const clientOpts = {
 const client = new Dash.Client(clientOpts);
 const identityId = '';
 const keyId = 1; */
-const { IdentityPublicKey, IdentityPublicKeyWithWitness } = require('@dashevo/wasm-dpp');
+const {
+  IdentityPublicKey,
+  IdentityPublicKeyWithWitness,
+} = require('@dashevo/wasm-dpp');
 
 async function updateIdentityAddKey(sdkClient, identityId, keyId) {
   const existingIdentity = await sdkClient.platform.identities.get(identityId);
