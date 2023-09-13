@@ -500,6 +500,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
   describe('Misc', function () {
     it('Should send a transaction', async function () {
+      assert.isDefined(identity, 'Expected identity to be defined. Skip tx test to minimize UTXO growth.');
       const txid = await tutorials.sendFunds(sdkClient);
       console.log(`\tTransaction broadcast: ${txid}`);
       expect(txid).to.have.a.lengthOf(64);
