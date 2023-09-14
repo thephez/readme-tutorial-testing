@@ -8,32 +8,23 @@ const clientOpts = {
 };
 const client = new Dash.Client(clientOpts); */
 
-async function updateContract(client, identityId, contractId) {
+async function updateContract(client, identityId, contractId, schema) {
   const { platform } = client;
   const identity = await platform.identities.get(identityId);
 
   const existingDataContract = await platform.contracts.get(contractId);
-  const documents = existingDataContract.getDocuments();
-  // console.dir({documents})
-  documents.note.properties.author = {
+  const documentSchema = existingDataContract.getDocumentSchema(schema);
+  // console.dir({documentSchema})
+  documentSchema.properties.author = {
     type: 'string',
   };
 
-  existingDataContract.setDocuments(documents);
+  existingDataContract.setDocumentSchema(schema, documentSchema);
   // console.dir({existingDataContract}, {depth:null})
 
-  // Make sure contract passes validation checks
-  const validationResult = await platform.dpp.dataContract.validate(
-    existingDataContract,
-  );
-
-  if (validationResult.isValid()) {
-    // console.log('Validation passed, broadcasting contract..');
-    // Sign and submit the data contract
-    return platform.contracts.update(existingDataContract, identity);
-  }
-  console.error(validationResult); // An array of detailed validation errors
-  throw validationResult.errors[0];
+  // Sign and submit the data contract
+  await platform.contracts.update(existingDataContract, identity);
+  return existingDataContract;
 }
 
 /* updateContract()

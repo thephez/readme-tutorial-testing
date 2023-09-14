@@ -20,7 +20,6 @@ const binaryContractDocumentSchema = require('../tutorials/contract/contracts/co
 const {
   PlatformProtocol: { Identity },
   PlatformProtocol: { DataContract },
-  PlatformProtocol: { Identifier },
 } = Dash;
 
 dotenv.config();
@@ -32,7 +31,7 @@ const network = process.env.NETWORK;
 // eslint-disable-next-line prefer-const
 let selectedNode =
   goodNodes.goodNodes[Math.floor(Math.random() * goodNodes.goodNodes.length)];
-// selectedNode = '35.90.255.217:3000'; // devnet
+// selectedNode = '35.88.162.148:1443:self-signed'; // devnet
 // selectedNode = '127.0.0.1:3000';
 
 let noWalletClient;
@@ -41,6 +40,7 @@ let sdkClient;
 let account;
 let identity;
 let checkForIdentity = false;
+let identityUpdated = false;
 
 describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function suite() {
   this.timeout(50000);
@@ -141,6 +141,10 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     }).timeout(60000);
 
     it('Should retrieve the identity', async function () {
+      if (typeof identity === 'undefined') {
+        console.log('\t Skipping the test. Expected identity to be defined.');
+        return this.skip();
+      }
       const retrievedIdentity = await tutorials.retrieveIdentity(
         sdkClient,
         identity.toJSON().id,
@@ -149,7 +153,10 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     });
 
     it('Should topup the identity', async function () {
-      // assert.isDefined(identity);
+      if (typeof identity === 'undefined') {
+        console.log('\t Skipping the test. Expected identity to be defined.');
+        return this.skip();
+      }
 
       const startBalance = identity.balance;
       const identityToppedUp = await tutorials.topupIdentity(
@@ -162,7 +169,10 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     });
 
     it('Should retrieve all account identity IDs', async function () {
-      // assert.isDefined(identity);
+      if (typeof identity === 'undefined') {
+        console.log('\t Skipping the test. Expected identity to be defined.');
+        return this.skip();
+      }
 
       const identityIds = await tutorials.retrieveIdentityIds(sdkClient);
       // console.log(identityIds);
@@ -171,6 +181,10 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     });
 
     it('Should update the identity (add key)', async function () {
+      if (typeof identity === 'undefined') {
+        console.log('\t Skipping the test. Expected identity to be defined.');
+        return this.skip();
+      }
       const startingKeyCount = identity.toJSON().publicKeys.length;
       const identityKeyAdded = await tutorials.updateIdentityAddKey(
         sdkClient,
@@ -183,9 +197,14 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         startingKeyCount + 1,
       );
       identity = identityKeyAdded; // Update identity for use in following tests
+      identityUpdated = true;
     });
 
     it('Should update the identity (disable key)', async function () {
+      if (identityUpdated === false) {
+        console.log('\tNew identity key not added. Skip disabling a key.');
+        return this.skip();
+      }
       const keyIdToDisable = identity.toJSON().publicKeys.slice(-1)[0].id;
       const identityKeyDisabled = await tutorials.updateIdentityDisableKey(
         sdkClient,
@@ -202,7 +221,10 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     });
 
     it('Should register a name', async function () {
-      // assert.isDefined(identity);
+      if (typeof identity === 'undefined') {
+        console.log('\t Skipping the test. Expected identity to be defined.');
+        return this.skip();
+      }
 
       // Check if initial name already established on this network
       const retrievedName = await tutorials.retrieveNameByName(
@@ -228,7 +250,10 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     });
 
     it('Should register an alias', async function () {
-      // assert.isDefined(identity);
+      if (typeof identity === 'undefined') {
+        console.log('\t Skipping the test. Expected identity to be defined.');
+        return this.skip();
+      }
       const alias = `${name}-alias`;
 
       const registeredAlias = await tutorials.registerAlias(
@@ -241,7 +266,10 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     }).timeout(60000);
 
     it('Should retrieve a name by name', async function () {
-      // assert.isDefined(identity);
+      if (typeof identity === 'undefined') {
+        console.log('\t Skipping the test. Expected identity to be defined.');
+        return this.skip();
+      }
       const retrievedName = await tutorials.retrieveNameByName(
         noWalletClient,
         name,
@@ -251,7 +279,10 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     });
 
     it('Should retrieve a name by record', async function () {
-      // assert.isDefined(identity);
+      if (typeof identity === 'undefined') {
+        console.log('\t Skipping the test. Expected identity to be defined.');
+        return this.skip();
+      }
       const retrievedName = await tutorials.retrieveNameByRecord(
         noWalletClient,
         identity.toJSON().id,
@@ -263,7 +294,10 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     });
 
     it('Should retrieve a name by search', async function () {
-      // assert.isDefined(identity);
+      if (typeof identity === 'undefined') {
+        console.log('\t Skipping the test. Expected identity to be defined.');
+        return this.skip();
+      }
       const retrievedName = await tutorials.retrieveNameBySearch(
         noWalletClient,
         name,
@@ -285,24 +319,31 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     const updatedNoteMessage = `${noteMessage} (updated)`;
 
     it('Should create a minimal contract', async function () {
-      assert.isDefined(identity);
+      if (typeof identity === 'undefined') {
+        console.log('\t Skipping the test. Expected identity to be defined.');
+        return this.skip();
+      }
       // eslint-disable-next-line max-len
       const contractTransition = await tutorials.registerContractProvided(
         sdkClient,
         identity.toJSON().id,
         minimalContractDocumentSchema,
       );
-      contract = contractTransition.toJSON().dataContract;
+      // console.log(contractTransition.toJSON());
+      contract = contractTransition.toJSON();
       console.log(
-        `\tRegistered minimal contract: ${contract.$id} ${contract.version}`,
+        `\tRegistered minimal contract: ${contract.id} ${contract.version}`,
       );
 
-      assert.containsAllKeys(contract.documents, ['note']);
+      assert.containsAllKeys(contract.documentSchemas, ['note']);
     });
 
     it('Should retrieve the contract', async function () {
-      assert.isDefined(contract);
-      contractId = contract.$id;
+      if (typeof contract === 'undefined') {
+        console.log('\t Skipping the test. Expected contract to be defined.');
+        return this.skip();
+      }
+      contractId = contract.id;
       retrievedContract = await tutorials.retrieveContract(
         noWalletClient,
         contractId,
@@ -312,18 +353,21 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       // expect(retrievedContract.toJSON()).to.deep.equal(contract); // TODO: update to work with v0.24
 
       // Manually add contract with name "tutorialContract"
-      sdkClient.apps.apps.tutorialContract = {
-        contractId: Identifier.from(contractId),
-        retrievedContract,
-      };
-      noWalletClient.apps.apps.tutorialContract = {
-        contractId: Identifier.from(contractId),
-        retrievedContract,
-      };
+      sdkClient.getApps().set('tutorialContract', {
+        contractId: retrievedContract.getId(),
+        contract: retrievedContract,
+      });
+      noWalletClient.getApps().set('tutorialContract', {
+        contractId: retrievedContract.getId(),
+        contract: retrievedContract,
+      });
     });
 
     it('Should submit a new document to be updated then deleted', async function () {
-      assert.isDefined(contract);
+      if (typeof contract === 'undefined') {
+        console.log('\t Skipping the test. Expected contract to be defined.');
+        return this.skip();
+      }
       // console.log(sdkClient.getApps());
       const documentBatchTransition = await tutorials.submitNoteDocument(
         sdkClient,
@@ -332,12 +376,19 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       );
       // console.log(documentBatchTransition.toJSON());
 
-      documentId = documentBatchTransition.toJSON().transitions[0].$id;
+      documentId = documentBatchTransition.toJSON().$id;
       expect(documentBatchTransition.toJSON()).to.be.an('object');
     }).timeout();
 
     it('Should get the document', async function () {
-      assert.isDefined(contract);
+      if (typeof contract === 'undefined') {
+        console.log('\t Skipping the test. Expected contract to be defined.');
+        return this.skip();
+      }
+      if (typeof documentId === 'undefined') {
+        console.log('\t Skipping the test. Expected documentId to be defined.');
+        return this.skip();
+      }
       const documents = await tutorials.getDocuments(noWalletClient);
       // console.log(documents[0].toJSON());
 
@@ -347,7 +398,14 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     });
 
     it('Should update the document', async function () {
-      assert.isDefined(contract);
+      if (typeof contract === 'undefined') {
+        console.log('\t Skipping the test. Expected contract to be defined.');
+        return this.skip();
+      }
+      if (typeof documentId === 'undefined') {
+        console.log('\t Skipping the test. Expected documentId to be defined.');
+        return this.skip();
+      }
       const documentBatchTransition = await tutorials.updateNoteDocument(
         sdkClient,
         identity.toJSON().id,
@@ -360,7 +418,14 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     });
 
     it('Should get the updated document', async function () {
-      assert.isDefined(contract);
+      if (typeof contract === 'undefined') {
+        console.log('\t Skipping the test. Expected contract to be defined.');
+        return this.skip();
+      }
+      if (typeof documentId === 'undefined') {
+        console.log('\t Skipping the test. Expected documentId to be defined.');
+        return this.skip();
+      }
       const documents = await tutorials.getDocuments(noWalletClient);
       // console.log(documents);
 
@@ -370,7 +435,14 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     });
 
     it('Should delete the document', async function () {
-      assert.isDefined(contract);
+      if (typeof contract === 'undefined') {
+        console.log('\t Skipping the test. Expected contract to be defined.');
+        return this.skip();
+      }
+      if (typeof documentId === 'undefined') {
+        console.log('\t Skipping the test. Expected documentId to be defined.');
+        return this.skip();
+      }
       const documentBatchTransition = await tutorials.deleteNoteDocument(
         sdkClient,
         identity.toJSON().id,
@@ -382,7 +454,14 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     });
 
     it('Should retrieve no documents', async function () {
-      assert.isDefined(contract);
+      if (typeof contract === 'undefined') {
+        console.log('\t Skipping the test. Expected contract to be defined.');
+        return this.skip();
+      }
+      if (typeof documentId === 'undefined') {
+        console.log('\t Skipping the test. Expected documentId to be defined.');
+        return this.skip();
+      }
       const documents = await tutorials.getDocuments(noWalletClient);
       // console.log(documents);
 
@@ -390,31 +469,38 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     });
 
     it('Should submit a new document', async function () {
-      assert.isDefined(contract);
+      if (typeof contract === 'undefined') {
+        console.log('\t Skipping the test. Expected contract to be defined.');
+        return this.skip();
+      }
       const documentBatchTransition = await tutorials.submitNoteDocument(
         sdkClient,
         identity.toJSON().id,
         noteMessage,
       );
 
-      documentId = documentBatchTransition.toJSON().transitions[0].$id;
+      documentId = documentBatchTransition.toJSON().$id;
       console.log(`\tSubmitted document: ${documentId}`);
       expect(documentBatchTransition).to.be.an('object');
     }).timeout();
 
     it('Should update the contract', async function () {
-      assert.isDefined(contract);
+      if (typeof contract === 'undefined') {
+        console.log('\t Skipping the test. Expected contract to be defined.');
+        return this.skip();
+      }
       // eslint-disable-next-line max-len
       const contractTransition = await tutorials.updateContractProvided(
         sdkClient,
         identity.toJSON().id,
         contractId,
+        'note',
       );
-      updatedContract = contractTransition.toJSON().dataContract;
-      console.log(`\tUpdated minimal contract: ${updatedContract.$id}`);
+      updatedContract = contractTransition.toJSON();
+      console.log(`\tUpdated minimal contract: ${updatedContract.id}`);
 
-      assert.containsAllKeys(updatedContract.documents, ['note']);
-      assert.containsAllKeys(updatedContract.documents.note.properties, [
+      assert.containsAllKeys(updatedContract.documentSchemas, ['note']);
+      assert.containsAllKeys(updatedContract.documentSchemas.note.properties, [
         'message',
         'author',
       ]);
@@ -422,42 +508,51 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
     describe('Additional Contracts', function () {
       it('Should create a contract with indices', async function () {
-        assert.isDefined(identity);
+        if (typeof identity === 'undefined') {
+          console.log('\t Skipping the test. Expected identity to be defined.');
+          return this.skip();
+        }
         // eslint-disable-next-line max-len
         const contractTransition = await tutorials.registerContractProvided(
           sdkClient,
           identity.toJSON().id,
           indexedContractDocumentSchema,
         );
-        const indexedContract = contractTransition.toJSON().dataContract;
+        const indexedContract = contractTransition.toJSON();
         console.log(
-          `\tRegistered contract with indices: ${indexedContract.$id}`,
+          `\tRegistered contract with indices: ${indexedContract.id}`,
         );
 
-        assert.containsAllKeys(indexedContract.documents.note, ['indices']);
+        assert.containsAllKeys(indexedContract.documentSchemas.note, ['indices']);
       });
 
       it('Should create a contract with timestamps required', async function () {
-        assert.isDefined(identity);
+        if (typeof identity === 'undefined') {
+          console.log('\t Skipping the test. Expected identity to be defined.');
+          return this.skip();
+        }
         // eslint-disable-next-line max-len
         const contractTransition = await tutorials.registerContractProvided(
           sdkClient,
           identity.toJSON().id,
           timestampContractDocumentSchema,
         );
-        const timestampContract = contractTransition.toJSON().dataContract;
+        const timestampContract = contractTransition.toJSON();
         console.log(
-          `\tRegistered contract with timestamps required: ${timestampContract.$id}`,
+          `\tRegistered contract with timestamps required: ${timestampContract.id}`,
         );
 
-        expect(timestampContract.documents.note.required).to.include(
+        expect(timestampContract.documentSchemas.note.required).to.include(
           '$createdAt',
           '$updatedAt',
         );
       });
 
       xit('Should create a contract with $ref', async function () {
-        assert.isDefined(identity);
+        if (typeof identity === 'undefined') {
+          console.log('\t Skipping the test. Expected identity to be defined.');
+          return this.skip();
+        }
         // eslint-disable-next-line max-len
         const contractTransition = await tutorials.registerContractProvided(
           sdkClient,
@@ -465,27 +560,30 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
           refContractDocumentSchema,
           refContractDefinitions,
         );
-        const refContract = contractTransition.toJSON().dataContract;
-        console.log(`\tRegistered contract with $ref: ${refContract.$id}`);
+        const refContract = contractTransition.toJSON();
+        console.log(`\tRegistered contract with $ref: ${refContract.id}`);
 
         expect(refContract.$defs).to.be.an('object');
         expect(refContract.$defs).to.have.property('address');
       });
 
       it('Should create a contract with binary data', async function () {
-        assert.isDefined(identity);
+        if (typeof identity === 'undefined') {
+          console.log('\t Skipping the test. Expected identity to be defined.');
+          return this.skip();
+        }
         // eslint-disable-next-line max-len
         const contractTransition = await tutorials.registerContractProvided(
           sdkClient,
           identity.toJSON().id,
           binaryContractDocumentSchema,
         );
-        const binaryContract = contractTransition.toJSON().dataContract;
+        const binaryContract = contractTransition.toJSON();
         console.log(
-          `\tRegistered contract with binary data: ${binaryContract.$id}`,
+          `\tRegistered contract with binary data: ${binaryContract.id}`,
         );
 
-        expect(binaryContract.documents.block.properties.hash).to.have.property(
+        expect(binaryContract.documentSchemas.block.properties.hash).to.have.property(
           'byteArray',
         );
       });
@@ -494,6 +592,10 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
   describe('Misc', function () {
     it('Should send a transaction', async function () {
+      if (typeof identity === 'undefined') {
+        console.log('\tExpected identity to be defined. Skipping the test to minimize UTXO growth.');
+        return this.skip();
+      }
       const txid = await tutorials.sendFunds(sdkClient);
       console.log(`\tTransaction broadcast: ${txid}`);
       expect(txid).to.have.a.lengthOf(64);

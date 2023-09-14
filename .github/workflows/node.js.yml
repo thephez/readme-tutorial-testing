@@ -40,4 +40,4 @@ jobs:
         CI: true
         NETWORK: 'testnet'
         WALLET_MNEMONIC: ${{ secrets.WALLET_MNEMONIC }}
-        SYNC_START_HEIGHT: 670000
+        SYNC_START_HEIGHT: 900000
