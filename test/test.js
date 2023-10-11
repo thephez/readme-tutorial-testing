@@ -25,7 +25,7 @@ const {
 dotenv.config();
 const mnemonic = process.env.WALLET_MNEMONIC;
 const newIdentityBalance = 9999000; // ~ minimum credit balance of new identity
-const initialName = 'RT-First-00000'; // Used to make query tests easier
+const initialName = 'DQ-Test-00000'; // Used to make docs query tests easier
 const syncStartHeight = process.env.SYNC_START_HEIGHT;
 const network = process.env.NETWORK;
 // eslint-disable-next-line prefer-const
@@ -235,7 +235,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       if (retrievedName === null) {
         name = initialName;
       } else {
-        name = `RT-${faker.name.firstName()}-${faker.datatype.number()}`;
+        name = `DQ-${faker.name.firstName()}-${faker.datatype.number()}`;
       }
 
       const registeredName = await tutorials.registerName(
@@ -254,7 +254,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         console.log('\t Skipping the test. Expected identity to be defined.');
         return this.skip();
       }
-      const alias = `${name}-alias`;
+      const alias = `${name}-backup`;
 
       const registeredAlias = await tutorials.registerAlias(
         sdkClient,
