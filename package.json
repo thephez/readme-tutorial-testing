@@ -1,6 +1,6 @@
 {
   "name": "readme-tutorial-testing",
-  "version": "0.25.0-dev",
+  "version": "0.25.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,8 +11,8 @@
   "author": "thephez",
   "license": "MIT",
   "dependencies": {
-    "@dashevo/wasm-dpp": "^0.25.0-dev.32",
-    "dash": "^3.25.0-dev.32"
+    "@dashevo/wasm-dpp": "^0.25.2",
+    "dash": "^3.25.2"
   },
   "devDependencies": {
     "chai": "^4.3.10",
