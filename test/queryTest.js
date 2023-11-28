@@ -16,8 +16,8 @@ const network = process.env.NETWORK;
 // eslint-disable-next-line prefer-const
 let selectedNode =
   goodNodes.goodNodes[Math.floor(Math.random() * goodNodes.goodNodes.length)];
-const documentId = 'A7EPNJ1MYFKWEU2Dn2oprpA9dUaRE5zs8r8wDiMeiFcp'; // DPNS domain document ID for identityId
-const identityId = 'D4XykQwuzdNuLLVBbpKLo3VMumuQKKGKFGRYsj5KnMnQ'; // Identity ID for an identityName (e.g. RT-First-00000)
+const documentId = 'GFHhUoupPGniR5CE6h19pSiiC3vN1NXP1onKsTRSJgSk'; // DPNS domain document ID for identityId
+const identityId = 'ACuBePyCHEDgeEaabp49RLu22UPckEwK5sCJfVyQP5Vq'; // Identity ID for an identityName (e.g. RT-First-00000)
 const identityName = ['DQ-Test-00000', 'DQ-Test-00000-backup'];
 const startsWithString = 'DQ-';
 
