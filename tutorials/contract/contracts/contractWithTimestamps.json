@@ -3,7 +3,8 @@
     "type": "object",
     "properties": {
       "message": {
-        "type": "string"
+        "type": "string",
+        "position": 0
       }
     },
     "required": ["$createdAt", "$updatedAt"],

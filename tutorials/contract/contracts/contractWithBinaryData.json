@@ -6,7 +6,8 @@
          "type": "array",
          "byteArray": true,
          "maxItems": 64,
-         "description": "Store block hashes"
+         "description": "Store block hashes",
+         "position": 0
        }
      },
      "additionalProperties": false

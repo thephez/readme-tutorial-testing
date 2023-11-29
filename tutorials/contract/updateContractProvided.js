@@ -17,6 +17,7 @@ async function updateContract(client, identityId, contractId, schema) {
   // console.dir({documentSchema})
   documentSchema.properties.author = {
     type: 'string',
+    position: 1,
   };
 
   existingDataContract.setDocumentSchema(schema, documentSchema);
