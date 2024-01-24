@@ -20,8 +20,7 @@ async function transferCredits(client, identityId, recipientId) {
   // const recipientId = process.env.RECIPIENT_ID; // Recipient's ID
   const recipientIdentity = await client.platform.identities.get(recipientId);
   console.log(
-    '\tRecipient identity balance before transfer: ',
-    recipientIdentity.balance,
+    `\tRecipient identity balance before transfer: ${recipientIdentity.balance}`,
   );
   const transferAmount = 1000; // Number of credits to transfer
 

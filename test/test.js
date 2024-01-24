@@ -226,9 +226,14 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         return this.skip();
       }
       // Use the initial alias as the recipient for the transfer
-      const initialAlias = await sdkClient.platform.names.search(`${initialName}-backup`, 'dash');
+      const initialAlias = await sdkClient.platform.names.search(
+        `${initialName}-backup`,
+        'dash',
+      );
       const recipientId = initialAlias[0].getData().records.dashAliasIdentityId;
-      const recipientIdentity = await sdkClient.platform.identities.get(recipientId);
+      const recipientIdentity = await sdkClient.platform.identities.get(
+        recipientId,
+      );
       const startBalance = recipientIdentity.balance;
 
       const identityTransferRecipient = await tutorials.transferCredits(
