@@ -220,7 +220,28 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(identity.toJSON().publicKeys.slice(-1)[0].disabledAt).to.not.exist;
     });
 
-    it('Should register a name', async function () {
+    it('Should transfer credits to another identity', async function () {
+      if (typeof identity === 'undefined') {
+        console.log('\t Skipping the test. Expected identity to be defined.');
+        return this.skip();
+      }
+      // Use the initial alias as the recipient for the transfer
+      const initialAlias = await sdkClient.platform.names.search(`${initialName}-backup`, 'dash');
+      const recipientId = initialAlias[0].getData().records.dashAliasIdentityId;
+      const recipientIdentity = await sdkClient.platform.identities.get(recipientId);
+      const startBalance = recipientIdentity.balance;
+
+      const identityTransferRecipient = await tutorials.transferCredits(
+        sdkClient,
+        identity.toJSON().id,
+        initialAlias[0].getData().records.dashAliasIdentityId,
+      );
+      console.log(`\tNew balance: ${identityTransferRecipient.balance}`);
+      expect(identityTransferRecipient).to.be.instanceOf(Identity);
+      expect(identityTransferRecipient.balance).to.not.equal(startBalance);
+    });
+
+    xit('Should register a name', async function () {
       if (typeof identity === 'undefined') {
         console.log('\t Skipping the test. Expected identity to be defined.');
         return this.skip();

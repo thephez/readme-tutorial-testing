@@ -8,6 +8,7 @@ module.exports = {
   ...require('./identity/updateIdentityAddKey'),
   ...require('./identity/updateIdentityDisableKey'),
   ...require('./identity/retrieveAccountIdentityIds'),
+  ...require('./identity/transferCredits'),
   ...require('./name/registerName'),
   ...require('./name/registerAlias'),
   ...require('./name/retrieveNameByName'),
