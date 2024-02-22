@@ -246,7 +246,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(identityTransferRecipient.balance).to.not.equal(startBalance);
     });
 
-    xit('Should register a name', async function () {
+    it('Should register a name', async function () {
       if (typeof identity === 'undefined') {
         console.log('\t Skipping the test. Expected identity to be defined.');
         return this.skip();
