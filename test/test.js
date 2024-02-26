@@ -114,6 +114,8 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
           this.skip();
         }
       }
+      // Delay between tests
+      return new Promise(resolve => setTimeout(resolve, 1500));
     });
 
     it('Client should connect without error', async function () {
@@ -343,6 +345,11 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     let documentId;
     const noteMessage = `Tutorial CI Test @ ${new Date().toUTCString()}`;
     const updatedNoteMessage = `${noteMessage} (updated)`;
+
+    beforeEach(function () {
+      // Delay between tests
+      return new Promise(resolve => setTimeout(resolve, 1500));
+    });
 
     it('Should create a minimal contract', async function () {
       if (typeof identity === 'undefined') {
