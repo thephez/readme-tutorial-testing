@@ -28,6 +28,7 @@ const newIdentityBalance = 9999000; // ~ minimum credit balance of new identity
 const initialName = 'DQ-Test-00000'; // Used to make docs query tests easier
 const syncStartHeight = process.env.SYNC_START_HEIGHT;
 const network = process.env.NETWORK;
+const testDelay = 1000; // Delay (in ms) between each test
 // eslint-disable-next-line prefer-const
 let selectedNode =
   goodNodes.goodNodes[Math.floor(Math.random() * goodNodes.goodNodes.length)];
@@ -115,7 +116,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         }
       }
       // Delay between tests
-      return new Promise(resolve => setTimeout(resolve, 1500));
+      return new Promise(resolve => setTimeout(resolve, testDelay));
     });
 
     it('Client should connect without error', async function () {
@@ -348,7 +349,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
     beforeEach(function () {
       // Delay between tests
-      return new Promise(resolve => setTimeout(resolve, 1500));
+      return new Promise(resolve => setTimeout(resolve, testDelay));
     });
 
     it('Should create a minimal contract', async function () {
