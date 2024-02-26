@@ -28,7 +28,7 @@ const newIdentityBalance = 9999000; // ~ minimum credit balance of new identity
 const initialName = 'DQ-Test-00000'; // Used to make docs query tests easier
 const syncStartHeight = process.env.SYNC_START_HEIGHT;
 const network = process.env.NETWORK;
-const testDelay = 1000; // Delay (in ms) between each test
+const testDelay = 1500; // Delay (in ms) between each test
 // eslint-disable-next-line prefer-const
 let selectedNode =
   goodNodes.goodNodes[Math.floor(Math.random() * goodNodes.goodNodes.length)];
