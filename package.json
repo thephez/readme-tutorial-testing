@@ -11,8 +11,8 @@
   "author": "thephez",
   "license": "MIT",
   "dependencies": {
-    "@dashevo/wasm-dpp": "^1.0.0-dev.5",
-    "dash": "^4.0.0-dev.5"
+    "@dashevo/wasm-dpp": "^1.0.0-dev.7",
+    "dash": "^4.0.0-dev.7"
   },
   "devDependencies": {
     "chai": "^4.3.10",
