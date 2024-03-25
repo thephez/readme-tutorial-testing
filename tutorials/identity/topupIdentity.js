@@ -10,7 +10,7 @@ const client = new Dash.Client(clientOpts); */
 
 async function topupIdentity(sdkClient, identityId) {
   // const identityId = 'an identity ID goes here';
-  const topUpAmount = 300000; // Number of duffs
+  const topUpAmount = 500000; // Number of duffs
 
   await sdkClient.platform.identities.topUp(identityId, topUpAmount);
   return sdkClient.platform.identities.get(identityId);
