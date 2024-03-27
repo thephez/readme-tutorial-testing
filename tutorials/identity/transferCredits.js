@@ -22,7 +22,7 @@ async function transferCredits(client, identityId, recipientId) {
   console.log(
     `\tRecipient identity balance before transfer: ${recipientIdentity.balance}`,
   );
-  const transferAmount = 1000; // Number of credits to transfer
+  const transferAmount = 300000; // Number of credits to transfer
 
   await client.platform.identities.creditTransfer(
     identity,
