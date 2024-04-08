@@ -533,8 +533,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     }).timeout();
 
     describe('Additional Contracts', function () {
-      // TODO: re-enable when duplicate nonce issue resolved
-      xit('Should create a contract with indices', async function () {
+      it('Should create a contract with indices', async function () {
         if (typeof identity === 'undefined') {
           console.log('\t Skipping the test. Expected identity to be defined.');
           return this.skip();
@@ -553,8 +552,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         assert.containsAllKeys(indexedContract.documentSchemas.note, ['indices']);
       });
 
-      // TODO: re-enable when duplicate nonce issue resolved
-      xit('Should create a contract with timestamps required', async function () {
+      it('Should create a contract with timestamps required', async function () {
         if (typeof identity === 'undefined') {
           console.log('\t Skipping the test. Expected identity to be defined.');
           return this.skip();
@@ -595,8 +593,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         expect(refContract.$defs).to.have.property('address');
       });
 
-      // TODO: re-enable when duplicate nonce issue resolved
-      xit('Should create a contract with binary data', async function () {
+      it('Should create a contract with binary data', async function () {
         if (typeof identity === 'undefined') {
           console.log('\t Skipping the test. Expected identity to be defined.');
           return this.skip();
