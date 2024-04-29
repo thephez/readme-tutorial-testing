@@ -630,8 +630,9 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     it('Should execute DAPI client methods and return Dash Core status', async function () {
       const status = await tutorials.dapiClientMethods(noWalletClient);
       // console.dir(status);
-      expect(status.version).to.include.all.keys('software', 'protocol');
-      expect(status.chain).to.include.all.keys('name', 'blocksCount');
+      expect(status).to.include.all.keys('version', 'time', 'status', 'syncProgress', 'chain', 'network');
+      expect(status.version).to.include.all.keys('software', 'protocol', 'agent');
+      expect(status.chain).to.include.all.keys('name', 'headersCount', 'blocksCount', 'bestBlockHash', 'difficulty', 'chainWork', 'isSynced', 'syncProgress');
     });
 
     after(function () {
