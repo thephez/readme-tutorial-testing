@@ -139,9 +139,9 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       console.log(
-        `\tReceived document with name/id: ${result[0].getData().label} ${
-          result[0].getOwnerId().toString()
-        }`,
+        `\tReceived document with name/id: ${
+          result[0].getData().label
+        } ${result[0].getOwnerId().toString()}`,
       );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
@@ -156,9 +156,9 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       console.log(
-        `\tReceived document with name/id: ${result[0].getData().label} ${
-          result[0].getOwnerId().toString()
-        }`,
+        `\tReceived document with name/id: ${
+          result[0].getData().label
+        } ${result[0].getOwnerId().toString()}`,
       );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
@@ -173,9 +173,9 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       console.log(
-        `\tReceived document with name/id: ${result[0].getData().label} ${
-          result[0].getOwnerId().toString()
-        }`,
+        `\tReceived document with name/id: ${
+          result[0].getData().label
+        } ${result[0].getOwnerId().toString()}`,
       );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
@@ -190,9 +190,9 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       console.log(
-        `\tReceived document with name/id: ${result[0].getData().label} ${
-          result[0].getOwnerId().toString()
-        }`,
+        `\tReceived document with name/id: ${
+          result[0].getData().label
+        } ${result[0].getOwnerId().toString()}`,
       );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
@@ -207,9 +207,9 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       console.log(
-        `\tReceived document with name/id: ${result[0].getData().label} ${
-          result[0].getOwnerId().toString()
-        }`,
+        `\tReceived document with name/id: ${
+          result[0].getData().label
+        } ${result[0].getOwnerId().toString()}`,
       );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
@@ -224,9 +224,9 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       console.log(
-        `\tReceived document with name/id: ${result[0].getData().label} ${
-          result[0].getOwnerId().toString()
-        }`,
+        `\tReceived document with name/id: ${
+          result[0].getData().label
+        } ${result[0].getOwnerId().toString()}`,
       );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
@@ -241,9 +241,9 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       console.log(
-        `\tReceived document with name/id: ${result[0].getData().label} ${
-          result[0].getOwnerId().toString()
-        }`,
+        `\tReceived document with name/id: ${
+          result[0].getData().label
+        } ${result[0].getOwnerId().toString()}`,
       );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
@@ -258,9 +258,9 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       );
 
       console.log(
-        `\tReceived document with name/id: ${result[0].getData().label} ${
-          result[0].getOwnerId().toString()
-        }`,
+        `\tReceived document with name/id: ${
+          result[0].getData().label
+        } ${result[0].getOwnerId().toString()}`,
       );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
@@ -380,7 +380,9 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
         'asc',
       );
 
-      console.log(`\tReceived document with name: ${result[0].getData().label}`);
+      console.log(
+        `\tReceived document with name: ${result[0].getData().label}`,
+      );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
       expect(
@@ -395,7 +397,9 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
         'desc',
       );
 
-      console.log(`\tReceived document with name: ${result[0].getData().label}`);
+      console.log(
+        `\tReceived document with name: ${result[0].getData().label}`,
+      );
       expect(result).to.have.lengthOf(1);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
       expect(

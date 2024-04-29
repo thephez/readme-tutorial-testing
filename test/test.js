@@ -549,7 +549,9 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
           `\tRegistered contract with indices: ${indexedContract.id}`,
         );
 
-        assert.containsAllKeys(indexedContract.documentSchemas.note, ['indices']);
+        assert.containsAllKeys(indexedContract.documentSchemas.note, [
+          'indices',
+        ]);
       });
 
       it('Should create a contract with timestamps required', async function () {
@@ -609,9 +611,9 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
           `\tRegistered contract with binary data: ${binaryContract.id}`,
         );
 
-        expect(binaryContract.documentSchemas.block.properties.hash).to.have.property(
-          'byteArray',
-        );
+        expect(
+          binaryContract.documentSchemas.block.properties.hash,
+        ).to.have.property('byteArray');
       });
     });
   });
@@ -619,7 +621,9 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
   describe('Misc', function () {
     it('Should send a transaction', async function () {
       if (typeof identity === 'undefined') {
-        console.log('\tExpected identity to be defined. Skipping the test to minimize UTXO growth.');
+        console.log(
+          '\tExpected identity to be defined. Skipping the test to minimize UTXO growth.',
+        );
         return this.skip();
       }
       const txid = await tutorials.sendFunds(sdkClient);
@@ -630,9 +634,29 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     it('Should execute DAPI client methods and return Dash Core status', async function () {
       const status = await tutorials.dapiClientMethods(noWalletClient);
       // console.dir(status);
-      expect(status).to.include.all.keys('version', 'time', 'status', 'syncProgress', 'chain', 'network');
-      expect(status.version).to.include.all.keys('software', 'protocol', 'agent');
-      expect(status.chain).to.include.all.keys('name', 'headersCount', 'blocksCount', 'bestBlockHash', 'difficulty', 'chainWork', 'isSynced', 'syncProgress');
+      expect(status).to.include.all.keys(
+        'version',
+        'time',
+        'status',
+        'syncProgress',
+        'chain',
+        'network',
+      );
+      expect(status.version).to.include.all.keys(
+        'software',
+        'protocol',
+        'agent',
+      );
+      expect(status.chain).to.include.all.keys(
+        'name',
+        'headersCount',
+        'blocksCount',
+        'bestBlockHash',
+        'difficulty',
+        'chainWork',
+        'isSynced',
+        'syncProgress',
+      );
     });
 
     after(function () {
