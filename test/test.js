@@ -16,6 +16,7 @@ const timestampContractDocumentSchema = require('../tutorials/contract/contracts
 const refContractDocumentSchema = require('../tutorials/contract/contracts/contractWithRef.json');
 const refContractDefinitions = require('../tutorials/contract/contracts/contractWithRefDefinitions.json');
 const binaryContractDocumentSchema = require('../tutorials/contract/contracts/contractWithBinaryData.json');
+const nftContractDocumentSchema = require('../tutorials/contract/contracts/contractNft.json');
 
 const {
   PlatformProtocol: { Identity },
@@ -614,6 +615,27 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         expect(
           binaryContract.documentSchemas.block.properties.hash,
         ).to.have.property('byteArray');
+      });
+
+      it('Should create an NFT contract', async function () {
+        if (typeof identity === 'undefined') {
+          console.log('\t Skipping the test. Expected identity to be defined.');
+          return this.skip();
+        }
+        // eslint-disable-next-line max-len
+        const contractTransition = await tutorials.registerContractProvided(
+          sdkClient,
+          identity.toJSON().id,
+          nftContractDocumentSchema,
+        );
+        const nftContract = contractTransition.toJSON();
+        console.log(
+          `\tRegistered NFT contract: ${nftContract.id}`,
+        );
+
+        expect(nftContract.documentSchemas).to.have.property(
+          'card',
+        );
       });
     });
   });
