@@ -1,0 +1,68 @@
+{
+    "card": {
+      "type": "object",
+      "documentsMutable": false, 
+      "canBeDeleted": true, 
+      "transferable": 1, 
+      "tradeMode": 1, 
+      "creationRestrictionMode": 0, 
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the card",
+          "minLength": 0,
+          "maxLength": 63,
+          "position": 0
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the card",
+          "minLength": 0,
+          "maxLength": 256,
+          "position": 1
+        },
+        "attack": {
+          "type": "integer",
+          "description": "Attack power of the card",
+          "position": 2
+        },
+        "defense": {
+          "type": "integer",
+          "description": "Defense level of the card",
+          "position": 3
+        }
+      },
+      "indices": [
+        {
+          "name": "owner",
+          "properties": [
+            {
+              "$ownerId": "asc"
+            }
+          ]
+        },
+        {
+          "name": "attack",
+          "properties": [
+            {
+              "attack": "asc"
+            }
+          ]
+        },
+        {
+          "name": "defense",
+          "properties": [
+            {
+              "defense": "asc"
+            }
+          ]
+        }
+      ],
+      "required": [
+        "name",
+        "attack",
+        "defense"
+      ],
+      "additionalProperties": false
+    }
+  }
