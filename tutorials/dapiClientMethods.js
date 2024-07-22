@@ -4,10 +4,10 @@
 // const client = new Dash.Client();
 
 async function dapiClientMethods(client) {
-  console.log(await client.getDAPIClient().core.getBlockHash(1));
-  console.log(await client.getDAPIClient().core.getBestBlockHash());
-  console.log(await client.getDAPIClient().core.getBlockByHeight(1));
-  await client.getDAPIClient().core.getMasternodeStatus();
+  // console.log(await client.getDAPIClient().core.getBlockHash(1)); // Disabled in Platform v1.0
+  // console.log(await client.getDAPIClient().core.getBestBlockHash()); // Disabled in Platform v1.0
+  // console.log(await client.getDAPIClient().core.getBlockByHeight(1)); // Disabled in Platform v1.0
+  // await client.getDAPIClient().core.getMasternodeStatus(); // Disabled in Platform v1.0
 
   return client.getDAPIClient().core.getBlockchainStatus();
 }
