@@ -83,6 +83,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
 
   describe('Identities and Names', function () {
     let name;
+    let walletIdentityIds;
     before(function () {
       // selectedNode = '127.0.0.1:3000';
       console.log(`\tUsing node ${selectedNode} for tests`);
@@ -175,10 +176,10 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         return this.skip();
       }
 
-      const identityIds = await tutorials.retrieveIdentityIds(sdkClient);
-      // console.log(identityIds);
-      expect(identityIds).to.be.an('array').that.has.lengthOf.at.least(1);
-      expect(identityIds).to.include(identity.toJSON().id);
+      walletIdentityIds = await tutorials.retrieveIdentityIds(sdkClient);
+      // console.log(walletIdentityIds);
+      expect(walletIdentityIds).to.be.an('array').that.has.lengthOf.at.least(1);
+      expect(walletIdentityIds).to.include(identity.toJSON().id);
     });
 
     it('Should update the identity (add key)', async function () {
@@ -221,20 +222,18 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(identity.toJSON().publicKeys.slice(-1)[0].disabledAt).to.not.exist;
     });
 
-    xit('Should transfer credits to another identity', async function () {
+    it('Should transfer credits to another identity', async function () {
       if (typeof identity === 'undefined') {
         console.log('\t Skipping the test. Expected identity to be defined.');
         return this.skip();
       }
 
-      // TODO: fix this. It broke due to names not working with SDK anymore
-      //   https://github.com/dashpay/platform/issues/1999
-      // Use the initial alias as the recipient for the transfer
-      const initialAlias = await sdkClient.platform.names.search(
-        `${initialName}-backup`,
-        'dash',
-      );
-      const recipientId = initialAlias[0].getData().records.dashAliasIdentityId;
+      if (walletIdentityIds.length < 2) {
+        console.log('\t Skipping the test. Not enough identities created with this mnemonic yet.');
+        return this.skip();
+      }
+
+      const recipientId = walletIdentityIds[0];
       const recipientIdentity = await sdkClient.platform.identities.get(
         recipientId,
       );
@@ -243,9 +242,9 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       const identityTransferRecipient = await tutorials.transferCredits(
         sdkClient,
         identity.toJSON().id,
-        initialAlias[0].getData().records.dashAliasIdentityId,
+        recipientId,
       );
-      console.log(`\tNew balance: ${identityTransferRecipient.balance}`);
+      console.log(`\tNew balance: ${identityTransferRecipient.balance} (${recipientId})`);
       expect(identityTransferRecipient).to.be.instanceOf(Identity);
       expect(identityTransferRecipient.balance).to.not.equal(startBalance);
     });
