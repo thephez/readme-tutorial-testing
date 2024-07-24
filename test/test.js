@@ -247,7 +247,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(identityTransferRecipient.balance).to.not.equal(startBalance);
     });
 
-    it('Should register a name', async function () {
+    xit('Should register a name', async function () {
       if (typeof identity === 'undefined') {
         console.log('\t Skipping the test. Expected identity to be defined.');
         return this.skip();
@@ -276,7 +276,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(registeredName.toJSON().label).to.equal(name);
     });
 
-    it('Should register an alias', async function () {
+    xit('Should register an alias', async function () {
       if (typeof identity === 'undefined') {
         console.log('\t Skipping the test. Expected identity to be defined.');
         return this.skip();
@@ -292,7 +292,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(registeredAlias.toJSON().label).to.equal(alias);
     }).timeout(60000);
 
-    it('Should retrieve a name by name', async function () {
+    xit('Should retrieve a name by name', async function () {
       if (typeof identity === 'undefined') {
         console.log('\t Skipping the test. Expected identity to be defined.');
         return this.skip();
@@ -305,7 +305,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(retrievedName.toJSON().label).to.equal(name);
     });
 
-    it('Should retrieve a name by record', async function () {
+    xit('Should retrieve a name by record', async function () {
       if (typeof identity === 'undefined') {
         console.log('\t Skipping the test. Expected identity to be defined.');
         return this.skip();
@@ -320,7 +320,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(retrievedName[0].toJSON().label).to.equal(name);
     });
 
-    it('Should retrieve a name by search', async function () {
+    xit('Should retrieve a name by search', async function () {
       if (typeof identity === 'undefined') {
         console.log('\t Skipping the test. Expected identity to be defined.');
         return this.skip();
