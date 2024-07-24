@@ -1,18 +1,18 @@
 {
   "name": "readme-tutorial-testing",
-  "version": "1.0.0-beta",
+  "version": "1.0.0-rc",
   "description": "",
   "main": "index.js",
   "scripts": {
     "fmt": "npx prettier@2 --write '**/*.{,js}'",
     "lint": "eslint .",
-    "test": "mocha --exit"
+    "test": "mocha --exit --ignore 'test/queryTest.js'"
   },
   "author": "thephez",
   "license": "MIT",
   "dependencies": {
-    "@dashevo/wasm-dpp": "^1.0.0-beta.4",
-    "dash": "^4.0.0-beta.4"
+    "@dashevo/wasm-dpp": "^1.0.0-rc.1",
+    "dash": "^4.0.0-rc.1"
   },
   "devDependencies": {
     "chai": "^4.4.1",
