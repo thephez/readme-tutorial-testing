@@ -221,11 +221,14 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(identity.toJSON().publicKeys.slice(-1)[0].disabledAt).to.not.exist;
     });
 
-    it('Should transfer credits to another identity', async function () {
+    xit('Should transfer credits to another identity', async function () {
       if (typeof identity === 'undefined') {
         console.log('\t Skipping the test. Expected identity to be defined.');
         return this.skip();
       }
+
+      // TODO: fix this. It broke due to names not working with SDK anymore
+      //   https://github.com/dashpay/platform/issues/1999
       // Use the initial alias as the recipient for the transfer
       const initialAlias = await sdkClient.platform.names.search(
         `${initialName}-backup`,
