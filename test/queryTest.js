@@ -16,10 +16,10 @@ const network = process.env.NETWORK;
 // eslint-disable-next-line prefer-const
 let selectedNode =
   goodNodes.goodNodes[Math.floor(Math.random() * goodNodes.goodNodes.length)];
-const documentId = 'EBeBRRb7kqo5WJRg7mP2iaDLgywWmzKCHHTRtwfdwXM9'; // DPNS domain document ID for identityId
-const identityId = 'FSyAXq35ZACEKZFiKxqyb3WzVEVPw8PaLf7Twf3nWa2Z'; // Identity ID for an identityName (e.g. RT-First-00000)
-const identityName = ['DQ-Test-00000', 'DQ-Test-00000-backup'];
-const startsWithString = 'DQ-';
+const documentId = '7ZuMhABHpUTR4PvmwJ3yMzmAiGvv7HoywcLpHJcJbCh3'; // DPNS domain document ID for identityId
+const identityId = '8UqmqzmNSC9Xumo1JessptXzdjhudBRVYeA35eRzgc8'; // Identity ID for an identityName (e.g. RT-First-00000)
+const identityName = ['Tutorial-Test-000000', 'Tutorial-Test-000000-backup'];
+const startsWithString = 'Tutorial-Test-';
 
 let sdkClient;
 let limit = 1;
