@@ -26,7 +26,7 @@ const {
 dotenv.config();
 const mnemonic = process.env.WALLET_MNEMONIC;
 const newIdentityBalance = 9999000; // ~ minimum credit balance of new identity
-const initialName = 'DQ-Test-00000'; // Used to make docs query tests easier
+const initialName = 'Tutorial-Test-000000'; // Used to make docs query tests easier
 const syncStartHeight = process.env.SYNC_START_HEIGHT;
 const network = process.env.NETWORK;
 // eslint-disable-next-line prefer-const
@@ -34,6 +34,24 @@ let selectedNode =
   goodNodes.goodNodes[Math.floor(Math.random() * goodNodes.goodNodes.length)];
 // selectedNode = '35.88.162.148:1443:self-signed'; // devnet
 // selectedNode = '127.0.0.1:3000';
+
+// Force names to be at least 20 characters for test purposes so they register immediately rather
+// than going to a contested vote
+function generateName(base) {
+  const minLength = 20;
+  const number = faker.datatype.number();
+
+  // Calculate the remaining length needed to reach the minimum length
+  const remainingLength = minLength - base.length;
+
+  // Pad the number to ensure the total length is at least 20 characters
+  let paddedNumber = String(number);
+  if (remainingLength > 0) {
+    paddedNumber = paddedNumber.padStart(remainingLength + paddedNumber.length, '0');
+  }
+
+  return base + paddedNumber;
+}
 
 let noWalletClient;
 let emptyWalletClient;
@@ -249,7 +267,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(identityTransferRecipient.balance).to.not.equal(startBalance);
     });
 
-    xit('Should register a name', async function () {
+    it('Should register a name', async function () {
       if (typeof identity === 'undefined') {
         console.log('\t Skipping the test. Expected identity to be defined.');
         return this.skip();
@@ -264,7 +282,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       if (retrievedName === null) {
         name = initialName;
       } else {
-        name = `DQ-${faker.name.firstName()}-${faker.datatype.number()}`;
+        name = generateName(`Tutorial-Test-${faker.name.firstName()}-`);
       }
 
       const registeredName = await tutorials.registerName(
@@ -278,23 +296,35 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(registeredName.toJSON().label).to.equal(name);
     });
 
-    xit('Should register an alias', async function () {
+    // Aliases are no longer present since https://github.com/dashpay/platform/pull/1984
+    it('Should register another name', async function () {
       if (typeof identity === 'undefined') {
         console.log('\t Skipping the test. Expected identity to be defined.');
         return this.skip();
       }
-      const alias = `${name}-backup`;
+      // Check if initial name already established on this network
+      const retrievedName = await tutorials.retrieveNameByName(
+        noWalletClient,
+        initialName,
+      );
 
-      const registeredAlias = await tutorials.registerAlias(
+      if (retrievedName === null) {
+        console.log('\t Skipping the test. Expected name to be defined.');
+        return this.skip();
+      }
+
+      const backupName = `${name}-backup`;
+
+      const registeredBackupName = await tutorials.registerName(
         sdkClient,
         identity.toJSON().id,
-        alias,
+        backupName,
       );
-      console.log(`\tRegistered ${alias} (${registeredAlias.toJSON().$id})`);
-      expect(registeredAlias.toJSON().label).to.equal(alias);
+      console.log(`\tRegistered ${backupName} (${registeredBackupName.toJSON().$id})`);
+      expect(registeredBackupName.toJSON().label).to.equal(backupName);
     }).timeout(60000);
 
-    xit('Should retrieve a name by name', async function () {
+    it('Should retrieve a name by name', async function () {
       if (typeof identity === 'undefined') {
         console.log('\t Skipping the test. Expected identity to be defined.');
         return this.skip();
@@ -307,7 +337,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(retrievedName.toJSON().label).to.equal(name);
     });
 
-    xit('Should retrieve a name by record', async function () {
+    it('Should retrieve a name by record', async function () {
       if (typeof identity === 'undefined') {
         console.log('\t Skipping the test. Expected identity to be defined.');
         return this.skip();
@@ -322,7 +352,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(retrievedName[0].toJSON().label).to.equal(name);
     });
 
-    xit('Should retrieve a name by search', async function () {
+    it('Should retrieve a name by search', async function () {
       if (typeof identity === 'undefined') {
         console.log('\t Skipping the test. Expected identity to be defined.');
         return this.skip();
