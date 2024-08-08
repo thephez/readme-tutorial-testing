@@ -52,8 +52,8 @@ async function whereLessThanId(
 ) {
   return sdkClient.platform.documents.get('dpns.domain', {
     limit,
-    where: [['records.dashUniqueIdentityId', '<', id]],
-    orderBy: [['records.dashUniqueIdentityId', orderByDirection]],
+    where: [['records.identity', '<', id]],
+    orderBy: [['records.identity', orderByDirection]],
   });
 }
 
@@ -65,8 +65,8 @@ async function whereLessThanEqualToId(
 ) {
   return sdkClient.platform.documents.get('dpns.domain', {
     limit,
-    where: [['records.dashUniqueIdentityId', '<=', id]],
-    orderBy: [['records.dashUniqueIdentityId', orderByDirection]],
+    where: [['records.identity', '<=', id]],
+    orderBy: [['records.identity', orderByDirection]],
   });
 }
 
@@ -78,8 +78,8 @@ async function whereGreaterThanId(
 ) {
   return sdkClient.platform.documents.get('dpns.domain', {
     limit,
-    where: [['records.dashUniqueIdentityId', '>', id]],
-    orderBy: [['records.dashUniqueIdentityId', orderByDirection]],
+    where: [['records.identity', '>', id]],
+    orderBy: [['records.identity', orderByDirection]],
   });
 }
 
@@ -91,8 +91,8 @@ async function whereGreaterThanEqualToId(
 ) {
   return sdkClient.platform.documents.get('dpns.domain', {
     limit,
-    where: [['records.dashUniqueIdentityId', '>=', id]],
-    orderBy: [['records.dashUniqueIdentityId', orderByDirection]],
+    where: [['records.identity', '>=', id]],
+    orderBy: [['records.identity', orderByDirection]],
   });
 }
 
