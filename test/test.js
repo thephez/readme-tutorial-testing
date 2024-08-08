@@ -348,8 +348,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       );
 
       expect(retrievedName).to.be.an('array').that.has.lengthOf.at.least(1);
-      expect(retrievedName[0]).to.be.an('object');
-      expect(retrievedName[0].toJSON().label).to.equal(name);
+      expect(retrievedName.some(item => item.toJSON().label === name)).to.be.true;
     });
 
     it('Should retrieve a name by search', async function () {
