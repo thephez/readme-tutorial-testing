@@ -13,7 +13,7 @@ async function registerAlias(client, identityId, alias) {
   const identity = await platform.identities.get(identityId);
   const aliasRegistration = await platform.names.register(
     `${alias}.dash`,
-    { dashAliasIdentityId: identity.getId() },
+    { identity: identity.getId() },
     identity,
   );
 

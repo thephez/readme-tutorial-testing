@@ -13,7 +13,7 @@ async function registerName(client, identityId, name) {
   const identity = await platform.identities.get(identityId);
   const nameRegistration = await platform.names.register(
     `${name}.dash`,
-    { dashUniqueIdentityId: identity.getId() },
+    { identity: identity.getId() },
     identity,
   );
 
