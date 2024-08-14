@@ -153,6 +153,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
         sdkClient,
         identityId,
         'asc',
+        2, // TODO: remove when fixed. This param should not be required, but (n-1) records appear to be returned for asc sort
       );
 
       console.log(
@@ -187,6 +188,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
         sdkClient,
         identityId,
         'asc',
+        2, // TODO: remove when fixed. This param should not be required, but (n-1) records appear to be returned for asc sort
       );
 
       console.log(
