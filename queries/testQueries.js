@@ -3,6 +3,24 @@ const {
   PlatformProtocol: { Identifier },
 } = require('dash');
 
+/**
+ * @param {string} input
+ * @return {string}
+ */
+function convertToHomographSafeChars(input) {
+  return input.toLowerCase().replace(/[oli]/g, (match) => {
+    if (match === 'o') {
+      return '0';
+    }
+
+    if (match === 'l' || match === 'i') {
+      return '1';
+    }
+
+    return match;
+  });
+}
+
 async function startAt(sdkClient, startAtId, limit = 1) {
   return sdkClient.platform.documents.get('dpns.domain', {
     limit,
@@ -22,7 +40,7 @@ async function startAtComplex(
     startAt: Buffer.from(Identifier.from(startAtId)),
     where: [
       ['normalizedParentDomainName', '==', 'dash'],
-      ['normalizedLabel', 'startsWith', startsWithString.toLowerCase()],
+      ['normalizedLabel', 'startsWith', convertToHomographSafeChars(startsWithString)],
     ],
     orderBy: [['normalizedLabel', orderByDirection]],
   });
@@ -36,10 +54,11 @@ async function startAfter(sdkClient, startAfterId, limit = 1) {
 }
 
 async function whereEqual(sdkClient, dpnsName) {
+  const normalizedLabel = convertToHomographSafeChars(dpnsName);
   return sdkClient.platform.documents.get('dpns.domain', {
     where: [
       ['normalizedParentDomainName', '==', 'dash'],
-      ['normalizedLabel', '==', dpnsName.toLowerCase()],
+      ['normalizedLabel', '==', normalizedLabel],
     ],
   });
 }
@@ -107,7 +126,7 @@ async function whereIn(
     limit,
     where: [
       ['normalizedParentDomainName', '==', 'dash'],
-      ['normalizedLabel', 'in', dpnsNames.map((name) => name.toLowerCase())],
+      ['normalizedLabel', 'in', dpnsNames.map((name) => convertToHomographSafeChars(name))],
     ],
     orderBy: [['normalizedLabel', orderByDirection]],
   });
@@ -123,7 +142,7 @@ async function whereStartsWith(
     limit,
     where: [
       ['normalizedParentDomainName', '==', 'dash'],
-      ['normalizedLabel', 'startsWith', startsWithName.toLowerCase()],
+      ['normalizedLabel', 'startsWith', convertToHomographSafeChars(startsWithName)],
     ],
     orderBy: [['normalizedLabel', orderByDirection]],
   });
