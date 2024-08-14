@@ -16,8 +16,8 @@ const network = process.env.NETWORK;
 // eslint-disable-next-line prefer-const
 let selectedNode =
   goodNodes.goodNodes[Math.floor(Math.random() * goodNodes.goodNodes.length)];
-const documentId = '7ZuMhABHpUTR4PvmwJ3yMzmAiGvv7HoywcLpHJcJbCh3'; // DPNS domain document ID for identityId
-const identityId = '8UqmqzmNSC9Xumo1JessptXzdjhudBRVYeA35eRzgc8'; // Identity ID for an identityName (e.g. RT-First-00000)
+const documentId = '76zngYDxgp9wH5r5yARKFCg4MziYHQJAM12ndwMmguWq'; // DPNS domain document ID for identityId
+const identityId = 'AYN4srupPWDrp833iG5qtmaAsbapNvaV7svAdncLN5Rh'; // Identity ID for an identityName (e.g. Tutorial-Test-000000)
 const identityName = ['Tutorial-Test-000000', 'Tutorial-Test-000000-backup'];
 const startsWithString = 'Tutorial-Test-';
 
@@ -255,6 +255,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
         sdkClient,
         identityId,
         'asc',
+        2, // So both regular and backup name are retrieved
       );
 
       console.log(
@@ -262,9 +263,10 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
           result[0].getData().label
         } ${result[0].getOwnerId().toString()}`,
       );
-      expect(result).to.have.lengthOf(1);
+      expect(result).to.have.lengthOf(2);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
-      expect(result[0].getId().toString()).to.be.equal(documentId);
+      // eslint-disable-next-line no-unused-expressions
+      expect(result.some((item) => item.getId().toString() === documentId)).to.be.true;
     });
 
     it(`in (asc) - should return all existing names from list (all do exist) - (${identityName})`, async function () {
