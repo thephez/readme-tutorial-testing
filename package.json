@@ -6,7 +6,7 @@
   "scripts": {
     "fmt": "npx prettier@2 --write '**/*.{,js}'",
     "lint": "eslint .",
-    "test": "mocha --exit --ignore 'test/queryTest.js'"
+    "test": "mocha --exit"
   },
   "author": "thephez",
   "license": "MIT",
