@@ -16,8 +16,8 @@ const network = process.env.NETWORK;
 // eslint-disable-next-line prefer-const
 let selectedNode =
   goodNodes.goodNodes[Math.floor(Math.random() * goodNodes.goodNodes.length)];
-const documentId = '76zngYDxgp9wH5r5yARKFCg4MziYHQJAM12ndwMmguWq'; // DPNS domain document ID for identityId
-const identityId = 'AYN4srupPWDrp833iG5qtmaAsbapNvaV7svAdncLN5Rh'; // Identity ID for an identityName (e.g. Tutorial-Test-000000)
+const documentId = 'E8m6NCCnpschx4WRfk1uLMHqttqMJKPwYt8fWaVSJPrL'; // DPNS domain document ID for identityId
+const identityId = 'GgZekwh38XcWQTyWWWvmw6CEYFnLU7yiZFPWZEjqKHit'; // Identity ID for an identityName (e.g. Tutorial-Test-000000)
 const identityName = ['Tutorial-Test-000000', 'Tutorial-Test-000000-backup'];
 const startsWithString = 'Tutorial-Test-';
 
@@ -153,7 +153,6 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
         sdkClient,
         identityId,
         'asc',
-        2, // TODO: remove when fixed. This param should not be required, but (n-1) records appear to be returned for asc sort
       );
 
       console.log(
@@ -188,7 +187,6 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
         sdkClient,
         identityId,
         'asc',
-        2, // TODO: remove when fixed. This param should not be required, but (n-1) records appear to be returned for asc sort
       );
 
       console.log(
