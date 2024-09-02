@@ -1,4 +1,4 @@
-// List of DCG testnet nodes
+// List of mainnet enabled evonodes
 module.exports.goodMainnetNodes = [
   '149.28.241.190:443',
   '216.238.75.46:443',
@@ -187,5 +187,5 @@ module.exports.goodMainnetNodes = [
   '213.199.35.15:443',
   '114.132.172.215:443',
   '93.190.140.162:443',
-  '65.108.74.109:443'
+  '65.108.74.109:443',
 ];
