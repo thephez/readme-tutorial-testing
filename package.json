@@ -6,6 +6,8 @@
   "scripts": {
     "fmt": "npx prettier@2 --write '**/*.{,js}'",
     "lint": "eslint .",
+    "test:integration": "mocha test/test --exit",
+    "test:queries": "mocha test/queryTest --exit",
     "test": "mocha --exit"
   },
   "author": "thephez",
