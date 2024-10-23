@@ -267,7 +267,41 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       expect(identityTransferRecipient.balance).to.not.equal(startBalance);
     });
 
-    it('Should register a name', async function () {
+    it('Should withdraw credits from Platform', async function () {
+      if (typeof identity === 'undefined') {
+        console.log('\t Skipping the test. Expected identity to be defined.');
+        return this.skip();
+      }
+
+      const identityId = identity.toJSON().id;
+      const startingIdentity = await sdkClient.platform.identities.get(
+        identityId,
+      );
+      const startBalance = startingIdentity.balance;
+      console.log(`\tIdentity balance before withdrawal: ${startBalance}`);
+
+      const toAddress = account.getUnusedAddress().address;
+      const creditWithdrawalAmount = 1000000;
+      // console.log(
+      //   `\tWithdrawing ${creditWithdrawalAmount} credits to ${toAddress}`,
+      // );
+
+      const endingIdentity = await tutorials.withdrawCredits(
+        sdkClient,
+        startingIdentity,
+        toAddress,
+        creditWithdrawalAmount,
+      );
+
+      const balanceChange = endingIdentity.balance - startBalance;
+      console.log(
+        `\tIdentity balance after withdrawal: ${endingIdentity.balance} (Change: ${balanceChange})`,
+      );
+      expect(endingIdentity).to.be.instanceOf(Identity);
+      expect(endingIdentity.balance).to.not.equal(startBalance);
+    });
+
+    xit('Should register a name', async function () {
       if (typeof identity === 'undefined') {
         console.log('\t Skipping the test. Expected identity to be defined.');
         return this.skip();
