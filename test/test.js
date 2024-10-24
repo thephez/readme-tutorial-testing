@@ -42,7 +42,10 @@ function generateName(base) {
   // Pad the number to ensure the total length is at least 20 characters
   let paddedNumber = String(number);
   if (remainingLength > 0) {
-    paddedNumber = paddedNumber.padStart(remainingLength + paddedNumber.length, '0');
+    paddedNumber = paddedNumber.padStart(
+      remainingLength + paddedNumber.length,
+      '0',
+    );
   }
 
   return base + paddedNumber;
@@ -262,7 +265,9 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       }
 
       if (walletIdentityIds.length < 2) {
-        console.log('\t Skipping the test. Not enough identities created with this mnemonic yet.');
+        console.log(
+          '\t Skipping the test. Not enough identities created with this mnemonic yet.',
+        );
         return this.skip();
       }
 
@@ -277,7 +282,9 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         identity.toJSON().id,
         recipientId,
       );
-      console.log(`\tNew balance: ${identityTransferRecipient.balance} (${recipientId})`);
+      console.log(
+        `\tNew balance: ${identityTransferRecipient.balance} (${recipientId})`,
+      );
       expect(identityTransferRecipient).to.be.instanceOf(Identity);
       expect(identityTransferRecipient.balance).to.not.equal(startBalance);
     });
@@ -369,7 +376,9 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
         identity.toJSON().id,
         backupName,
       );
-      console.log(`\tRegistered ${backupName} (${registeredBackupName.toJSON().$id})`);
+      console.log(
+        `\tRegistered ${backupName} (${registeredBackupName.toJSON().$id})`,
+      );
       expect(registeredBackupName.toJSON().label).to.equal(backupName);
     }).timeout(60000);
 
@@ -397,7 +406,8 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
       );
 
       expect(retrievedName).to.be.an('array').that.has.lengthOf.at.least(1);
-      expect(retrievedName.some(item => item.toJSON().label === name)).to.be.true;
+      expect(retrievedName.some((item) => item.toJSON().label === name)).to.be
+        .true;
     });
 
     it('Should retrieve a name by search', async function () {
@@ -709,13 +719,9 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
           nftContractDocumentSchema,
         );
         const nftContract = contractTransition.toJSON();
-        console.log(
-          `\tRegistered NFT contract: ${nftContract.id}`,
-        );
+        console.log(`\tRegistered NFT contract: ${nftContract.id}`);
 
-        expect(nftContract.documentSchemas).to.have.property(
-          'card',
-        );
+        expect(nftContract.documentSchemas).to.have.property('card');
       });
     });
   });

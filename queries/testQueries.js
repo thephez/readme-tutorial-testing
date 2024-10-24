@@ -40,7 +40,11 @@ async function startAtComplex(
     startAt: Buffer.from(Identifier.from(startAtId)),
     where: [
       ['normalizedParentDomainName', '==', 'dash'],
-      ['normalizedLabel', 'startsWith', convertToHomographSafeChars(startsWithString)],
+      [
+        'normalizedLabel',
+        'startsWith',
+        convertToHomographSafeChars(startsWithString),
+      ],
     ],
     orderBy: [['normalizedLabel', orderByDirection]],
   });
@@ -126,7 +130,11 @@ async function whereIn(
     limit,
     where: [
       ['normalizedParentDomainName', '==', 'dash'],
-      ['normalizedLabel', 'in', dpnsNames.map((name) => convertToHomographSafeChars(name))],
+      [
+        'normalizedLabel',
+        'in',
+        dpnsNames.map((name) => convertToHomographSafeChars(name)),
+      ],
     ],
     orderBy: [['normalizedLabel', orderByDirection]],
   });
@@ -142,7 +150,11 @@ async function whereStartsWith(
     limit,
     where: [
       ['normalizedParentDomainName', '==', 'dash'],
-      ['normalizedLabel', 'startsWith', convertToHomographSafeChars(startsWithName)],
+      [
+        'normalizedLabel',
+        'startsWith',
+        convertToHomographSafeChars(startsWithName),
+      ],
     ],
     orderBy: [['normalizedLabel', orderByDirection]],
   });

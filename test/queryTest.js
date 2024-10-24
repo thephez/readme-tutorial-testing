@@ -266,7 +266,8 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
       expect(result).to.have.lengthOf(2);
       expect(result[0]).to.be.instanceOf(ExtendedDocument);
       // eslint-disable-next-line no-unused-expressions
-      expect(result.some((item) => item.getId().toString() === documentId)).to.be.true;
+      expect(result.some((item) => item.getId().toString() === documentId)).to
+        .be.true;
     });
 
     it(`in (asc) - should return all existing names from list (all do exist) - (${identityName})`, async function () {
