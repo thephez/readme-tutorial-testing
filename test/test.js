@@ -29,11 +29,6 @@ const newIdentityBalance = 9999000; // ~ minimum credit balance of new identity
 const initialName = 'Tutorial-Test-000000'; // Used to make docs query tests easier
 const syncStartHeight = process.env.SYNC_START_HEIGHT;
 const network = process.env.NETWORK;
-// eslint-disable-next-line prefer-const
-let selectedNode =
-  goodNodes.goodNodes[Math.floor(Math.random() * goodNodes.goodNodes.length)];
-// selectedNode = '35.88.162.148:1443:self-signed'; // devnet
-// selectedNode = '127.0.0.1:3000';
 
 // Force names to be at least 20 characters for test purposes so they register immediately rather
 // than going to a contested vote
@@ -53,6 +48,26 @@ function generateName(base) {
   return base + paddedNumber;
 }
 
+function selectRandomNodes(nodeList, count = 2) {
+  // eslint-disable-next-line prefer-const
+  let selectedNodes = [];
+  while (selectedNodes.length < count) {
+    const randomNode = nodeList[Math.floor(Math.random() * nodeList.length)];
+
+    // Ensure no duplicates
+    if (!selectedNodes.includes(randomNode)) {
+      selectedNodes.push(randomNode);
+    }
+  }
+
+  return selectedNodes;
+}
+
+// eslint-disable-next-line prefer-const
+let selectedNodes = selectRandomNodes(goodNodes.goodNodes, 2);
+// selectedNode = '35.88.162.148:1443:self-signed'; // devnet
+// selectedNode = '127.0.0.1:3000';
+
 let noWalletClient;
 let emptyWalletClient;
 let sdkClient;
@@ -68,7 +83,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     before(function () {
       // selectedNode = '127.0.0.1:3000';
       console.log(
-        `\tUsing node ${selectedNode} for tests. Network type: ${network}`,
+        `\tUsing nodes ${selectedNodes} for tests. Network type: ${network}`,
       );
       emptyWalletClient = new Dash.Client({
         network,
@@ -77,7 +92,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
           offlineMode: true,
         },
         // Comment out for local networks
-        dapiAddresses: [selectedNode],
+        dapiAddresses: selectedNodes,
       });
     });
 
@@ -104,13 +119,13 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
     let walletIdentityIds;
     before(function () {
       // selectedNode = '127.0.0.1:3000';
-      console.log(`\tUsing node ${selectedNode} for tests`);
+      console.log(`\tUsing nodes ${selectedNodes} for tests`);
 
       // Client with no wallet for read-only operations
       noWalletClient = new Dash.Client({
         network,
         // Comment out for local networks
-        dapiAddresses: [selectedNode],
+        dapiAddresses: selectedNodes,
       });
 
       // Switch to using received mnemonic for client
@@ -123,7 +138,7 @@ describe(`Tutorial Code Tests (${new Date().toLocaleTimeString()})`, function su
           },
         },
         // Comment out for local networks
-        dapiAddresses: [selectedNode],
+        dapiAddresses: selectedNodes,
       });
     });
 
