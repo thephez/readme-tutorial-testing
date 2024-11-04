@@ -21,7 +21,7 @@ jobs:
       CI: true
       NETWORK: 'testnet'
       WALLET_MNEMONIC: ${{ secrets.WALLET_MNEMONIC }}
-      SYNC_START_HEIGHT: 975000    
+      SYNC_START_HEIGHT: 1134210    
 
     strategy:
       matrix:
