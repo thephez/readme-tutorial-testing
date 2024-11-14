@@ -35,9 +35,9 @@ if (network === 'testnet') {
       Math.floor(Math.random() * goodMainnetNodes.goodMainnetNodes.length)
     ];
 
-  documentId = '8H7xdt65kvXkm7dtSHyzpZnwU5cMEPpbssSFdsoayJoP'; // DPNS domain document ID for identityId
-  identityId = 'BMJWm8wKmbApR7nQ6q7RG3HgD8maJ8t7B4yWBKRe7aZ6'; // Identity ID for an identityName (e.g. Tutorial-Test-000000)
-  identityName = ['WenEvo-2-9-24', '1337'];
+  documentId = 'CArf6mcv8oijKZAxSrAaVfGBo9euNbrhxKwdQfzhcuAR'; // DPNS domain document ID for identityId
+  identityId = 'CJiTyM1AyXv1bZFWoAoEb9nHQZVW4rQNnPudQzayUWMt'; // Identity ID for an identityName (e.g. Tutorial-Test-000000)
+  identityName = ['0x0000-0000-0000-0001'];
   startsWithString = '0x';
 }
 
@@ -310,7 +310,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
 
       console.log(`\tReceived document with name(s): ${names}`);
       expect(result).to.have.lengthOf(identityName.length);
-      expect(result[1]).to.be.instanceOf(ExtendedDocument);
+      expect(result[0]).to.be.instanceOf(ExtendedDocument);
       // eslint-disable-next-line no-unused-expressions
       expect(match).to.be.true;
     });
