@@ -9,17 +9,37 @@ const { expect } = require('chai');
 const dotenv = require('dotenv');
 const testQueries = require('../queries/testQueries');
 const goodNodes = require('./goodNodes');
+const goodMainnetNodes = require('./goodMainnetNodes');
 
 dotenv.config();
 const network = process.env.NETWORK;
 // const seedHost = 'seed-1.<devnet-name>.networks.dash.org';
 // eslint-disable-next-line prefer-const
-let selectedNode =
-  goodNodes.goodNodes[Math.floor(Math.random() * goodNodes.goodNodes.length)];
-const documentId = 'E8m6NCCnpschx4WRfk1uLMHqttqMJKPwYt8fWaVSJPrL'; // DPNS domain document ID for identityId
-const identityId = 'GgZekwh38XcWQTyWWWvmw6CEYFnLU7yiZFPWZEjqKHit'; // Identity ID for an identityName (e.g. Tutorial-Test-000000)
-const identityName = ['Tutorial-Test-000000', 'Tutorial-Test-000000-backup'];
-const startsWithString = 'Tutorial-Test-';
+let selectedNode;
+let documentId;
+let identityId;
+let identityName;
+let startsWithString;
+
+if (network === 'testnet') {
+  selectedNode =
+    goodNodes.goodNodes[Math.floor(Math.random() * goodNodes.goodNodes.length)];
+
+  documentId = 'E8m6NCCnpschx4WRfk1uLMHqttqMJKPwYt8fWaVSJPrL'; // DPNS domain document ID for identityId
+  identityId = 'GgZekwh38XcWQTyWWWvmw6CEYFnLU7yiZFPWZEjqKHit'; // Identity ID for an identityName (e.g. Tutorial-Test-000000)
+  identityName = ['Tutorial-Test-000000', 'Tutorial-Test-000000-backup'];
+  startsWithString = 'Tutorial-Test-';
+} else if (network === 'mainnet') {
+  selectedNode =
+    goodMainnetNodes.goodMainnetNodes[
+      Math.floor(Math.random() * goodMainnetNodes.goodMainnetNodes.length)
+    ];
+
+  documentId = 'CArf6mcv8oijKZAxSrAaVfGBo9euNbrhxKwdQfzhcuAR'; // DPNS domain document ID for identityId
+  identityId = 'CJiTyM1AyXv1bZFWoAoEb9nHQZVW4rQNnPudQzayUWMt'; // Identity ID for an identityName (e.g. Tutorial-Test-000000)
+  identityName = ['0x0000-0000-0000-0001'];
+  startsWithString = '0x';
+}
 
 let sdkClient;
 let limit = 1;
@@ -290,7 +310,7 @@ describe(`Query Tests (${new Date().toLocaleTimeString()})`, function suite() {
 
       console.log(`\tReceived document with name(s): ${names}`);
       expect(result).to.have.lengthOf(identityName.length);
-      expect(result[1]).to.be.instanceOf(ExtendedDocument);
+      expect(result[0]).to.be.instanceOf(ExtendedDocument);
       // eslint-disable-next-line no-unused-expressions
       expect(match).to.be.true;
     });
