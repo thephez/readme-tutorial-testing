@@ -1,6 +1,6 @@
 {
   "name": "platform-tutorial-testing",
-  "version": "1.5.1",
+  "version": "1.6.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,8 +13,8 @@
   "author": "thephez",
   "license": "MIT",
   "dependencies": {
-    "@dashevo/wasm-dpp": "^1.5.1",
-    "dash": "^4.5.1"
+    "@dashevo/wasm-dpp": "^1.6.2",
+    "dash": "^4.6.2"
   },
   "devDependencies": {
     "chai": "^4.4.1",
